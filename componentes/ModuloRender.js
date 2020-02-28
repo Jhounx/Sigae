@@ -43,6 +43,10 @@ class Modulo {
             $(".content-head").append("<script src=\" " + this.pasta + "/javascript.js\"></script>");
         }
 
+        if (eval("typeof pre_init_" + classe.id) == "function") { 
+            window["pre_init_" + classe.id]()
+        }
+
         setTimeout(function () {
             $("modulo").empty();
             $("#carregamentoModulo").hide();

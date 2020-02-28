@@ -8,7 +8,7 @@ function sideMenus() {
     node1 = new Node("Calendários", "perm_contact_calendar")
     conjunto1 = new Conjunto()
     node1.add(conjunto1)
-    linha2 = new Linha("Calendário de atendimentos", null, "#conjunto1", "--calendarioCompleto");
+    linha2 = new Linha("Calendário de atendimentos", null, "#conjunto1", "--calendario");
     linha3 = new Linha("Meus atendimentos agendados", null, "#conjunto1", "--atendimentosAgendados");
     linha4 = new Linha("Meus atendimentos inscritos", null, "#conjunto1", "--atendimentosInscritos");
 
@@ -42,8 +42,8 @@ function sideMenus() {
 
 function modulos() {
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, false, linha1);
-    calendarioCompleto = new Modulo("calendarioCompleto", "../modulos/calendarioCompleto", "Calendário de atendimentos", "perm_contact_calendar", false, false, linha2);
-    calendarioMinhaTurma = new Modulo("calendarioMinhaTurma", "../modulos/calendarioMinhaTurma", "Calendário de atendimentos para minha turma", "perm_contact_calendar", false, false, linha3);
+    calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
+    //calendarioMinhaTurma = new Modulo("calendarioMinhaTurma", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", false, false, linha3);
 
     setModuloParam()
 }
