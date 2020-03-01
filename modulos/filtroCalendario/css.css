@@ -1,0 +1,12 @@
+.text-primary {
+    color: azure !important
+}
+
+.fora {
+    margin-left: 2px;
+}
+
+.desabilitarTudo:hover {
+    cursor: pointer;
+    color: rgb(92, 102, 188)
+}

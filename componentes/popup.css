@@ -28,3 +28,8 @@
 .swal2-content {
     overflow-x: hidden;
 }
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+    overflow-y: scroll !important;
+    position: fixed;
+}

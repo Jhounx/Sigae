@@ -49,6 +49,7 @@ class Popup {
             showCancelButton: true,
             cancelButtonColor: '#d33',
             showConfirmButton: false,
+            allowEnterKey: false,
             onOpen: function() {
                 if (classe.js == true) {
                     window["init_" + classe.name]()
@@ -57,11 +58,16 @@ class Popup {
             onClose: function() {
                 try {
                     selectAtual()
+                    window["close_" + classe.name]()
                 } catch(ex) {}
             },
             html: `${classe.html}`
         })
-        $(".swal2-popup").css("cssText", "height: " + this.altura + " !important; width: " + this.largura + " !important; display:flex");
+        if(this.altura != null) {
+            $(".swal2-popup").css("cssText", "height: " + this.altura + " !important; width: " + this.largura + " !important; display:flex");
+        } else {
+            $(".swal2-popup").css("cssText", "width: " + this.largura + " !important; display:flex");
+        }
         if (this.scroll == true) {
             $(".swal2-content").css("cssText", "overflow-y: auto; !important");
         } else {

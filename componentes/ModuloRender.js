@@ -16,7 +16,7 @@ class Modulo {
     }
 
     invoker() {
-        $("modulo").empty();
+        $("modulo").remove();
         $(".content-head").empty()
         $(".breadcrumbs").hide();
         $("#carregamentoModulo").show();
@@ -48,7 +48,7 @@ class Modulo {
         }
 
         setTimeout(function () {
-            $("modulo").empty();
+            $("modulo").remove();
             $("#carregamentoModulo").hide();
             $(".breadcrumbs").show();
             $(".breadcrumbsTitulo").text(classe.titulo)
@@ -58,10 +58,9 @@ class Modulo {
             $(".content").append(data)
             moduloAtual = classe;
             if (classe.js == true) {
-                try {
+                if (eval("typeof init_" + classe.id) == "function") {
                     window["init_" + classe.id]()
-                }
-                catch (err) {
+                } else {
                     erro("A função " + "'init_" + classe.id + "' não existe")
                 }
             }

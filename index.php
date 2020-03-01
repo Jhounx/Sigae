@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./componentes/loading.css">
     <link rel="icon" href="./icones/si.png">
-    <script src="../componentes/APIs/jquery-3.1.1.min.js"></script>
+    <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
     <script src="../componentes/APIs/popper.min.js"></script>
@@ -22,7 +22,7 @@
     <script src="./componentes/Popup.js"></script>
 </head>
 
-<body>
+<body style="overflow-x: hidden !important;overflow-y: hidden !important;">
     <div class="divCarregamento">
         <img class="imgCarregamento" src="./icones/loading.svg">
         <div class="noJS">Essa página precisa de Javascript. Ative-o!</div>

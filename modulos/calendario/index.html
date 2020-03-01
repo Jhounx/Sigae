@@ -1,3 +1,23 @@
 <modulo>
-    
+    <div class="ferramentas">
+        <div class="divControle">
+            <button class="btn btn-controle btn-menor waves-effect waves-light" onclick="anoVoltar()">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            <button class="btn btn-controle waves-effect waves-light" onclick="anoAtual()">Ano atual</button>
+            <button class="btn btn-controle btn-menor waves-effect waves-light" onclick="anoAvancar()">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </div>
+        <div class="divControleBaixo">
+            <button class="btn btn-controle btn-grande waves-effect waves-light" onclick="filtroCalendario.show()">Adicionar um filtro</button>
+            <button class="btn btn-controle btn-menor waves-effect waves-light">
+                <i class="material-icons">question_answer</i>
+            </button>
+        </div>
+    </div>
+    <h1 class="anoCalendario"></h1>
+    <div class="pai">
+        <div id="calendar"></div>
+    </div>
 </modulo>

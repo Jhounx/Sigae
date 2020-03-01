@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../componentes/loading.css">
     <link rel="stylesheet" href="../componentes/popup.css">
     <link rel="icon" href="../icones/si.png">
-    <script src="../componentes/APIs/jquery-3.1.1.min.js"></script>
+    <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
     <script src="./javascript.js"></script>
@@ -27,8 +27,10 @@
     <script src="../componentes/Modulos.js"></script>
     <script src="../componentes/Misc.js"></script>
     <script src="../componentes/Console.js"></script>
-    <script src="../componentes/APIs/materialize.min.js"></script>
+    <script src="../componentes/request.js"></script>
     <script src="../componentes/APIs/param.js"></script>
+    <script src="../componentes/APIs/calendarize.js"></script>
+    <script src="../componentes/APIs/materialize.min.js"></script>
 </head>
 
 <body>
