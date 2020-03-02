@@ -1,4 +1,4 @@
-var versao = "Dev 1.0.6"
+var versao = "Dev 1.0.6.1"
 
 function definirVersao() {
     $(".versao").text(versao)

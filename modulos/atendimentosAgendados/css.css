@@ -1,0 +1,37 @@
+.divTabela {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+.responsive-table {
+    overflow-x: auto;
+}
+
+.estadoTabela {
+    width: 150px !important;
+}
+
+thead {
+    background: rgb(74, 80, 88);
+    color: white;
+}
+
+th {
+    border-radius: 0px !important;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.hover:hover {
+    background-color: rgb(192, 206, 226) !important;
+    color: white !important;
+    transition: all 200ms;
+}
+
+td, th {
+    padding: 18px !important;
+}
+@media only screen and (max-width : 1248px) {}

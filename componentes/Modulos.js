@@ -43,7 +43,7 @@ function sideMenus() {
 function modulos() {
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, false, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
-    //calendarioMinhaTurma = new Modulo("calendarioMinhaTurma", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", false, false, linha3);
+    atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
 
     setModuloParam()
 }
