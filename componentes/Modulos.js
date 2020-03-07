@@ -31,7 +31,7 @@ function sideMenus() {
     conjunto4 = new Conjunto()
     node4.add(conjunto4)
     linha9 = new Linha("Alterar configurações", null, "#conjunto4", "--alterarConfig");
-    linha10 = new Linha("Abrir console", null, "#conjunto4", "abrirConsole()");
+    linha10 = new Linha("Abrir menu de alertas", null, "#conjunto4", "abrirConsole()");
     linha11 = new Linha("Sobre o SiGAÊ", null, "#conjunto4", "sobreSigae()");
 
     //Finalizar sessão
@@ -45,19 +45,26 @@ function modulos() {
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
 
+    erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", false, false, null);
+
     setModuloParam()
 }
 
 function setModuloParam() {
-    var moduloParam = getParam()["modulo"];
+    var moduloParam = get_parametro("modulo")
     if (moduloParam == undefined) {
-        linha1.do()
+        linha1.rodar()
     } else {
+        var achou = false;
         for (var i = 0; i < arrayModulos.length; i++) {
             var moduloDoArray = arrayModulos[i]
             if (moduloDoArray.id == moduloParam) {
-                moduloDoArray.linha.do()
+                var achou = true;
+                moduloDoArray.linha.rodar()
             }
+        }
+        if(achou == false) {
+            erro404.invoker()
         }
     }
 }
@@ -119,7 +126,7 @@ function removeAllSelection() {
 
 class Linha {
 
-    id; titulo; icone; conjunto; conjuntoNumero; action;
+    // id; titulo; icone; conjunto; conjuntoNumero; action;
 
     constructor(titulo, icone, conjunto, action) {
         linhas++;
@@ -139,14 +146,14 @@ class Linha {
         if (this.conjunto == null) {
             if (this.icone == null) {
                 $(".divLinhas").append("\
-                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".do('click')\">\
+                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
                     <div class=\"sideContainer\">\
                         <span class=\"textoNode\">" + this.titulo + "</span>\
                     </div>\
                 </div>")
             } else {
                 $(".divLinhas").append("\
-                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".do('click')\">\
+                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
                     <div class=\"sideContainer\">\
                         <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
                         <span class=\"textoNode\">" + this.titulo + "</span>\
@@ -156,14 +163,14 @@ class Linha {
         } else {
             if (this.icone == null) {
                 $(this.conjunto).append("\
-                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".do('click')\">\
+                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
                     <div class=\"sideContainer\">\
                         <span class=\"textoChildren\">" + this.titulo + "</span>\
                     </div>\
                 </div>")
             } else {
                 $(this.conjunto).append("\
-                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".do('click')\">\
+                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
                     <div class=\"sideContainer\">\
                         <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
                         <span class=\"textoChildren\">" + this.titulo + "</span>\
@@ -181,9 +188,8 @@ class Linha {
         $("#linha" + this.id).css("color", "white");
     }
 
-    do(click) {
+    rodar(click) {
         removeAllSelection()
-        closeAll(nodeDaLinha(this))
         selectLinha(this)
         if (this.action.startsWith("--")) {
             var modulo = this.action.substring(2), achou = false;
@@ -194,7 +200,7 @@ class Linha {
                     moduloDoArray.invoker()
                     if (moduloDoArray.linha.id != 1) {
                         if (click == 'click') {
-                            addParam("modulo", moduloDoArray.id)
+                            add_parametros("modulo", moduloDoArray.id, true)
                         }
                     } else {
                         removeParam()
@@ -222,9 +228,10 @@ class Linha {
 
 class Node {
 
-    id; titulo; icone; conjunto; isOpen = false;
+    // id; titulo; icone; conjunto; isOpen = false;
 
     constructor(titulo, icone) {
+        var isOpen = false;
         nodes++;
         this.id = nodes;
         this.titulo = titulo;
@@ -240,7 +247,7 @@ class Node {
 
     render() {
         $(".divLinhas").append("\
-        <div class=\"node\" id=\"node" + nodes + "\" onclick=\"node" + nodes + ".do()\">\
+        <div class=\"node\" id=\"node" + nodes + "\" onclick=\"node" + nodes + ".rodar()\">\
             <div class=\"sideContainer\">\
                 <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
                 <span class=\"textoNode\">" + this.titulo + "</span>\
@@ -251,7 +258,7 @@ class Node {
         </div>")
     }
 
-    do() {
+    rodar() {
         if (this.isOpen == true) {
             this.close()
         } else {
@@ -278,7 +285,7 @@ class Node {
 
 class Conjunto {
 
-    node;
+    // node;
 
     constructor() {
         conjuntos++;

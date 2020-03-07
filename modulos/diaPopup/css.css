@@ -1,0 +1,48 @@
+.divAtendimentos {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.rolagemAtendimentos {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.divHeaderAtendimentos {
+    padding-left: 4px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    color: #595959 !important;
+    font-weight: 600 !important;
+}
+
+.textoAtendimento {
+    font-size: 18px;
+}
+
+.paiDiaPopup {
+    display: inline-flex;
+}
+
+.respostasAtendimento {
+    display: inline-block;
+    font-size: 18px;
+    color: #595959 !important;
+    font-weight: 600 !important;
+}
+
+.icone-popupDia {
+    /* height: 100%; */
+    /* display: flex !important; */
+    align-items: center !important;
+    margin-right: 4px !important;
+}
+
+.divMaterial {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.btn {
+    color: white !important;
+}

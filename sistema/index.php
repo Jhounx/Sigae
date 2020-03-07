@@ -33,7 +33,7 @@
     <script src="../componentes/APIs/materialize.min.js"></script>
 </head>
 
-<body>
+<body style="width: 100% !important">
     <div class="divCarregamento">
         <img class="imgCarregamento" src="../icones/loading.svg">
         <div class="noJS">Essa página precisa de Javascript. Ative-o!</div>
@@ -122,9 +122,9 @@
         </div>
         <div id="consoleModal" class="modal consoleModal bottom-sheet">
             <div class="modal-content">
-                <b class="consoleTexto">Console</b>
+                <b class="consoleTexto">Menu de alertas</b>
                 <div class="divBotoes">
-                    <a class="dropdown-button consoleBotao consoleBotao-ferramentas" data-beloworigin="true" data-activates="dropdownConsole">Ferramentas do console</a>
+                    <a class="dropdown-button consoleBotao consoleBotao-ferramentas" data-beloworigin="true" data-activates="dropdownConsole"><i class="material-icons">arrow_drop_down</i></a>
                     <ul id="dropdownConsole" class="dropdown-content dropdown-console">
                         <li><a style="text-decoration: none; " href="javascript:void(0)" onclick="limparConsole()"><i class="material-icons">delete_forever</i>Limpar console</a></li>
                     </ul>

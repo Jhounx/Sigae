@@ -4,6 +4,24 @@ function init() {
             $("#senha").focus();
         }
     });
+    $('#login').mask('00000000000');
+    floatingLabel.init();
+    comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "82%");
+    comoCriar.setScroll(true)
+    comoCriar.invoker()
+    esqueciSenha = new Popup("esqueciSenha", "../modulos/login/esqueciSenha", "Esqueci minha senha", "500px", "460px");
+    esqueciSenha.setScroll(false)
+    esqueciSenha.setJS(true)
+    esqueciSenha.invoker()
+    $(function () {
+        var width = $(window).width();
+        var height = $(window).height();
+        if (width <= 730 || height <= 528) {
+            var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            $("html, body").css({ "width": w, "height": h });
+        }
+    });
 }
 
 function enviarRecuperacao() {
@@ -32,7 +50,7 @@ function mainEmail() {
 
 class Campo {
 
-    input; enterClick; enterComponent
+    // input; enterClick; enterComponent
 
     constructor(input, enterClick, enterComponent) {
         this.input = input;

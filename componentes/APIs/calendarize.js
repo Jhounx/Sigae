@@ -47,10 +47,6 @@ function Calendarize() {
 				showMonth: true,
 				showDaysOfWeek: true,
 				showYear: false,
-				clickHandler: function(e) {
-					var day = e.target.getAttribute("data-date");
-					//alert(day);
-				}
 			};
 
 			months.forEach(function(a, b) {
@@ -128,7 +124,19 @@ function Calendarize() {
 				var today = new Date(new Date().setHours(0, 0, 0, 0));
 				var $dayNode = document.createElement('div');
 				$dayNode.classList.add('day');
-				$dayNode.setAttribute("data-date", c);
+				
+				dia1 = c.getUTCDate() + "";
+				mes1 = (c.getUTCMonth() + 1) + ""
+				ano1 = c.getUTCFullYear() + ""
+
+				if(dia1.length == 1) {
+					dia1 = "0" + dia1;
+				}
+				if(mes1.length == 1) {
+					mes1 = "0" + mes1;
+				}
+				$dayNode.setAttribute("onclick", "invokerDia('" + dia1 + "', '" + mes1 + "', '" + ano1 + "')");
+
 				$dayNode.innerText = (d + 1);
 				var dow = new Date(c).getDay();
 				var dateParsed = Date.parse(c);

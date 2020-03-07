@@ -20,6 +20,7 @@
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
     <script src="./javascript.js"></script>
     <script src="./componentes/Popup.js"></script>
+    <script src="./componentes/request.js"></script>
 </head>
 
 <body style="overflow-x: hidden !important;overflow-y: hidden !important;">
@@ -74,7 +75,7 @@
             <div id="erro">
                 <div class="row justify-content-center">
                     <div id="alert-login" class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
-                        <h8 style="text-align:center">Desculpe, usuário e/ou senha incorreto(s)</h8>
+                        <h8 class="erroTexto" style="text-align:center"></h8>
                         <button type="button" class="close" onclick="main();">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -82,10 +83,10 @@
                 </div>
             </div>
         </form>
-    </div> 
+    </div>
     <script class="script">
-        window.onload = function () {
-            setTimeout(function () {
+        window.onload = function() {
+            setTimeout(function() {
                 $(".divCarregamento").fadeOut(500);
                 $(".centro").fadeIn(500);
             }, 500);
@@ -96,38 +97,38 @@
         senha = new Campo("#senha", "click", "#botao")
         login.img("usuario")
         senha.img("senha")
+
         function logar() {
             $("#erro").hide()
             $("#waiting").show()
-            setTimeout(function () {
-                $("#waiting").hide()
-                $("#erro").show()
-            }, 1000);
+            request = new Request(null)
+            request.add("login", $("#login").val())
+            request.add("senha", $("#senha").val())
+            request.send("POST", "logarResposta")
+        }
+
+        function logarResposta(resposta) {
+            if(resposta == "-1") {
+                $(".erroTexto").text("Erro ao efeturar login")
+            }
+            if(resposta == 0) {
+                $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
+            }
+            if(resposta == 1) {
+                $(".erroTexto").text("Sua senha está incorreta. Confira-a")
+            }
+            if(resposta == 2) {
+                
+            }
+            $("#waiting").hide()
+            $("#erro").show()
         }
 
         function main() {
             $("#erro").hide(500)
             $("#waiting").hide(500)
         }
-        $(function () {
-            var width = $(window).width();
-            var height = $(window).height();
-            if (width <= 730 || height <= 528) {
-                var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-                var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-                $("html, body").css({ "width": w, "height": h });
-            }
-        });
-        $('#login').mask('00000000000');
-        floatingLabel.init();
-
-        comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "82%");
-        comoCriar.setScroll(true)
-        comoCriar.invoker()
-        esqueciSenha = new Popup("esqueciSenha", "../modulos/login/esqueciSenha", "Esqueci minha senha", "500px", "460px");
-        esqueciSenha.setScroll(false)
-        esqueciSenha.setJS(true)
-        esqueciSenha.invoker()
     </script>
 </body>
+
 </html>

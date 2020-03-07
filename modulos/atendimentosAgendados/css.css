@@ -8,10 +8,6 @@
     overflow-x: auto;
 }
 
-.estadoTabela {
-    width: 150px !important;
-}
-
 thead {
     background: rgb(74, 80, 88);
     color: white;

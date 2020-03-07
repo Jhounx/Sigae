@@ -1,6 +1,7 @@
 class Popup {
 
-    name; file; largura; altura; titulo; css; js; scroll; html;
+    // name; file; largura; altura; titulo; css; js; scroll; html;
+
     constructor(name, file, titulo, largura, altura) {
         this.name = name;
         this.file = file;
@@ -19,6 +20,10 @@ class Popup {
 
     setScroll(boolean) {
         this.scroll = boolean;
+    }
+
+    setTitle(titulo) {
+        this.titulo = titulo
     }
 
     invoker() {
@@ -41,7 +46,8 @@ class Popup {
     }
 
     show() {
-        var classe = this;
+        var classe = this, alturaScroll;
+        alturaScroll = $('body').scrollTop();
         Swal.fire({
             title: '<img src="../icones/sigae.svg" width="150" height="91"><br><h1 class="tituloPopup" style="font-size: 18px">' + this.titulo + '</h1>',
             animation: false,
@@ -51,11 +57,13 @@ class Popup {
             showConfirmButton: false,
             allowEnterKey: false,
             onOpen: function() {
+                $("body").scrollTop(alturaScroll);
                 if (classe.js == true) {
                     window["init_" + classe.name]()
                 }
             },
             onClose: function() {
+                $("body").animate({ scrollTop: alturaScroll }, 100);
                 try {
                     selectAtual()
                     window["close_" + classe.name]()

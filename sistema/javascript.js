@@ -7,7 +7,11 @@ function init() {
 function initMaterialize() {
     $(".side-nav.fixed").css("display", "block");
     $(".button-collapse").sideNav({
+        onOpen: function() {
+            $("body").addClass("noScrollSide")
+        },
         onClose: function () {
+            $("body").removeClass("noScrollSide")
             $(".hamburger").removeClass('is-active');
             $(".footer").css('display', "block");
         },

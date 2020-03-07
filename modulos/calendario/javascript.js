@@ -2,7 +2,8 @@ var ano;
 
 /* Filtros */
 
-var filtroLivre, filtroCampus, filtroTurma, filtroDisciplina, filtroProfessor, filtroHorario
+var filtroLivre, filtroCampus, filtroTurma, filtroDisciplina, filtroProfessor, filtroHorario,
+    diaP, mesP, anoP
 
 function init_calendario() {
     anoAtual()
@@ -15,6 +16,19 @@ function popups() {
     filtroCalendario.setCss(true)
     filtroCalendario.setJS(true)
     filtroCalendario.invoker()
+
+    diaPopup = new Popup("diaPopup", "../modulos/diaPopup", "Dia: null", "700px", "98%");
+    diaPopup.setScroll(true)
+    diaPopup.setCss(true)
+    diaPopup.setJS(true)
+    diaPopup.invoker()
+}
+
+function invokerDia(d, m, a) {
+    diaP = d
+    mesP = m
+    anoP = a
+    diaPopup.show()
 }
 
 function renderCalendario(ano) {

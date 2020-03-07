@@ -2,7 +2,7 @@ var arrayModulos = [], moduloAtual;
 
 class Modulo {
 
-    id; pasta; titulo; icone; css; js; linha;
+    // id; pasta; titulo; icone; css; js; linha;
 
     constructor(id, pasta, titulo, icone, css, js, linha) {
         this.id = id;

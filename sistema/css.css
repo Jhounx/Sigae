@@ -1,12 +1,10 @@
 body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
+    height: 100%;
+    overflow-y: scroll !important;
 }
 
 html {
-    height: 100%;
-}
-
-body {
     height: 100%;
 }
 
@@ -385,6 +383,10 @@ main {
     color: grey;
 }
 
+#dropdownConsole {
+    width: 200px !important;
+}
+
 /* MISC */
 
 @font-face {
@@ -417,4 +419,8 @@ main {
 
 label {
     margin-bottom: 0px;
+}
+
+.noScrollSide {
+    overflow: hidden !important;
 }

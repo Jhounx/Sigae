@@ -1,0 +1,235 @@
+/* default */
+body {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(241, 242, 243);
+}
+
+.tudo {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+    display: flex;
+    flex-flow: column;
+}
+
+.linha {
+    width: 600px;
+}
+
+.topo {
+    height: 200px;
+}
+
+.titulo {
+    font-size: 22px;
+    color: rgb(59, 59, 75);
+    text-align: center;
+}
+
+.parte1 {
+    margin-top: 180px;
+    flex-grow : 1;
+}
+
+.parte2 {
+    margin-top: 90px;
+    display: none;
+    flex-grow : 1;
+}
+
+.parte3 {
+    margin-top: 90px;
+    display: none;
+    flex-grow : 1;
+}
+
+.parte4 {
+    margin-top: 150px;
+    display: none;
+    flex-grow : 1;
+}
+
+/* parte 1 */
+
+.contentChave {
+    width: 320px;
+}
+
+.inputChave {
+    width: 100%;
+}
+
+.btnChave {
+    width: 100%;
+    color: white !important;
+}
+
+.waiting {
+    display: none;
+    margin-top: 25px;
+}
+
+.erro {
+    display: none;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.alert-danger {
+    width: 100%;
+}
+
+.close:focus {
+    outline: none;
+    background-color: transparent !important;
+}
+
+.alert {
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: rgb(59, 59, 75);
+    color: rgb(241, 242, 243);
+    border-color: rgb(59, 59, 75)
+}
+
+/* Parte 2 */
+
+.parte2Painel {
+    display: inline-flex;
+}
+
+.vcE {
+    text-align: center;
+    font-size: 28px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.parte2Esquerda {
+    float: left;
+    margin-left: 5px;
+}
+
+.parte2Direita {
+    float: right;
+}
+
+.perguntaInfo {
+    font-size: 22px;
+    margin-right: 12px;
+    margin-left: 3px;
+}
+
+.perguntaResp {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.btn-confirmar {
+    color: white !important;
+    width: 95%;
+    margin-top: 10px;
+    text-transform: unset !important;
+}
+
+.linhaBotao {
+    margin-bottom: 0px !important;
+}
+
+.input-field {
+    width: 100% !important;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.msgInputError {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    color: crimson;
+    text-align: left;
+    width: 100%;
+}
+
+.baixo {
+    height: 120px;
+}
+
+/* Parte 4 */
+
+.emailTexto {
+    font-size: 24px;
+    color: rgb(59, 59, 75);
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: left;
+}
+
+.estadoMSG {
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    font-size: 23px;
+}
+
+.linhabotoes {
+    margin-bottom: 0px;
+    width: 50%;
+}
+
+/* footer */
+
+.footer {
+    width: 100% !important;
+    height: 150px !important;
+    background-color: rgb(74, 80, 88) !important;
+    position: relative;
+}
+
+.footerLinha {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 50px;
+}
+
+.copyright-titulo {
+    font-size: 20px;
+    color: rgb(151, 176, 235);
+    margin-top: 35px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.copyright {
+    font-size: 17px;
+    color: aliceblue;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+.versao {
+    font-size: 16px;
+    color: rgb(151, 176, 235);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.linkFooter {
+    color: rgb(68, 221, 104);
+    transition: color 300ms;
+}
+
+.linkFooter:hover {
+    color: rgb(40, 167, 69);
+}
+
+#linkFooter2,
+#brTitulo {
+    display: none;
+}

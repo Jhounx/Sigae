@@ -1,0 +1,255 @@
+<html>
+
+<head>
+    <title>SiGAÊ - IFBA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Pedro Cerqueira Mota, João Costa Neto, Rafael Requião" />
+    <link rel="stylesheet" href="../componentes/APIs/bootstrap.min.css">
+    <link rel="stylesheet" href="../componentes/APIs/materialize.min.css">
+    <link rel="stylesheet" href="./css.css">
+    <link rel="stylesheet" href="../componentes/popup.css">
+    <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="../componentes/loading.css">
+    <link rel="icon" href="../icones/si.png">
+    <link rel="stylesheet" href="../componentes/APIs/icon.css">
+    <script src="../componentes/APIs/jquery.min.js"></script>
+    <script src="../componentes/APIs/sweetalert2@8.js"></script>
+    <script src="../componentes/APIs/floatingLabel.js"></script>
+    <script src="../componentes/APIs/popper.min.js"></script>
+    <script src="../componentes/APIs/bootstrap.min.js"></script>
+    <script src="../componentes/APIs/jquery.mask.min.js"></script>
+    <script src="./javascript.js"></script>
+    <script src="./validacao.js"></script>
+    <script src="../componentes/Popup.js"></script>
+    <script src="../componentes/Misc.js"></script>
+    <script src="../componentes/APIs/materialize.min.js"></script>
+</head>
+
+<body style="overflow: hidden !important;">
+    <div class="tudo">
+        <div class="topo">
+            <div class="row justify-content-center">
+                <img src="../icones/sigae.svg">
+            </div>
+            <h1 class="titulo">Registrar usuário - <b id="partes">Parte 1</b></h1>
+        </div>
+        <div class="parte1 parte">
+            <div class="row justify-content-center">
+                <div class="contentChave">
+                    <div class="input-field inputChave">
+                        <input id="campoChave" type="text">
+                        <label for="campoChave">Digite sua chave de acesso</label>
+                    </div>
+                    <a class="waves-effect waves-light btn btnChave" onclick="verificarChave()">Próxima etapa</a>
+                    <div class="waiting" id="waiting">
+                        <div class="row justify-content-center">
+                            <div class="spinner-border text-secondary" id="spinner-login" role="status"></div>
+                        </div>
+                    </div>
+                    <div class="erro" id="erro">
+                        <div class="row justify-content-center">
+                            <div id="alert-login" class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
+                                <h8 style="text-align:center">Desculpe, esse código é inválido</h8>
+                                <button type="button" class="close" onclick="main();">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="parte2 parte">
+            <div class="row justify-content-center">
+                <div>
+                    <h2 class="vcE">Verifique seus dados pessoais</h2>
+                    <div class="parte2Painel">
+                        <div class="parte2Esquerda">
+                            <h2 class="perguntaInfo" id="perg1">Nome: </h2>
+                            <h2 class="perguntaInfo" id="perg2">Matrícula: </h2>
+                            <h2 class="perguntaInfo" id="perg3">Curso: </h2>
+                            <h2 class="perguntaInfo" id="perg4">Turma: </h2>
+                        </div>
+                        <div class="parte2Direita">
+                            <h2 class="perguntaResp" id="resp1">Pedro Henrique Cerqueira Mota</h2>
+                            <h2 class="perguntaResp" id="resp2">20190058123</h2>
+                            <h2 class="perguntaResp" id="resp3">Automação Industrial (Integrado)</h2>
+                            <h2 class="perguntaResp" id="resp4">5812</h2>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row justify-content-center linhaBotao">
+                        <a class="waves-effect waves-light btn btn-confirmar" onclick="irParte3()">Tudo está correto</a>
+                    </div>
+                    <div class="row justify-content-center linhaBotao">
+                        <a class="waves-effect waves-light btn btn-confirmar" onclick="irParte1()">Algo está errado</a>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function (event) {
+                            definirVersao()
+                        });
+                        $(window).on('resize', function () {
+                            resizer()
+                        });
+                        function resizer() {
+                            $("#perg1").height($("#resp1").outerHeight())
+                            $("#perg2").height($("#resp2").outerHeight())
+                            $("#perg3").height($("#resp3").outerHeight())
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="parte3 parte">
+            <form id="formValidate">
+                <div class="row justify-content-center linha">
+                    <div class="alert alert-primary">
+                        <li>Informações pessoais</li>
+                        <br>
+                        Estas informações não podem ser alteradas pelo usuário.
+                    </div>
+                    <div>
+                        <div class="parte2Painel">
+                            <div class="parte2Esquerda">
+                                <h2 class="perguntaInfo" id="perg5">Nome: </h2>
+                                <h2 class="perguntaInfo" id="perg6">Matrícula: </h2>
+                                <h2 class="perguntaInfo" id="perg7">Curso: </h2>
+                            </div>
+                            <div class="parte2Direita">
+                                <h2 class="perguntaResp" id="resp5">Pedro Henrique Cerqueira Mota</h2>
+                                <h2 class="perguntaResp" id="resp6">20190058123</h2>
+                                <h2 class="perguntaResp" id="resp7">Automação Industrial (Integrado)</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center linha">
+                    <div class="alert alert-primary">
+                        <li>Abreviação do nome</li>
+                        <br>
+                        Essa configuração define a abreviação do seu nome.
+                        Seu nome aparecerá com essa abreviação na maioria das vezes.
+                    </div>
+                    <div class="input-field inputSelectNome">
+                        <select class="selectNome">
+                            <option value="" disabled selected>Escolha uma opção</option>
+                        </select>
+                        <label>Abreviação do nome</label>
+                    </div>
+                    <label class="msgInputError" id="erro1"></label>
+                </div>
+                <div class="row justify-content-center linha">
+                    <div class="alert alert-primary">
+                        <li>E-mail</li>
+                        <br>
+                        O SiGAÊ enviará e-mails para a conta, informando a situação dos atendimentos, essa opção pode ser desativada posteriormente.
+                        <br>
+                        O e-mail também servirá para recuperar a conta caso haja perda de senha
+                    </div>
+                    <div class="input-field">
+                        <input id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')">
+                        <label for="email">E-mail</label>
+                    </div>
+                    <label class="msgInputError" id="erro2"></label>
+                </div>
+                <div class="row justify-content-center linha">
+                    <div class="alert alert-primary">
+                        <li>Senha</li>
+                        <br>
+                        Digite uma senha que contenha entre 6 e 30 caracteres:
+                    </div>
+                    <div class="input-field">
+                        <input id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha1')">
+                        <label for="senha1">Senha</label>
+                    </div>
+                    <label class="msgInputError" id="erro3"></label>
+                    <div class="input-field">
+                        <input id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha2')">
+                        <label for=" senha2">Senha</label>
+                    </div>
+                    <label class="msgInputError" id="erro4"></label>
+                </div>
+                <div class="row justify-content-center linha">
+                    <a class="waves-effect waves-light btn btn-confirmar" onclick="irParte4()">Finalizar registro</a>
+                </div>
+                <div class="baixo">
+                    <div class="waiting" id="waiting2">
+                        <div class="row justify-content-center">
+                            <div class="spinner-border text-secondary" id="spinner-login2" role="status"></div>
+                        </div>
+                    </div>
+                    <div class="erro" id="erro2">
+                        <div class="row justify-content-center">
+                            <div id="alert-login2" class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
+                                <h8 style="text-align:center">Desculpe, algo deu errado. Tente novamente mais tarde</h8>
+                                <button type="button" class="close" onclick="main();">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(window).on("resize", function () {
+                        resizer()
+                    });
+
+                    function resizer() {
+                        $("#perg5").height($("#resp5").outerHeight())
+                        $("#perg6").height($("#resp6").outerHeight())
+                        $("#perg7").height($("#resp7").outerHeight())
+                        $("#perg8").height($("#resp8").outerHeight())
+                    }
+                    names = nomes($("#resp5").text())
+                    for (var i = 0; i < names.length; i++) {
+                        $(".selectNome").append("<option>" + names[i] + "</option>")
+                    }
+
+                    $(".selectNome").material_select();
+                    $('.selectNome').click(function (event) {
+                        event.stopPropagation();
+                    });
+                </script>
+            </form>
+        </div>
+        <div class="parte4 parte">
+            <div class="row justify-content-center">
+                <div>
+                    <div class="emailTexto">
+                        Por motivos de segurança precisamos validar o seu endereço de e-mail.
+                        <br> Enviaremos em instantes uma mensagem para <b id="emailParte4">pedrocmota1@hotmail.com</b></br> contendo informações para concluir o processo de registro de usuário
+                    </div>
+                    <hr style="margin-left: 10px;margin-right: 10px;">
+                    <div class="estadoMSG">Estado da mensagem: <b>Enviando...</b></div>
+                    <div class="row justify-content-center linhabotoes">
+                        <a class="waves-effect waves-light btn btn-confirmar" onclick="reenviarEmail()">Reenviar mensagem</a>
+                    </div>
+                    <div class="row justify-content-center linhabotoes">
+                        <a class="waves-effect waves-light btn btn-confirmar" onclick="cancelarInscricao()">Começar inscrição novamente</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="row justify-content-center footerLinha">
+                <h4 class="copyright-titulo">Sistema de Gerenciamento de<br id="brTitulo"> Atendimento ao Estudante</h4>
+            </div>
+            <div class="row justify-content-center footerLinha">
+                <h4 class="copyright">© 2020 SiGAÊ | Desenvolvimento:
+                    <a class="linkFooter" id="linkFooter1" href="https://portal.ifba.edu.br/" target="_blank">Instituto Federal da Bahia</a>
+                    <a class="linkFooter" id="linkFooter2" href="https://portal.ifba.edu.br/" target="_blank">IFBA</a></p>
+                </h4>
+            </div>
+            <div class="row justify-content-center footerLinha">
+                <h6 class="versao">null</h6>
+            </div>
+        </footer>
+    </div>
+    <script>
+        init()
+    </script>
+</body>
+
+</html>
