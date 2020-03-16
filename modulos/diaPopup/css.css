@@ -14,6 +14,11 @@
     padding-bottom: 6px !important;
     color: #595959 !important;
     font-weight: 600 !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .textoAtendimento {
@@ -32,8 +37,7 @@
 }
 
 .icone-popupDia {
-    /* height: 100%; */
-    /* display: flex !important; */
+    transition: all 0.2s ease;
     align-items: center !important;
     margin-right: 4px !important;
 }

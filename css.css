@@ -116,6 +116,11 @@ button:focus {
     margin-top: 8px;
 }
 
+.expirado {
+    color: white;
+    font-size: 16px;
+}
+
 /*campos */
 
 .divInput {

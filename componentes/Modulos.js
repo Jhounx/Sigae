@@ -126,8 +126,6 @@ function removeAllSelection() {
 
 class Linha {
 
-    // id; titulo; icone; conjunto; conjuntoNumero; action;
-
     constructor(titulo, icone, conjunto, action) {
         linhas++;
         this.id = linhas;
@@ -227,8 +225,6 @@ class Linha {
 }
 
 class Node {
-
-    // id; titulo; icone; conjunto; isOpen = false;
 
     constructor(titulo, icone) {
         var isOpen = false;

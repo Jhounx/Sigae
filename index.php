@@ -1,3 +1,11 @@
+<?php
+include("./back-end/logar.php");
+session_name("sessao");
+session_start();
+if (isset($_SESSION["permissaoSistema"])) {
+    header("location: ../sistema");
+}
+?>
 <html>
 
 <head>
@@ -18,6 +26,7 @@
     <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
+    <script src="../componentes/APIs/param.js"></script>
     <script src="./javascript.js"></script>
     <script src="./componentes/Popup.js"></script>
     <script src="./componentes/request.js"></script>
@@ -48,13 +57,13 @@
         <form class="form">
             <div class="row justify-content-center linha1">
                 <div class="divInput">
-                    <label for="login">Sua matrícula</label>
+                    <label id="login-label" for="login">Sua matrícula</label>
                     <input type="number" class="campo" id="login" placeholder="Sua matrícula" spellcheck="false" autocomplete="off">
                 </div>
             </div>
             <div class="row justify-content-center linha2">
                 <div class="divInput">
-                    <label for="senha">Sua senha</label>
+                    <label id="senha-label" for="senha">Sua senha</label>
                     <input type="password" class="campo" id="senha" placeholder="Sua senha" spellcheck="false" autocapitalize="none">
                 </div>
             </div>
@@ -89,6 +98,7 @@
             setTimeout(function() {
                 $(".divCarregamento").fadeOut(500);
                 $(".centro").fadeIn(500);
+                expirado()
             }, 500);
         }
         init()
@@ -99,29 +109,58 @@
         senha.img("senha")
 
         function logar() {
-            $("#erro").hide()
-            $("#waiting").show()
-            request = new Request(null)
-            request.add("login", $("#login").val())
-            request.add("senha", $("#senha").val())
-            request.send("POST", "logarResposta")
-        }
-
-        function logarResposta(resposta) {
-            if(resposta == "-1") {
-                $(".erroTexto").text("Erro ao efeturar login")
+            loginstr = $("#login").val()
+            senhastr = $("#senha").val()
+            if (loginstr != "" & senhastr != "") {
+                $("#erro").hide()
+                $("#waiting").show()
+                request = new Request()
+                request.add("login", loginstr)
+                request.add("senha", senhastr)
+                esperado = ["CON", "MAT", "SEN", "REG", "INA"] /* JÁ ESTA LOGADO, CONSEGUIU LOGAR, MATRICULA ERRADA, SENHA ERRADA, NAO CONFIRMOU REGISTRO, CONTA INATIVA */
+                request.send("POST", esperado, (resultado) => {
+                    $("#waiting").hide()
+                    $("#erro").show()
+                    if (resultado == undefined) {
+                        $(".erroTexto").text("Erro grave: Requisição falha")
+                    } else {
+                        resposta = resultado.resposta;
+                        erro = resultado.erro;
+                        if (resposta != null) {
+                            if (resposta == "INA") {
+                                $(".erroTexto").text("Essa conta está inativa")
+                                $("#erro").show()
+                            }
+                            if (resposta == "REG") {
+                                $("#erro").hide()
+                                window.location.href = "./registrar";
+                            }
+                            if (resposta == "MAT") {
+                                $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
+                                $("#erro").show()
+                            }
+                            if (resposta == "SEN") {
+                                $(".erroTexto").text("Sua senha está incorreta. Confira-a")
+                                $("#erro").show()
+                            }
+                            if (resposta == "CON") {
+                                $("#erro").hide()
+                                window.location.href = "./sistema";
+                            }
+                        } else {
+                            $(".erroTexto").text("Erro grave: Requisição confusa")
+                            alert(erro)
+                        }
+                    }
+                });
+            } else {
+                if (loginstr == "") {
+                    login.erro()
+                }
+                if (senhastr == "") {
+                    senha.erro()
+                }
             }
-            if(resposta == 0) {
-                $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
-            }
-            if(resposta == 1) {
-                $(".erroTexto").text("Sua senha está incorreta. Confira-a")
-            }
-            if(resposta == 2) {
-                
-            }
-            $("#waiting").hide()
-            $("#erro").show()
         }
 
         function main() {

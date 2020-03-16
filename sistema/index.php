@@ -1,5 +1,15 @@
 <?php
-
+include("../back-end/logar.php");
+session_name("sessao");
+session_start();
+if (isset($_GET["finalizarSessao"])) {
+    logout();
+    header("location: ../");
+}
+if (isset($_SESSION["permissaoSistema"])) {
+} else {
+    header("location: ../?expirado=true");
+}
 ?>
 <html>
 

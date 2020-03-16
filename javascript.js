@@ -4,7 +4,7 @@ function init() {
             $("#senha").focus();
         }
     });
-    $('#login').mask('00000000000');
+    $("#login").mask("00000000000");
     floatingLabel.init();
     comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "82%");
     comoCriar.setScroll(true)
@@ -48,9 +48,23 @@ function mainEmail() {
     $("#waitingEmail").hide()
 }
 
-class Campo {
+function expirado() {
+    var parametro = get_parametro("expirado")
+    if (parametro != undefined) {
+        Swal.fire({
+            position: 'top-end',
+            html: '<h2 class="expirado">Sua sessão é inválida ou já foi expirada</h2>',
+            width: '350px',
+            showConfirmButton: false,
+            timer: 4000,
+            backdrop: `transparent`,
+            background: 'rgb(50, 50, 50)'
+        })
+        window.history.pushState("", "", "./");
+    }
+}
 
-    // input; enterClick; enterComponent
+class Campo {
 
     constructor(input, enterClick, enterComponent) {
         this.input = input;
@@ -72,12 +86,22 @@ class Campo {
     }
 
     img(img) {
+        var classe = this
         var input = this.input
         $(input).focus(function () {
             $(input).css("background-image", "url(./icones/" + img + ".png)");
+            classe.removeErro()
         });
         $(input).focusout(function () {
             $(input).css("background-image", "url(./icones/" + img + "-disable.png)");
         });
+    }
+
+    erro() {
+        $(this.input).attr("style", "border: 1px solid rgb(220, 20, 60) !important");
+    }
+
+    removeErro() {
+        $(this.input).css("border", "");
     }
 }
