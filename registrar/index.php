@@ -1,7 +1,3 @@
-<?php
-session_name("sessao");
-session_start();
-?>
 <html>
 
 <head>
@@ -17,11 +13,8 @@ session_start();
     <link rel="stylesheet" href="../componentes/loading.css">
     <link rel="icon" href="../icones/si.png">
     <link rel="stylesheet" href="../componentes/APIs/icon.css">
-    <link rel="stylesheet" href="../componentes/APIs/icon.css">
     <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
-    <script src="../componentes/APIs/floatingLabel.js"></script>
-    <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
     <script src="../componentes/APIs/param.js"></script>
@@ -189,14 +182,7 @@ session_start();
                         <label class="msgInputError" id="erro6"></label>
                     </div>
                     <div class="row justify-content-center linha">
-                        <a class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="tentarInscreverUsuario()">Finalizar registro</a>
-                    </div>
-                    <div class="baixo">
-                        <div class="waiting" id="waiting2">
-                            <div class="row justify-content-center">
-                                <div class="spinner-border text-secondary" id="spinner-login2" role="status"></div>
-                            </div>
-                        </div>
+                        <a class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="inscreverUsuario()">Finalizar registro</a>
                     </div>
                     <script>
                         $(window).on("resize", function() {
@@ -204,10 +190,10 @@ session_start();
                         });
 
                         function resizer() {
-                            $("#perg5").height($("#resp5").outerHeight())
-                            $("#perg6").height($("#resp6").outerHeight())
-                            $("#perg7").height($("#resp7").outerHeight())
-                            $("#perg8").height($("#resp8").outerHeight())
+                            $("#perg1").height($("#resp1").outerHeight())
+                            $("#perg2").height($("#resp2").outerHeight())
+                            $("#perg3").height($("#resp3").outerHeight())
+                            $("#perg4").height($("#resp4").outerHeight())
                         }
                     </script>
                 </form>
@@ -223,10 +209,10 @@ session_start();
                         <hr>
                         <h2 class="emailTexto">Confira sua caixa de e-mails, incluíndo o lixo</h2>
                         <div class="row justify-content-center" style="margin-top:40px;margin-bottom: 5px;">
-                            <a class="waves-effect waves-light btn btn-parte4" id="botaoReeenviar" onclick="">Enviar E-mail novamente</a>
+                            <a class="waves-effect waves-light btn btn-parte4" id="botaoReeenviar" onclick="enviarEmailConfirmação(true)">Enviar E-mail novamente</a>
                         </div>
                         <div class="row justify-content-center">
-                            <a class="waves-effect waves-light btn btn-parte4" id="botaoCancelar" onclick="">Refazer minha inscrição</a>
+                            <a class="waves-effect waves-light btn btn-parte4" id="botaoCancelar" onclick="refazerInscrição()">Refazer minha inscrição</a>
                         </div>
                     </div>
                 </div>
@@ -250,8 +236,7 @@ session_start();
     <script>
         window.onload = function() {
             setTimeout(function() {
-                $(".divCarregamento").fadeOut(500);
-                $(".sistema").fadeIn(1800);
+                sairCarregamento()
                 init()
             }, 500);
         }

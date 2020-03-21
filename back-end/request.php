@@ -43,7 +43,7 @@ if (isset($_GET["registrarUsuario"]) &&
     isset($_GET["senha"]) &&
     isset($_GET["turma"]) &&
     isset($_GET["disciplinas"])) {
-        verificarSessao(["registro"]);
+        verificarSessao(["permissaoRegistro"]);
         require("./registro.php");
         $id = proteger($_GET["id"]);
         $nomePreferencial = proteger($_GET["nomePreferencial"]);
@@ -52,6 +52,23 @@ if (isset($_GET["registrarUsuario"]) &&
         $turma = proteger($_GET["turma"]);
         $disciplinas = proteger($_GET["disciplinas"]);
         echo(registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $disciplinas));
+}
+
+/* Cancelar registro */
+if (isset($_GET["cancelarInscricao"]) && isset($_GET["id"])) {
+    verificarSessao(["permissaoRegistro"]);
+    require("./registro.php");
+    $id = proteger($_GET["id"]);
+    echo (cancelarInscricao($id));
+}
+
+/* Verificar se o registro acabou */
+
+if (isset($_GET["registroAcabou"]) && isset($_GET["id"])) {
+    require("./registro.php");
+    verificarSessao(["permissaoRegistro"]);
+    $id = proteger($_GET["id"]);
+    echo (registroAcabou($id));
 }
 
 ##################################################

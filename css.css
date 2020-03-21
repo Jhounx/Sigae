@@ -116,9 +116,26 @@ button:focus {
     margin-top: 8px;
 }
 
+/* Alertas */
+
+.divContainer {
+    display: inline-flex;
+}
+
 .expirado {
     color: white;
     font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.iconeOk {
+    margin-bottom: 20px;
+    font-size: 35px;
+}
+
+.iconeErro {
+    margin-bottom: 10px;
+    font-size: 35px;
 }
 
 /*campos */

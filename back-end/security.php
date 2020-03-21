@@ -7,20 +7,22 @@ function proteger($string) {
 
 function verificarSessao($permissoes) {
     if($GLOBALS["debug"] == false) {
-        session_name("sessao");
-        session_start();
+        if(!isset($_SESSION)) {
+            session_name("sessao");
+            session_start();
+        }
         if(isset($_GET["id"])) {
             $id = proteger($_GET["id"]);
-            $setou = false;
+            $setou = 0;
             for ($i = 0; $i < count($permissoes); $i++) {
                 $perm = $permissoes[$i];
                 if(isset($_SESSION[$perm])) {
                     if($_SESSION[$perm] == $id) {
-                        $setou = true;
+                        $setou = 1;
                     }
                 }
             }
-            if($setou == false) {
+            if($setou == 0) {
                 echo "Requisição negada! Não há uma sessão armazenada nesse dispositivo";
                 die();
             }
@@ -29,4 +31,9 @@ function verificarSessao($permissoes) {
             die();
         }
     }
+}
+
+function mysqli_exist($query) {
+    $numeroLinha = mysqli_num_rows($query);
+    return $numeroLinha > 0;
 }

@@ -3,11 +3,16 @@ class Request {
     constructor() {
         this.parans = []
         this.values = []
+        this.url = "../back-end/request.php";
     }
 
     add(param, value) {
         this.parans.push(param);
         this.values.push(value)
+    }
+
+    setURL(value) {
+        this.url = value;
     }
 
     send(requestType, esperado, callback) {
@@ -16,7 +21,7 @@ class Request {
             dados[this.parans[i]] = this.values[i];
         }
         $.ajax({
-            url: "../back-end/request.php",
+            url: this.url,
             type: requestType,
             async: true,
             data: dados,

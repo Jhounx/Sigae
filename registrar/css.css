@@ -5,6 +5,7 @@ body {
     background-color: rgb(241, 242, 243);
 }
 
+
 .sistema {
     width: 100%;
     height: 100%;
@@ -18,6 +19,10 @@ body {
     overflow-y: auto !important;
     overflow-x: hidden;
     display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     flex-flow: column;
 }
 
@@ -37,7 +42,11 @@ body {
 
 .parte1 {
     margin-top: 180px;
-    flex-grow: 1;
+    -webkit-box-flex: 1 0 auto;
+    -moz-box-flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .parte2 {
@@ -205,28 +214,6 @@ body {
     text-transform: unset !important;
 }
 
-/* .emailTexto {
-    font-size: 24px;
-    color: rgb(59, 59, 75);
-    margin-left: 10px;
-    margin-right: 10px;
-    text-align: left;
-}
-
-.estadoMSG {
-    text-align: center;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 30px;
-    font-size: 23px;
-}
-
-.linhabotoes {
-    margin-bottom: 0px;
-    width: 50%;
-} */
-
 /* footer */
 
 .footer {
@@ -287,11 +274,11 @@ body {
 }
 
 li.optgroup:hover {
-    background-color: rgba(0,0,0,0.0) !important;
+    background-color: rgba(0, 0, 0, 0.0) !important;
 }
 
 
-.optgroup > * {
+.optgroup>* {
     min-height: 35px !important;
     height: 35px !important;
     padding: 0px !important;
@@ -303,7 +290,7 @@ li.optgroup:hover {
     height: 35px !important;
 }
 
-.optgroup-option > * {
+.optgroup-option>* {
     min-height: 35px !important;
     height: 35px !important;
     padding: 0px !important;
@@ -318,7 +305,19 @@ li.optgroup:hover {
     color: crimson;
 }
 
+.toast-ok {
+    color: rgb(14, 141, 14);
+}
+
 .toastTexto,
 .toast-action {
     white-space: nowrap;
+}
+
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+}
+
+.swal-button:focus {
+    box-shadow: none;
 }

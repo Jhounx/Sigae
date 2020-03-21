@@ -1,0 +1,34 @@
+.msgInputError {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    color: crimson;
+    text-align: left;
+    width: 100%;
+}
+
+.swal2-content {
+    padding-right: 0px !important;
+
+}
+.btn-confirmar {
+    color: white !important;
+    width: 90%;
+    margin-top: 10px;
+    text-transform: unset !important;
+    position: absolute;
+    bottom: 0px;
+    margin-bottom: 10px;
+}
+
+.toastTexto {
+    margin-left: 8px;
+}
+
+.toast-erro {
+    color: crimson;
+}
+
+.toast-ok {
+    color: rgb(14, 141, 14);
+}

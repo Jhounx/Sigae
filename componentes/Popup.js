@@ -8,6 +8,9 @@ class Popup {
         this.titulo = titulo;
         this.largura = largura;
         this.altura = altura;
+        this.botao = true;
+        this.path = "../icones/sigae.svg";
+        this.clickOut = true;
     }
 
     setCss(boolean) {
@@ -24,6 +27,18 @@ class Popup {
 
     setTitle(titulo) {
         this.titulo = titulo
+    }
+
+    setImgPath(path) {
+        this.imgPath = path;
+    }
+
+    setBotao(boolean) {
+        this.botao = boolean;
+    }
+
+    clicarFora(boolean) {
+        this.clickOut = boolean;
     }
 
     invoker() {
@@ -49,12 +64,13 @@ class Popup {
         var classe = this, alturaScroll;
         alturaScroll = $('body').scrollTop();
         Swal.fire({
-            title: '<img src="../icones/sigae.svg" width="150" height="91"><br><h1 class="tituloPopup" style="font-size: 18px">' + this.titulo + '</h1>',
+            title: '<img src="' + this.imgPath + '" width="150" height="91"><br><h1 class="tituloPopup" style="font-size: 18px">' + this.titulo + '</h1>',
             animation: false,
             cancelButtonText: 'Fechar',
-            showCancelButton: true,
+            showCancelButton: this.botao,
             cancelButtonColor: '#d33',
             showConfirmButton: false,
+            allowOutsideClick: this.clickOut,
             allowEnterKey: false,
             onOpen: function() {
                 $("body").scrollTop(alturaScroll);

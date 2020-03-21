@@ -17,14 +17,14 @@ function get_parametros() {
     if (url == window.location.origin + window.location.pathname) {
         url = url + "?"
     }
-    var parametros = (url.split('/?')[1]).split('&')
+    var parametros = (url.split('?')[1]).split('&')
     var json_parametros = {}
     for (coisa in parametros) {
         var coisa = parametros[coisa]
         var t = coisa.split('=')
         json_parametros[t[0]] = t[1]
     }
-    var parametros_puro = (url.split('/?')[1])
+    var parametros_puro = (url.split('?')[1])
     return [json_parametros, parametros_puro]
 }
 

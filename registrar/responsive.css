@@ -10,9 +10,9 @@
     }
 }
 
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 900px) {
     .parte1 {
-        margin-top: 100px;
+        margin-top: 80px;
     }
 }
 

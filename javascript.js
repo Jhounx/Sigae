@@ -48,19 +48,36 @@ function mainEmail() {
     $("#waitingEmail").hide()
 }
 
-function expirado() {
+function rightAlertas() {
     var parametro = get_parametro("expirado")
     if (parametro != undefined) {
         Swal.fire({
             position: 'top-end',
             html: '<h2 class="expirado">Sua sessão é inválida ou já foi expirada</h2>',
             width: '350px',
+            allowOutsideClick: false,
             showConfirmButton: false,
-            timer: 4000,
+            timer: 2000,
             backdrop: `transparent`,
             background: 'rgb(50, 50, 50)'
         })
         window.history.pushState("", "", "./");
+        return;
+    }
+    var parametro = get_parametro("reg")
+    if (parametro != undefined) {
+        Swal.fire({
+            position: 'top-end',
+            html: '<div style="display:inline-flex"><i class="material-icons iconeOk">add</i><h2 class="expirado">Sua conta foi registrada com sucesso!</h2></div>',
+            width: '350px',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            timer: 20000,
+            backdrop: `transparent`,
+            background: 'rgb(50, 50, 50)'
+        })
+        //window.history.pushState("", "", "./");
+        return;
     }
 }
 

@@ -15,6 +15,7 @@ if (isset($_SESSION["permissaoSistema"])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="Pedro Cerqueira Mota, João Costa Neto, Rafael Requião" />
     <link rel="stylesheet" href="../componentes/APIs/bootstrap.min.css">
+    <link rel="stylesheet" href="../componentes/APIs/icon.css">
     <link rel="stylesheet" href="./css.css">
     <link rel="stylesheet" href="../componentes/popup.css">
     <link rel="stylesheet" href="./responsive.css">
@@ -98,7 +99,7 @@ if (isset($_SESSION["permissaoSistema"])) {
             setTimeout(function() {
                 $(".divCarregamento").fadeOut(500);
                 $(".centro").fadeIn(500);
-                expirado()
+                rightAlertas()
             }, 500);
         }
         init()
