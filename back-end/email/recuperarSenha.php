@@ -1,3 +1,23 @@
+<?php 
+    //sleep(2);
+    require('../main.php');
+    require('../security.php');
+    if (isset($_GET['codigo'])) {
+        $codigo = proteger($_GET['codigo']);
+        $query = mysqli_query($conn, "SELECT * FROM codigos_email where valor='$codigo' and tipo = 'REC' limit 1");
+        if (!mysqli_exist($query)) {
+            echo "Código inválido";
+            die();
+        } else {
+            $array = mysqli_fetch_assoc($query);
+            $id = $array["id"];
+            addPermissao($id, "trocarSenha");
+        }
+    } else {
+        echo "Código inválido";
+        die();
+    }
+?>
 <html>
 <head>
     <title>SiGAÊ - Nova senha</title>
@@ -29,7 +49,7 @@
         }
     </style>
     <script>
-        id = get_parametro("codigo")
+        codigo = <?php echo "'$codigo';\n";?>
         recuperarSenha = new Popup("recuperarSenha", "../../modulos/login/recuperarSenha", "Digitar nova senha", null, "420px");
         recuperarSenha.setScroll(false)
         recuperarSenha.setCss(true)

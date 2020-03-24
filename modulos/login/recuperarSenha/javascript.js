@@ -54,37 +54,29 @@ function compararSenhas() {
     return false;
 }
 
-function perdeuFocus(comp) {
-    if (comp == "#senha1") {
-        validarSenha1()
-    }
-    if (comp == "#senha2") {
-        validarSenha2()
-    }
-}
-
-function verificarSenha() {
-    if (validarSenha1() == false & validarSenha2() == false) {
-        alert("pronto")
+function perdeuFocus() {
+    if(validarSenha1() | validarSenha2()) {
+        $("#botaoFinalizar").attr("disabled", true)
+    } else {
+        $("#botaoFinalizar").removeAttr("disabled")
     }
 }
 
 /* AJAX */
-
-function verificarSenha() {
+function enviarSenha() {
 
     $("#botaoFinalizar").addClass("disabled")
     request = new Request()
     request.add("trocarSenha", "")
-    request.add("codigo", id)
-    request.add("senha1", $("#senha1").val())
-    request.add("senha2", $("#senha2").val())
+    request.add("codigo", codigo)
+    request.add("senha", $("#senha1").val())
+    request.setURL("../../back-end/request.php")
     request.send("GET", ["OK"], (resultado) => {
         resposta = resultado.resposta;
         erro = resultado.erro;
         if (resposta != null) {
             if (resposta == "OK") {
-                //window.location.href = "./?id=" + jsonDados["key"];
+                window.location.href = "../../../?senhaTrocada=true";
             }
             if (resposta == "INV") {
                 dispararErro("Erro na requisição: ID inválido")

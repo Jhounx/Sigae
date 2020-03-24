@@ -127,6 +127,29 @@ body {
     margin-right: 6px;
 }
 
+.containerTipo {
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(74, 80, 88);
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+}
+
+.tipoParte2 {
+    font-size: 38px;
+    color: rgb(74, 80, 88);
+    text-align: center;
+    margin-top: 0px;
+}
+
+.tipo-icone {
+    color: rgb(74, 80, 88);
+    font-size: 34px !important;
+}
+
 .parte2Esquerda {
     float: left;
     margin-left: 5px;
@@ -140,11 +163,16 @@ body {
     font-size: 22px;
     margin-right: 12px;
     margin-left: 3px;
+    display:flex;
 }
 
 .perguntaResp {
     font-size: 22px;
     font-weight: bold;
+}
+
+.iconePerg {
+    margin-right: 5px;
 }
 
 .btn-confirmar {
@@ -167,8 +195,8 @@ body {
 
 .input-field {
     width: 100% !important;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .msgInputError {

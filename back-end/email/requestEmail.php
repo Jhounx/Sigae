@@ -13,6 +13,7 @@ if (isset($_GET['codigo'])) {
         $queryPessoaTexto = "
         UPDATE alunos SET estado = 'ATV' WHERE id='$id';
         UPDATE docentes SET estado = 'ATV' WHERE id='$id';
+        UPDATE admins SET estado = 'ATV' WHERE id='$id';
         DELETE FROM codigos_email WHERE id='$id'";
         if (mysqli_multi_query($conn, $queryPessoaTexto)) {
             header('Location: ../../?reg=true');
@@ -33,10 +34,11 @@ if (isset($_GET['emailValidacao']) && isset($_GET['id'])) {
 
     $id = proteger($_GET['id']);
     $queryPessoaTexto = "
-    select id, `nome.preferencia`, email, estado from alunos where id='$id' and estado='REG' 
+    select id, `nome.preferencia`, email, estado from alunos where id= '$id' and estado='REG'
     union
-    select id, `nome.preferencia`, email, estado from docentes
-    where id= '$id' and estado='REG'
+    select id, `nome.preferencia`, email, estado from docentes where id= '$id' and estado='REG'
+    union
+    select id, `nome.preferencia`, email, estado from admins where id= '$id' and estado='REG'
     limit 1";
     $queryPessoa = mysqli_query($conn, $queryPessoaTexto);
     if (mysqli_exist($queryPessoa)) {
@@ -73,26 +75,27 @@ if (isset($_GET['emailValidacao']) && isset($_GET['id'])) {
     }
 }
 
-if (isset($_GET['emailValidacao']) && isset($_GET['id'])) {
+if (isset($_GET['emailTrocarSenha']) && isset($_GET['email'])) {
     require('../main.php');
     require('../email/email.php');
     require('../misc.php');
     require('../security.php');
 
-    $id = proteger($_GET['id']);
+    $email = proteger($_GET['email']);
     $queryPessoaTexto = "
-    select id, `nome.preferencia`, email, senha, estado from alunos where id='$id' and estado='ATV' 
+    select id, `nome.preferencia`, email, estado from alunos where email='$email' and estado='ATV' 
     union
-    select id, `nome.preferencia`, email, senha, estado from docentes
-    where id= '$id' and estado='ATV'
+    select id, `nome.preferencia`, email, estado from docentes where email='$email' and estado='ATV'
+    union
+    select id, `nome.preferencia`, email, estado from admins where email='$email' and estado='ATV'
     limit 1";
     $queryPessoa = mysqli_query($conn, $queryPessoaTexto);
     if (mysqli_exist($queryPessoa)) {
         $arrayPessoa = mysqli_fetch_assoc($queryPessoa);
-        $email = $arrayPessoa['email'];
+        $id = $arrayPessoa['id'];
         $nome = $arrayPessoa['nome.preferencia'];
-
         $queryCodigosTexto = "SELECT * FROM codigos_email where id='$id' and tipo = 'REC' limit 1";
+
         $queryCodigo = mysqli_query($conn, $queryCodigosTexto);
         $array = mysqli_fetch_assoc($queryCodigo);
         if (mysqli_exist($queryCodigo)) {

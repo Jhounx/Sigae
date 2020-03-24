@@ -13,6 +13,12 @@ function init() {
     esqueciSenha.setScroll(false)
     esqueciSenha.setJS(true)
     esqueciSenha.invoker()
+
+    sobre = new Popup("sobre", "../modulos/sobre", "Sobre o SiGAÊ", "500px", "620px");
+    sobre.setCss(true)
+    sobre.setJS(true)
+    sobre.setScroll(true)
+    sobre.invoker()
     $(function () {
         var width = $(window).width();
         var height = $(window).height();
@@ -22,24 +28,6 @@ function init() {
             $("html, body").css({ "width": w, "height": h });
         }
     });
-}
-
-function enviarRecuperacao() {
-    $("#sucessoEmail").hide()
-    $("#erroEmail").hide()
-    $("#waitingEmail").show()
-    setTimeout(function () {
-        var email = $('#recuperarEmail').val();
-        if (email == "pedrocmota1@hotmail.com") {
-            $("#sucessoEmail").show()
-            $("#erroEmail").hide()
-            $("#waitingEmail").hide()
-        } else {
-            $("#sucessoEmail").hide()
-            $("#erroEmail").show()
-            $("#waitingEmail").hide()
-        }
-    }, 1000);
 }
 
 function mainEmail() {
@@ -53,13 +41,21 @@ function rightAlertas() {
     if (parametro != undefined) {
         Swal.fire({
             position: 'top-end',
-            html: '<h2 class="expirado">Sua sessão é inválida ou já foi expirada</h2>',
-            width: '350px',
+            html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeErro">lock</i><div class="expirado align-self-center">Sua sessão é inválida ou foi expirada!</div></div>',
+            width: '380px',
             allowOutsideClick: false,
             showConfirmButton: false,
             timer: 2000,
             backdrop: `transparent`,
-            background: 'rgb(50, 50, 50)'
+            background: 'rgb(50, 50, 50)',
+            onOpen: function () { 
+                $(".swal2-header").addClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").addClass("content2")
+            },
+            onClose: function() {
+                $(".swal2-header").removeClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").removeClass("content2")
+            }
         })
         window.history.pushState("", "", "./");
         return;
@@ -68,15 +64,46 @@ function rightAlertas() {
     if (parametro != undefined) {
         Swal.fire({
             position: 'top-end',
-            html: '<div style="display:inline-flex"><i class="material-icons iconeOk">add</i><h2 class="expirado">Sua conta foi registrada com sucesso!</h2></div>',
-            width: '350px',
+            html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeOk">done</i><div class="expirado align-self-center">Sua conta foi registrada com sucesso!</div></div>',
+            width: '380px',
             allowOutsideClick: false,
             showConfirmButton: false,
-            timer: 20000,
+            timer: 2000,
             backdrop: `transparent`,
-            background: 'rgb(50, 50, 50)'
+            background: 'rgb(50, 50, 50)',
+            onOpen: function () { 
+                $(".swal2-header").addClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").addClass("content2")
+            },
+            onClose: function() {
+                $(".swal2-header").removeClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").removeClass("content2")
+            }
         })
-        //window.history.pushState("", "", "./");
+        window.history.pushState("", "", "./");
+        return;
+    }
+    var parametro = get_parametro("senhaTrocada")
+    if (parametro != undefined) {
+        Swal.fire({
+            position: 'top-end',
+            html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeOk">done</i><div class="expirado align-self-center">Sua senha foi alterada com sucesso!</div></div>',
+            width: '380px',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            timer: 2000,
+            backdrop: `transparent`,
+            background: 'rgb(50, 50, 50)',
+            onOpen: function () { 
+                $(".swal2-header").addClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").addClass("content2")
+            },
+            onClose: function() {
+                $(".swal2-header").removeClass("header2")
+                $(".swal2-container.swal2-top-end.swal2-shown > div").removeClass("content2")
+            }
+        })
+        window.history.pushState("", "", "./");
         return;
     }
 }

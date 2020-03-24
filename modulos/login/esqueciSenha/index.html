@@ -2,11 +2,11 @@
     <div class="row justify-content-center" style="margin-top: 15px">
         <div class="divInput">
             <label for="recuperarEmail">Seu Email</label>
-            <input type="text" class="campo browser-default" id="recuperarEmail" placeholder="Seu Email" spellcheck="false" autocomplete="off" autocapitalize="none" disabled>
+            <input style="font-size: 15px" type="text" class="campo browser-default" id="recuperarEmail" placeholder="Seu Email" spellcheck="false" autocomplete="off" autocapitalize="none" disabled>
         </div>
     </div>
     <div class="row justify-content-center" style="margin-top: 12px">
-        <button type="button" onclick="enviarRecuperacao()" class="btn btn-success botaoLogin" id="botaoEnviarRecuperacao">Prosseguir</button>
+        <button disabled type="button" onclick="enviarEmail()" class="btn btn-success botaoLogin" id="botaoEnviarRecuperacao">Prosseguir</button>
     </div>
     <div id="waitingEmail" style="display: none; margin-top: 20px">
         <div class="row justify-content-center">

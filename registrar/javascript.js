@@ -166,7 +166,6 @@ function ajaxDadosParte2() {
                 } else {
                     jsonDisciplinas = resposta
                     $(".linhaDisciplina").removeAttr("style")
-                    var i = 1;
                     for (var disci in jsonDisciplinas) {
                         $(".selectDisciplinas").append("<option>" + jsonDisciplinas[disci] + "</option>")
                     }
@@ -182,6 +181,9 @@ function ajaxDadosParte2() {
                 alert(erro)
             }
         });
+    }
+    if (jsonDados["tipo"] == "ADM") {
+        renderizarParte2()
     }
 }
 
@@ -200,19 +202,22 @@ function renderizarParte2() {
     $("#resp2").text(jsonDados["matricula"])
     $("#resp3").text(jsonDados["curso"])
     if (jsonDados["tipo"] == "ALU") {
-        $("#resp3").text(jsonDados["curso"])
-        $("#resp4").text("Discente")
+        $(".tipoParte2").text("Aluno")
     }
     if (jsonDados["tipo"] == "DOC") {
-        $("#perg3, #resp3").hide()
-        $("#resp4").text("Docente")
+        $(".tipoParte2").text("Docente")
+        $("#perg3").hide()
+    }
+    if (jsonDados["tipo"] == "ADM") {
+        $(".tipoParte2").text("Administrador")
+        $("#perg3").hide()
     }
     $("#waiting").hide()
     $("#botaoConfirmar1").show()
     $("#botaoConfirmar2").show()
     $("#partes").text("Parte 2")
-    $(".parte1").hide()
-    $(".parte2").show()
+    $(".parte1").fadeOut(500)
+    $(".parte2").fadeIn(500)
     $(".parte3").hide()
     resizer()
     $(".btnChave").removeClass("disabled")
@@ -413,6 +418,7 @@ function verificarSempreVerificado() {
                     window.location.href = "../../?reg=true";
                 }
             } else {
+                this.alert(resposta)
                 dispararErro("Erro interno no sistema")
             }
         });

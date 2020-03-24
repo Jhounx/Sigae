@@ -76,24 +76,28 @@
             <div class="parte2 parte">
                 <form id="formValidate">
                     <div class="row justify-content-center linha">
-                        <div class="alert alert-primary">
-                            <li>Informações pessoais</li>
+                        <div>
+                            <div class="row justify-content-center linha">
+                                <div class="containerTipo">
+                                    <i class="material-icons tipo-icone">school</i>
+                                    <i class="tipoParte2" style="margin-left:5px;font-style: normal;">Docente</i>
+                                </div>
+                            </div>
                             <br>
-                            Estas informações não podem ser alteradas pelo usuário.
                         </div>
                         <div>
-                            <div class="parte2Painel">
-                                <div class="parte2Esquerda">
-                                    <h2 class="perguntaInfo" id="perg1">Nome: </h2>
-                                    <h2 class="perguntaInfo" id="perg2">Matrícula: </h2>
-                                    <h2 class="perguntaInfo" id="perg3">Curso: </h2>
-                                    <h2 class="perguntaInfo" id="perg4">Tipo: </h2>
-                                </div>
-                                <div class="parte2Direita">
-                                    <h2 class="perguntaResp" id="resp1"></h2>
-                                    <h2 class="perguntaResp" id="resp2"></h2>
-                                    <h2 class="perguntaResp" id="resp3"></h2>
-                                    <h2 class="perguntaResp" id="resp4"></h2>
+                            <div class="row justify-content-center linha">
+                                <div class="parte2Painel">
+                                    <div class="parte2Esquerda">
+                                        <h2 class="perguntaInfo" id="perg1"><i class="material-icons iconePerg">people</i>Nome:</h2>
+                                        <h2 class="perguntaInfo" id="perg2"><i class="material-icons iconePerg">account_circle</i>Matrícula: </h2>
+                                        <h2 class="perguntaInfo" id="perg3"><i class="material-icons iconePerg">account_balance</i>Curso:</h2>
+                                    </div>
+                                    <div class="parte2Direita">
+                                        <h2 class="perguntaResp" id="resp1"></h2>
+                                        <h2 class="perguntaResp" id="resp2"></h2>
+                                        <h2 class="perguntaResp" id="resp3"></h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +105,10 @@
                     <!-- Abreviação do nome -->
                     <div class="row justify-content-center linha">
                         <div class="alert alert-primary">
-                            <li>Abreviação do nome</li>
+                            <div style="display:inline-flex;margin-bottom:10px;">
+                                <i class="material-icons">account_box</i>
+                                <i style="margin-left:5px;font-style: normal;">Abreviação do nome</i>
+                            </div>
                             <br>
                             Essa configuração define a abreviação do seu nome.
                             Seu nome aparecerá com essa abreviação na maioria das vezes.
@@ -117,7 +124,10 @@
                     <!-- Sua turma -->
                     <div class="row justify-content-center linha linhaTurma" style="display:none">
                         <div class="alert alert-primary">
-                            <li>Sua turma</li>
+                            <div style="display:inline-flex;margin-bottom:10px;">
+                                <i class="material-icons">people</i>
+                                <i style="margin-left:5px;font-style: normal;">Sua turma</i>
+                            </div>
                             <br>
                             Escolha a opção correspondente a sua turma atual.
                             <br>
@@ -134,7 +144,10 @@
                     <!-- Disciplinas ministradas -->
                     <div class="row justify-content-center linha linhaDisciplina" style="display:none">
                         <div class="alert alert-primary">
-                            <li>Disciplinas ministradas</li>
+                            <div style="display:inline-flex;margin-bottom:10px;">
+                                <i class="material-icons">school</i>
+                                <i style="margin-left:5px;font-style: normal;">Suas disciplinass ministradas</i>
+                            </div>
                             <br>
                             Selecione as disciplinas que você ministra.
                             <br>
@@ -151,14 +164,17 @@
                     <!-- E-mail -->
                     <div class="row justify-content-center linha">
                         <div class="alert alert-primary">
-                            <li>E-mail</li>
+                            <div style="display:inline-flex;margin-bottom:10px;">
+                                <i class="material-icons">email</i>
+                                <i style="margin-left:5px;font-style: normal;">Seu E-mail</i>
+                            </div>
                             <br>
                             O SiGAÊ enviará e-mails para a conta, informando a situação dos atendimentos, essa opção pode ser desativada posteriormente.
                             <br>
                             O e-mail também servirá para recuperar a conta caso haja perda de senha
                         </div>
                         <div class="input-field">
-                            <input id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')">
+                            <input id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')" oninput="this.value=this.value.toLowerCase()">
                             <label for="email">E-mail</label>
                         </div>
                         <label class="msgInputError" id="erro4"></label>
@@ -166,7 +182,10 @@
                     <!-- Senha -->
                     <div class="row justify-content-center linha">
                         <div class="alert alert-primary">
-                            <li>Senha</li>
+                            <div style="display:inline-flex;margin-bottom:10px;">
+                                <i class="material-icons">vpn_key</i>
+                                <i style="margin-left:5px;font-style: normal;">Sua senha</i>
+                            </div>
                             <br>
                             Digite uma senha que contenha entre 6 e 30 caracteres:
                         </div>

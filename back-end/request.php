@@ -62,6 +62,17 @@ if (isset($_GET["cancelarInscricao"]) && isset($_GET["id"])) {
     echo (cancelarInscricao($id));
 }
 
+if (isset($_GET["trocarSenha"]) && isset($_GET["codigo"]) && isset($_GET["senha"])) {
+    require("./main.php");
+    require("./registro.php");
+    
+    $codigo = proteger($_GET["codigo"]);
+    $senha = proteger($_GET["senha"]);
+    $id = getIDByCodigo($codigo);
+    verificarSessao(["trocarSenha"], $id);
+    echo (trocarSenha($id, $senha));
+}
+
 /* Verificar se o registro acabou */
 
 if (isset($_GET["registroAcabou"]) && isset($_GET["id"])) {

@@ -31,6 +31,7 @@ if (isset($_SESSION["permissaoSistema"])) {
     <script src="./javascript.js"></script>
     <script src="./componentes/Popup.js"></script>
     <script src="./componentes/request.js"></script>
+    <script src="./componentes/Misc.js"></script>
 </head>
 
 <body style="overflow-x: hidden !important;overflow-y: hidden !important;">
@@ -47,7 +48,7 @@ if (isset($_SESSION["permissaoSistema"])) {
     </noscript>
     <div class="centro">
         <div class="parteBaixo">
-            <h2 class="copyright">© 2020 SiGAÊ | Desenvolvimento: <a style="color: rgb(40, 167, 69)" href="https://portal.ifba.edu.br" target="_blank">IFBA</a></h2>
+            <h2 class="copyright">© 2020 SiGAÊ | <a onclick="sobre.show()" class="desenvolvimento">Desenvolvimento</a>: <a style="color: rgb(40, 167, 69)" href="https://portal.ifba.edu.br" target="_blank">IFBA</a></h2>
         </div>
         <div class="row justify-content-center">
             <a style="text-decoration: none; text-align:center" href="./">

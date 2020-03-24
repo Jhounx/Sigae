@@ -1,7 +1,5 @@
 class Popup {
 
-    // name; file; largura; altura; titulo; css; js; scroll; html;
-
     constructor(name, file, titulo, largura, altura) {
         this.name = name;
         this.file = file;
@@ -9,7 +7,7 @@ class Popup {
         this.largura = largura;
         this.altura = altura;
         this.botao = true;
-        this.path = "../icones/sigae.svg";
+        this.imgPath = "../icones/sigae.svg";
         this.clickOut = true;
     }
 

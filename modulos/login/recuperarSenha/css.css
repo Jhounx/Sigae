@@ -1,10 +1,22 @@
+.swal2-container.swal2-shown {
+    background-color: transparent!important;
+}
+
+.linhaCampo {
+    margin-bottom: 0px !important;
+}
+
+.input-field {
+    width: 80% !important;
+}
+
 .msgInputError {
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 8px;
     color: crimson;
     text-align: left;
-    width: 100%;
+    width: 80%;
 }
 
 .swal2-content {
@@ -13,7 +25,7 @@
 }
 .btn-confirmar {
     color: white !important;
-    width: 90%;
+    width: 50%;
     margin-top: 10px;
     text-transform: unset !important;
     position: absolute;

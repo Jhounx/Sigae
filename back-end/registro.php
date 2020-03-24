@@ -2,11 +2,15 @@
 /* Verificar chave, criar sessão e retornar dados*/
 function validarKey($key) {
     include('./main.php');
+    //include('./security.php');
     $queryString = "
     select id,nome,matricula,estado,tipo,codigo_acesso,curso from alunos
     where codigo_acesso='$key'
     union
     select id,nome,matricula,estado,tipo,codigo_acesso,disciplinas from docentes
+    where codigo_acesso= '$key'
+    union
+    select id,nome,matricula,estado,tipo,codigo_acesso,senha from admins
     where codigo_acesso= '$key'
     limit 1";
     $query = mysqli_query($conn, $queryString);
@@ -21,22 +25,14 @@ function validarKey($key) {
         $cursoID = $array['curso'];
         $curso = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM cursos where id='$cursoID'"))['nome'];
         if ($estado == 'NUL') {
-            if(!isset($_SESSION)) {
-                session_name('sessao');
-                session_start();
-            }
-            $_SESSION['permissaoRegistro'] = $id;
+            addPermissao($id, "permissaoRegistro");
             return "{\"id\": \"$id\", \"nome\":\"$nome\",\"matricula\":\"$matricula\",\"curso\":\"$curso\", \"tipo\":\"$tipo\", \"estado\":\"NUL\", \"key\":\"$key\"}";
         }
         if ($estado == 'ATV') {
             return '{"estado":"ATV"}';
         }
         if ($estado == 'REG') {
-            if(!isset($_SESSION)) {
-                session_name('sessao');
-                session_start();
-            }
-            $_SESSION['permissaoRegistro'] = $id;
+            addPermissao($id, "permissaoRegistro");
             return "{\"id\": \"$id\", \"nome\":\"$nome\",\"matricula\":\"$matricula\",\"curso\":\"$curso\",\"tipo\":\"$tipo\", \"estado\":\"REG\", \"key\":\"$key\"}";
         }
         if ($estado == 'INA') {
@@ -57,6 +53,9 @@ function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $discipl
         where id='$id'
         union
         select id,nome,matricula,tipo,estado,codigo_acesso,disciplinas from docentes
+        where id='$id'
+        union
+        select id,nome,matricula,tipo,estado,codigo_acesso,senha from admins 
         where id='$id'
         limit 1";
     $query = mysqli_query($conn, $queryString);
@@ -101,6 +100,10 @@ function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $discipl
             $queryInsert = "
                 update docentes set `nome.preferencia` = '$nomePreferencial', senha = '$md5', disciplinas = '$disciplina', email = '$email', estado = \"REG\" where id=\"$id\"";
         }
+        if ($tipo == 'ADM') {
+            $queryInsert = "
+                update admins set `nome.preferencia` = '$nomePreferencial', senha = '$md5', email = '$email', estado = \"REG\" where id=\"$id\"";
+        }
         if (mysqli_query($conn, $queryInsert)) {
             echo '{}';
         } else {
@@ -116,7 +119,28 @@ function cancelarInscricao($id) {
     $query = "
         UPDATE alunos SET `nome.preferencia` = '', senha = '', turma = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
         UPDATE docentes SET `nome.preferencia` = '', senha = '', disciplinas = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
+        UPDATE admins SET `nome.preferencia` = '', senha = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
         DELETE FROM codigos_email WHERE id='$id'";
+    if (mysqli_multi_query($conn, $query)) {
+        removerPermissao($id, "permissaoRegistro");
+        echo "OK";
+    } else {
+        echo "INV";
+    }
+}
+
+function trocarSenha($id, $senha) {
+    include('./main.php');
+    removerPermissao($id, "trocarSenha");
+    if (strlen($senha) < 6) {
+        return "INV";
+    }
+    $md5 = md5($senha);
+    $query = "
+        UPDATE alunos SET senha = '$md5' WHERE id='$id' and estado='ATV';
+        UPDATE docentes SET senha = '$md5' WHERE id='$id' and estado='ATV';
+        UPDATE admins SET senha = '$md5' WHERE id='$id' and estado='ATV';
+        DELETE FROM codigos_email WHERE id='$id';";
     if (mysqli_multi_query($conn, $query)) {
         echo "OK";
     } else {
@@ -131,6 +155,9 @@ function registroAcabou($id) {
         where id='$id' and estado='ATV'
         union
         select id,estado from docentes
+        where id='$id' and estado='ATV'
+        union
+        select id,estado from admins
         where id='$id' and estado='ATV'
         limit 1";
     $query = mysqli_query($conn, $queryString);

@@ -1,13 +1,17 @@
-<div class="input-field">
-    <input id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha1')">
-    <label for="senha1">Senha</label>
+<div class="row justify-content-center linhaCampo">
+    <div class="input-field">
+        <input id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus()">
+        <label for="senha1">Senha</label>
+    </div>
+    <label class="msgInputError" id="erro1"></label>
 </div>
-<label class="msgInputError" id="erro1"></label>
-<div class="input-field">
-    <input id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha2')">
-    <label for="senha2">Repetir senha</label>
+<div class="row justify-content-center linhaCampo">
+    <div class="input-field">
+        <input id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus()">
+        <label for="senha2">Repetir senha</label>
+    </div>
+    <label class="msgInputError" id="erro2"></label>
 </div>
-<label class="msgInputError" id="erro2"></label>
 <div class="row justify-content-center">
-    <a class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="verificarSenha()">Trocar senha</a>
+    <a disabled class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="enviarSenha()">Trocar senha</a>
 </div>

@@ -116,26 +116,47 @@ button:focus {
     margin-top: 8px;
 }
 
+.desenvolvimento {
+    cursor: pointer;
+}
+
+.desenvolvimento:hover {
+    text-decoration: underline !important;
+}
+
 /* Alertas */
 
 .divContainer {
     display: inline-flex;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }
 
 .expirado {
     color: white;
     font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .iconeOk {
-    margin-bottom: 20px;
     font-size: 35px;
+    color: green;
+    margin-right: 5px;
 }
 
 .iconeErro {
-    margin-bottom: 10px;
     font-size: 35px;
+    color: crimson;
+    margin-right: 5px;
+}
+
+.header2 {
+    display:none !important;
+}
+
+.content2 {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
 }
 
 /*campos */
