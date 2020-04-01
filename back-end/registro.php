@@ -4,13 +4,13 @@ function validarKey($key) {
     include('./main.php');
     //include('./security.php');
     $queryString = "
-    select id,nome,matricula,estado,tipo,codigo_acesso,curso from alunos
+    select id,nome,matricula,campus,estado,tipo,codigo_acesso,curso from alunos
     where codigo_acesso='$key'
     union
-    select id,nome,matricula,estado,tipo,codigo_acesso,disciplinas from docentes
+    select id,nome,matricula,campus,estado,tipo,codigo_acesso,disciplinas from docentes
     where codigo_acesso= '$key'
     union
-    select id,nome,matricula,estado,tipo,codigo_acesso,senha from admins
+    select id,nome,matricula,campus,estado,tipo,codigo_acesso,senha from admins
     where codigo_acesso= '$key'
     limit 1";
     $query = mysqli_query($conn, $queryString);
@@ -23,17 +23,41 @@ function validarKey($key) {
         $estado = $array['estado'];
         $tipo = $array['tipo'];
         $cursoID = $array['curso'];
+        $campusID = $array['campus'];
+        $campus = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM campus where id='$campusID'"))['nome'];
         $curso = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM cursos where id='$cursoID'"))['nome'];
         if ($estado == 'NUL') {
             addPermissao($id, "permissaoRegistro");
-            return "{\"id\": \"$id\", \"nome\":\"$nome\",\"matricula\":\"$matricula\",\"curso\":\"$curso\", \"tipo\":\"$tipo\", \"estado\":\"NUL\", \"key\":\"$key\"}";
+            return "{
+                \"id\": \"$id\", 
+                \"nome\":\"$nome\",
+                \"matricula\":\"$matricula\",
+                \"campusID\":\"$campusID\",
+                \"campus\":\"$campus\",
+                \"curso\":\"$curso\", 
+                \"cursoID\":\"$cursoID\",
+                \"tipo\":\"$tipo\", 
+                \"estado\":\"NUL\", 
+                \"key\":\"$key\"
+            }";
         }
         if ($estado == 'ATV') {
             return '{"estado":"ATV"}';
         }
         if ($estado == 'REG') {
             addPermissao($id, "permissaoRegistro");
-            return "{\"id\": \"$id\", \"nome\":\"$nome\",\"matricula\":\"$matricula\",\"curso\":\"$curso\",\"tipo\":\"$tipo\", \"estado\":\"REG\", \"key\":\"$key\"}";
+            return "{
+                \"id\": \"$id\", 
+                \"nome\":\"$nome\",
+                \"matricula\":\"$matricula\",
+                \"campusID\":\"$campusID\",
+                \"campus\":\"$campus\",
+                \"curso\":\"$curso\",
+                \"cursoID\":\"$cursoID\",
+                \"tipo\":\"$tipo\", 
+                \"estado\":\"REG\", 
+                \"key\":\"$key\"
+            }";
         }
         if ($estado == 'INA') {
             return '{"estado":"INA"}';
@@ -45,9 +69,13 @@ function validarKey($key) {
 
 /* Realizar registro */
 function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $disciplina) {
-    include('./main.php');
-    include('./validacoes.php');
-    sleep(3);
+    require('./main.php');
+    require_once('./dados.php');
+
+    if(emailJaCadastrado($email)) {
+        return "EML";
+    }
+
     $queryString = "
         select id,nome,matricula,tipo,estado,codigo_acesso,curso from alunos
         where id='$id'
@@ -112,6 +140,22 @@ function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $discipl
     } else {
         return 'ID';
     }
+}
+
+function emailJaCadastrado($email) {
+    include('./main.php');
+    $queryString = "
+        select email from alunos
+        where email='$email'
+        union
+        select email from docentes
+        where email='$email'
+        union
+        select email from admins 
+        where email='$email'
+        limit 1";
+    $query = mysqli_query($conn, $queryString);
+    return mysqli_exist($query);
 }
 
 function cancelarInscricao($id) {

@@ -13,8 +13,11 @@
     <link rel="stylesheet" href="../componentes/loading.css">
     <link rel="icon" href="../icones/si.png">
     <link rel="stylesheet" href="../componentes/APIs/icon.css">
+    <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../componentes/select.css">
     <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
+    <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
     <script src="../componentes/APIs/param.js"></script>
@@ -23,6 +26,7 @@
     <script src="../componentes/request.js"></script>
     <script src="../componentes/Misc.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
+    <script src="../componentes/APIs/bootstrap-select.min.js"></script>
 </head>
 
 <body style="overflow: hidden !important;">
@@ -79,7 +83,6 @@
                         <div>
                             <div class="row justify-content-center linha">
                                 <div class="containerTipo">
-                                    <i class="material-icons tipo-icone">school</i>
                                     <i class="tipoParte2" style="margin-left:5px;font-style: normal;">Docente</i>
                                 </div>
                             </div>
@@ -91,12 +94,14 @@
                                     <div class="parte2Esquerda">
                                         <h2 class="perguntaInfo" id="perg1"><i class="material-icons iconePerg">people</i>Nome:</h2>
                                         <h2 class="perguntaInfo" id="perg2"><i class="material-icons iconePerg">account_circle</i>Matrícula: </h2>
-                                        <h2 class="perguntaInfo" id="perg3"><i class="material-icons iconePerg">account_balance</i>Curso:</h2>
+                                        <h2 class="perguntaInfo" id="perg3"><i class="material-icons iconePerg">school</i>Curso:</h2>
+                                        <h2 class="perguntaInfo" id="perg4"><i class="material-icons iconePerg">account_balance</i>Campus:</h2>
                                     </div>
                                     <div class="parte2Direita">
                                         <h2 class="perguntaResp" id="resp1"></h2>
                                         <h2 class="perguntaResp" id="resp2"></h2>
                                         <h2 class="perguntaResp" id="resp3"></h2>
+                                        <h2 class="perguntaResp" id="resp4"></h2>
                                     </div>
                                 </div>
                             </div>
@@ -113,11 +118,10 @@
                             Essa configuração define a abreviação do seu nome.
                             Seu nome aparecerá com essa abreviação na maioria das vezes.
                         </div>
-                        <div class="input-field inputSelectNome">
-                            <select id="selectNome" class="selectNome">
+                        <div class="input-field input-select inputSelectNome">
+                            <select class="selectpicker selectNome">
                                 <option disabled selected>Escolha uma opção</option>
                             </select>
-                            <label>Abreviação do nome</label>
                         </div>
                         <label class="msgInputError" id="erro1"></label>
                     </div>
@@ -133,11 +137,10 @@
                             <br>
                             Essa opção pode ser alterada posteriormente
                         </div>
-                        <div class="input-field inputSelectTurma">
-                            <select id="selectTurma" class="selectTurma">
+                        <div class="input-field input-select inputSelectTurma">
+                            <select id="selectTurma" class="selectTurma" data-live-search="true">
                                 <option disabled selected>Escolha uma opção</option>
                             </select>
-                            <label>Sua turma</label>
                         </div>
                         <label class="msgInputError" id="erro2"></label>
                     </div>
@@ -153,11 +156,9 @@
                             <br>
                             Essa opção pode ser alterada posteriormente
                         </div>
-                        <div class="input-field inputSelectDisciplinas">
-                            <select id="selectDisciplinas" multiple class="selectDisciplinas">
-                                <option disabled>Escolha uma opção</option>
+                        <div class="input-disciplinas inputSelectDisciplinas">
+                            <select id="selectDisciplinas" multiple data-live-search="true" class="selectDisciplinas">
                             </select>
-                            <label>Suas disciplinas</label>
                         </div>
                         <label class="msgInputError" id="erro3"></label>
                     </div>
@@ -174,7 +175,7 @@
                             O e-mail também servirá para recuperar a conta caso haja perda de senha
                         </div>
                         <div class="input-field">
-                            <input id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')" oninput="this.value=this.value.toLowerCase()">
+                            <input spellcheck="false" id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')" oninput="this.value=this.value.toLowerCase()">
                             <label for="email">E-mail</label>
                         </div>
                         <label class="msgInputError" id="erro4"></label>
@@ -190,12 +191,12 @@
                             Digite uma senha que contenha entre 6 e 30 caracteres:
                         </div>
                         <div class="input-field">
-                            <input id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha1')">
+                            <input spellcheck="false" id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha1')">
                             <label for="senha1">Senha</label>
                         </div>
                         <label class="msgInputError" id="erro5"></label>
                         <div class="input-field">
-                            <input id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha2')">
+                            <input spellcheck="false" id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha2')">
                             <label for="senha2">Repetir senha</label>
                         </div>
                         <label class="msgInputError" id="erro6"></label>

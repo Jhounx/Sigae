@@ -1,0 +1,10 @@
+modulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 54px;
+}
+
+h1 {
+    color: rgb(59, 59, 75)
+}

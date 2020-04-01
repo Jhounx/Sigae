@@ -1,15 +1,17 @@
 <?php
-include("../back-end/logar.php");
-session_name("sessao");
+include('../back-end/logar.php');
+include('../back-end/dados.php');
+session_name('sessao');
+session_set_cookie_params(3600 * 24);
 session_start();
-if (isset($_GET["finalizarSessao"])) {
+if (isset($_GET['finalizarSessao'])) {
     logout();
-    header("location: ../");
+    header('location: ../');
 }
-if (isset($_SESSION["permissaoSistema"])) {
-} else {
-    header("location: ../?expirado=true");
+if (!isset($_SESSION['permissaoSistema'])) {
+    header('location: ../?expirado=true');
 }
+$id = $_SESSION['permissaoSistema'];
 ?>
 <html>
 
@@ -27,20 +29,26 @@ if (isset($_SESSION["permissaoSistema"])) {
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="../componentes/loading.css">
     <link rel="stylesheet" href="../componentes/popup.css">
+    <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
     <link rel="icon" href="../icones/si.png">
     <script src="../componentes/APIs/jquery.min.js"></script>
+    <script src="../componentes/APIs/popper.min.js"></script>
+    <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
     <script src="./javascript.js"></script>
+    <script src="./modulosPopups.js"></script>
     <script src="../componentes/ModuloRender.js"></script>
     <script src="../componentes/Popup.js"></script>
     <script src="../componentes/Modulos.js"></script>
     <script src="../componentes/Misc.js"></script>
     <script src="../componentes/Console.js"></script>
     <script src="../componentes/request.js"></script>
+    <script src="../componentes/dados.js"></script>
     <script src="../componentes/APIs/param.js"></script>
     <script src="../componentes/APIs/calendarize.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
+    <script src="../componentes/APIs/bootstrap-select.min.js"></script>
 </head>
 
 <body style="width: 100% !important">
@@ -81,15 +89,15 @@ if (isset($_SESSION["permissaoSistema"])) {
                     </nav>
                 </div>
             </header>
-            <main style="flex: 1 0 auto;">
+            <main>
                 <ul id="slide-out" class="side-nav fixed">
                     <div class="sideDiv">
                         <div class="divTitulo">
                             <div style="margin-top: 10px;margin-bottom: 10px;" class="row justify-content-center">
-                                <img class="materialboxed circle" width="100" height="100" src="../icones/pp.jpg">
+                                <img class="materialboxed circle" width="100" height="100" src="../icones/semFoto.png">
                             </div>
-                            <h2 class="nome">Pedro Mota</h2>
-                            <h2 class="tipo">Aluno(a)</h2>
+                            <h2 class="nome"></h2>
+                            <h2 class="tipo"></h2>
                             <br>
                         </div>
                         <div class="divLinhas">
@@ -98,11 +106,13 @@ if (isset($_SESSION["permissaoSistema"])) {
                     </div>
                 </ul>
                 <div class="content">
-                    <div class="breadcrumbs breadcrumbs-tooltipped" data-position="bottom" data-tooltip="">
-                        <i class="small material-icons breadcrumbs-icone"></i>
-                        <h4 class="breadcrumbsTitulo"></h4>
+                    <div>
+                        <div class="breadcrumbs breadcrumbs-tooltipped" data-position="bottom" data-tooltip="">
+                            <i class="small material-icons breadcrumbs-icone"></i>
+                            <h4 class="breadcrumbsTitulo"></h4>
+                        </div>
+                        <img class="imgCarregamento" id="carregamentoModulo" src="../icones/spinner.svg">
                     </div>
-                    <img class="imgCarregamento" id="carregamentoModulo" src="../icones/spinner.svg">
                 </div>
                 <div class="content-head"></div>
             </main>
@@ -120,31 +130,49 @@ if (isset($_SESSION["permissaoSistema"])) {
                     <h6 class="versao">null</h6>
                 </div>
             </footer>
+            <script id="scriptJson">
+                <?php
+                $dados = pegarDadosUsuario($id);
+                echo "initDados('$dados')"
+                ?>
+            </script>
             <script>
                 init()
                 document.addEventListener("DOMContentLoaded", function(event) {
                     setTimeout(function() {
+                        $("#scriptJson").remove();
                         $(".divCarregamento").hide()
                         $(".tudo").fadeIn(1200);
+                        posInit()
                     }, 500);
                 });
             </script>
         </div>
+        <!-- console -->
         <div id="consoleModal" class="modal consoleModal bottom-sheet">
             <div class="modal-content">
-                <b class="consoleTexto">Menu de alertas</b>
-                <div class="divBotoes">
-                    <a class="dropdown-button consoleBotao consoleBotao-ferramentas" data-beloworigin="true" data-activates="dropdownConsole"><i class="material-icons">arrow_drop_down</i></a>
-                    <ul id="dropdownConsole" class="dropdown-content dropdown-console">
-                        <li><a style="text-decoration: none; " href="javascript:void(0)" onclick="limparConsole()"><i class="material-icons">delete_forever</i>Limpar console</a></li>
-                    </ul>
-                    <a class="consoleBotao" onclick="fecharConsole()">Fechar</a>
+                <div class="consoleTituloDiv">
+                    <img src="../icones/si.png" width="40" height="40">
+                    <b class="consoleTexto">Abrir console</b>
+                    <div class="divBotoes">
+                        <a class="dropdown-button consoleBotao consoleBotao-ferramentas" data-beloworigin="true" data-activates="dropdownConsole"><i class="material-icons">arrow_drop_down</i></a>
+                        <ul id="dropdownConsole" class="dropdown-content dropdown-console">
+                            <li><a style="text-decoration: none; " href="javascript:void(0)" onclick="limparConsole()"><i class="material-icons">delete_forever</i>Limpar</a></li>
+                        </ul>
+                        <a class="consoleBotao" onclick="fecharConsole()">Fechar</a>
+                    </div>
                 </div>
             </div>
             <div class="conteudoConsole"></div>
-            <div class="noAlertas">Não há nenhum alerta ou erro</div>
+            <div class="noAlertas">Não há nenhum novo alerta ou erro</div>
+        </div>
+        <!-- notificacoes -->
+        <div class="notificacoesDiv"></div>
+        <div class="circuloNotificacao">
+            <i class="material-icons notificacoesMenu">menu</i>
         </div>
     </div>
+    <div class="headerPopup"></div>
 </body>
 
 </html>

@@ -1,7 +1,6 @@
 var ano;
 
 /* Filtros */
-
 var filtroLivre, filtroCampus, filtroTurma, filtroDisciplina, filtroProfessor, filtroHorario,
     diaP, mesP, anoP
 
@@ -17,7 +16,7 @@ function popups() {
     filtroCalendario.setJS(true)
     filtroCalendario.invoker()
 
-    diaPopup = new Popup("diaPopup", "../modulos/diaPopup", "Dia: null", "700px", "98%");
+    diaPopup = new Popup("diaPopup", "../modulos/diaPopup", "Dia: null", "700px", "97%");
     diaPopup.setScroll(true)
     diaPopup.setCss(true)
     diaPopup.setJS(true)

@@ -1,3 +1,9 @@
+modulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .inicio-nome {
     font-size: 32px;
     color: rgb(78, 95, 120);

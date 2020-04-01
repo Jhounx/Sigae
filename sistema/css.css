@@ -1,5 +1,6 @@
 body {
     overflow-x: hidden !important;
+    width: 100% !important;
     height: 100%;
     overflow-y: scroll !important;
 }
@@ -148,7 +149,11 @@ html {
     user-select: none;
     cursor: pointer;
     transition: color 200ms;
+}
 
+.linkLinha {
+    text-decoration: none !important;
+    padding: 0px !important;
 }
 
 @media only screen and (min-width : 992px) {
@@ -198,11 +203,20 @@ html {
 main {
     overflow-x: auto;
     margin-left: 300px;
+    flex: 1 0 auto;
+    display: flex;
 }
 
 .content {
     padding-left: 20px;
     padding-right: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+modulo {
+    flex-grow: 1
 }
 
 /*breadcrumbs*/
@@ -230,11 +244,12 @@ main {
     margin-top: 7px;
     font-size: 30px !important;
     color: rgb(92, 102, 188);
-    display: inline-flex !important; 
+    display: inline-flex !important;
 }
 
 .breadcrumbsTitulo {
     display: inline-flex;
+    margin-left: 5px;
     margin-top: 10px;
     margin-bottom: 0px;
     font-size: 26px;
@@ -304,6 +319,7 @@ main {
 .modal-content {
     height: 82px !important;
     padding-left: 10px !important;
+    padding-right: 5px !important;
 }
 
 .conteudoConsole {
@@ -322,6 +338,25 @@ main {
     margin-top: 3px;
 }
 
+.consoleTituloDiv {
+    display: inline-flex;
+}
+
+.consoleTexto {
+    font-size: 22px;
+    height: 100%;
+    vertical-align: middle;
+    align-items: center;
+    display: flex;
+    margin-left: 10px;
+    color: rgb(78, 95, 120)
+}
+
+.consoleTitulo {
+    vertical-align: middle;
+    align-items: center;
+}
+
 .consoleBotao {
     font-size: 18px;
     color: rgb(50, 50, 61) !important;
@@ -335,11 +370,6 @@ main {
 
 .consoleBotao-ferramentas {
     margin-right: 8px;
-}
-
-.consoleTexto {
-    font-size: 22px;
-    height: 100%;
 }
 
 .consoleContent {
@@ -377,7 +407,7 @@ main {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     font-size: 18px;
     color: grey;
@@ -385,6 +415,43 @@ main {
 
 #dropdownConsole {
     width: 200px !important;
+}
+
+/* Notificação */
+
+.circuloNotificacao {
+    position: fixed;
+    right: 24px;
+    bottom: 45px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: rgb(141, 152, 243);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notificacoesDiv {
+    position: fixed;
+    right: 24px;
+    bottom: calc(15px + 65px);
+    width: 65px;
+    background-color: whitesmoke;
+    height: 250px;
+    border-radius: 15px 15px 0px 0px;
+    -moz-border-radius: 15px 15px 0px 0px;
+    -webkit-border-radius: 15px 15px 0px 0px;
+}
+
+.notificacoesMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+    height: 100%;
+    font-size: 40px
 }
 
 /* MISC */

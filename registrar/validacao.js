@@ -10,14 +10,14 @@ function validarDados() {
 }
 
 function validarSelect() {
-    $(".selectNome input").removeAttr("style");
     var erro = false;
 
     if ($(".selectNome option:selected").index() == 0) {
         $("#erro1").text("Selecione uma opção")
-        $(".selectNome input").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+        $("div.input-field.input-select.inputSelectNome > div > button").addClass("selectError")
         erro = true;
     } else {
+        $("div.input-field.input-select.inputSelectNome > div > button").removeClass("selectError")
         $("#erro1").text("")
     }
 
@@ -25,23 +25,22 @@ function validarSelect() {
         $(".selectTurma input").removeAttr("style");
         if ($("#selectTurma").val() == null) {
             $("#erro2").text("Selecione uma opção")
-            $(".selectTurma input").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+            $("div.input-field.input-select.inputSelectTurma > div > button").addClass("selectError")
             erro = true;
         } else {
+            $("div.input-field.input-select.inputSelectTurma > div > button").removeClass("selectError")
             $("#erro2").text("")
         }
     }
     if (jsonDados["tipo"] == "DOC") {
         $(".selectDisciplinas input").removeAttr("style");
-        var numero = 0;
-        $(".selectDisciplinas option:selected").each(function () {
-            numero++;
-        });
-        if (numero <= 0) {
+        l = $("#selectDisciplinas").val().length
+        if(l == 0) {
             $("#erro3").text("Selecione uma opção")
-            $(".selectDisciplinas input").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+            $("div.input-disciplinas.inputSelectDisciplinas > div > button").addClass("selectError")
             erro = true;
         } else {
+            $("div.input-disciplinas.inputSelectDisciplinas > div > button").removeClass("selectError")
             $("#erro3").text("")
         }
     }

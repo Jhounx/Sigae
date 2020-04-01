@@ -1,0 +1,62 @@
+<modulo>
+    <div class="botoes">
+        <a class="waves-effect waves-light btn"><i class="material-icons left">save</i>Salvar dados</a>
+        <a class="waves-effect waves-light btn" onclick="linha7.rodar()"><i class="material-icons left">undo</i>Desfazer alterações</a>
+    </div>
+    <ul class="collapsible" data-collapsible="accordion">
+        <li id="l1">
+            <div class="collapsible-header"><i class="material-icons icone-tab">account_circle</i>Alterar abreviação de nome<div class="editado" id="ed1">(alterado)</div>
+            </div>
+            <div class="collapsible-body">
+                <h2 class="labelLi">Selecione uma opção</h2>
+                <select class="selectpicker selectNome">
+
+                </select>
+            </div>
+        </li>
+        <li id="l2">
+            <div class="collapsible-header"><i class="material-icons icone-tab">supervisor_account</i>Alterar turma<div class="editado" id="ed2">(alterado)</div>
+            </div>
+            <div class="collapsible-body">
+                <h2 class="labelLi">Selecione uma opção</h2>
+                <select class="selectpicker selectTurmas" data-live-search="true">
+
+                </select>
+            </div>
+        </li>
+        <li id="l3">
+            <div class="collapsible-header"><i class="material-icons icone-tab">school</i>Alterar disciplina<div class="editado" id="ed3">(alterado)</div>
+            </div>
+            <div class="collapsible-body">
+                <h2 class="labelLi">Selecione uma opção</h2>
+                <select class="selectpicker selectDisciplinas" multiple data-live-search="true">
+
+                </select>
+                <div id="erro1" class="erro">Deve se selecionar pelo menos uma opção</div>
+            </div>
+        </li>
+        <li id="l4">
+            <div class="collapsible-header"><i class="material-icons icone-tab">email</i>Alterar email<div class="editado" id="ed4">(alterado)</div>
+            </div>
+            <div class="collapsible-body">
+                <div class="input-field">
+                    <input spellcheck="false" id="email" type="email" autocomplete="false">
+                    <label for="email">E-mail</label>
+                </div>
+                <div id="erro2" class="erro">Esse email é inválido</div>
+            </div>
+        </li>
+        <li id="l5">
+            <div class="collapsible-header"><i class="material-icons icone-tab">add_a_photo</i>Alterar foto de perfil<div class="editado" id="ed5">(alterado)</div>
+            </div>
+            <div class="collapsible-body">
+                <div class="row justify-content-center">
+                    <img src="../icones/semFoto.png" width="180" height="180" class="circle responsive-img">
+                </div>
+                <div class="row justify-content-center">
+                    <input type="file" class="file-input" required>
+                </div>
+            </div>
+        </li>
+    </ul>
+</modulo>

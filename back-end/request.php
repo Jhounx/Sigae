@@ -1,5 +1,6 @@
 <?php
 require_once("./security.php");
+require_once("./dados.php");
 require_once("./main.php");
 ob_start();
 
@@ -15,7 +16,7 @@ if($array["debug"] == "SIM") {
 # TITULO I - Login e Registro
 ##################################################
 
-/* verificar o login */
+/* Verificar o login */
 if (isset($_POST["login"]) and isset($_POST["senha"])) {
     require("./logar.php");
     $login = proteger($_POST["login"]);
@@ -35,7 +36,7 @@ if (isset($_GET["validarKey"]) && isset($_GET["codigo"])) {
     echo (validarKey($codigo));
 }
 
-/* realizar o registro */
+/* Realizar o registro */
 if (isset($_GET["registrarUsuario"]) && 
     isset($_GET["id"]) && 
     isset($_GET["nomePreferencial"]) && 
@@ -62,6 +63,7 @@ if (isset($_GET["cancelarInscricao"]) && isset($_GET["id"])) {
     echo (cancelarInscricao($id));
 }
 
+/* Trocar senha */
 if (isset($_GET["trocarSenha"]) && isset($_GET["codigo"]) && isset($_GET["senha"])) {
     require("./main.php");
     require("./registro.php");
@@ -74,7 +76,6 @@ if (isset($_GET["trocarSenha"]) && isset($_GET["codigo"]) && isset($_GET["senha"
 }
 
 /* Verificar se o registro acabou */
-
 if (isset($_GET["registroAcabou"]) && isset($_GET["id"])) {
     require("./registro.php");
     verificarSessao(["permissaoRegistro"]);
@@ -86,68 +87,38 @@ if (isset($_GET["registroAcabou"]) && isset($_GET["id"])) {
 # TITULO II - JSON dos dados de infraestrutura
 ##################################################
 
-/* Pegar todas as turmas */ 
-if (isset($_GET["getTurmas"])) {
-    verificarSessao(["permissaoSistema", "permissaoRegistro"]);
-    $query = "SELECT tabelaTurma.codigo, tabelaTurma.curso, tabelaCurso.nome
-    FROM turmas as tabelaTurma
-    LEFT JOIN cursos as tabelaCurso
-    on tabelaTurma.curso = tabelaCurso.id";
 
-    $resultadoQuery= $conn->query($query);
-    $arr = array();
-    while ($linha = mysqli_fetch_array($resultadoQuery)) {
-        $turma = $linha["codigo"];
-        $curso = $linha["nome"];
-        $arr[$curso][] = $turma;
-    }
-    echo json_encode($arr);
+/* Pegar todas as turmas */ 
+if (isset($_GET["getTurmas"]) && isset($_GET["campus"])) {
+    verificarSessao(["permissaoSistema"]);
+    echo(getTurmas());
 }
 
 /* Verificar se turma específica existe. SIM/NAO*/
 if (isset($_GET["turmaExiste"]) && isset($_GET["turma"])) {
-    include("./validacoes.php");
+    include("./dados.php");
     verificarSessao(["permissaoSistema", "permissaoRegistro"]);
     $turma = proteger($_GET["turma"]);
     echo validarTurma($turma);
 }
 
-if (isset($_GET["getTurmasByCurso"]) && isset($_GET["curso"])) {
+/* Pegar turmas pelo curso */
+if (isset($_GET["getTurmasByCurso"]) && isset($_GET["curso"]) && isset($_GET["campus"])) {
     verificarSessao(["permissaoSistema", "permissaoRegistro"]);
     $curso = proteger($_GET["curso"]);
-    $query = "SELECT tabelaTurma.codigo, tabelaTurma.curso, tabelaCurso.nome
-    FROM turmas as tabelaTurma
-    LEFT JOIN cursos as tabelaCurso
-    on tabelaTurma.curso = tabelaCurso.id where tabelaTurma.curso=\"$curso\"";
-
-    $resultadoQuery= $conn->query($query);
-    $arr = array();
-    while ($linha = mysqli_fetch_array($resultadoQuery)) {
-        $turma = $linha["codigo"];
-        $curso = $linha["nome"];
-        $arr[$curso][] = $turma;
-    }
-    echo json_encode($arr);
+    $campus = proteger($_GET["campus"]);
+    echo getTurmasByCurso($curso, $campus);
 }
 
 /* Pegar todas as disciplinas */ 
 if (isset($_GET["getDisciplinas"])) {
     verificarSessao(["permissaoSistema", "permissaoRegistro"]);
-    $query = "select * from disciplinas";
-    $arr = array();
-    if ($req = mysqli_query($conn, $query)) {
-        while ($row = mysqli_fetch_array($req)) {
-            $id = $row["id"];
-            $nome = $row["nome"];
-            $arr[$id][] = $nome;
-        }
-        echo json_encode($arr);
-    }
+    echo getDisciplinas();
 }
 
 /* Verificar se disciplinas específica existe. SIM/NAO*/
 if (isset($_GET["disciplinasExiste"]) && isset($_GET["disciplina"])) {
-    include("./validacoes.php");
+    include("./dados.php");
     verificarSessao(["permissaoSistema", "permissaoRegistro"]);
     $disciplina = proteger($_GET["disciplina"]);
     echo validarDisciplina($disciplina);

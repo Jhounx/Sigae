@@ -1,9 +1,25 @@
 <?php
-include("./back-end/logar.php");
-session_name("sessao");
+include('./back-end/main.php');
+include('./back-end/logar.php');
+session_name('sessao');
+session_set_cookie_params(3600 * 24);
 session_start();
-if (isset($_SESSION["permissaoSistema"])) {
-    header("location: ../sistema");
+if (isset($_SESSION['permissaoSistema'])) {
+    $param = "";
+    $i = 1;
+    foreach ($_GET as $key => $value) {
+        if(count($_GET) == $i) {
+            $param = $param . $key . "=" . $value;
+        } else {
+            $param = $param . $key . "=" . $value . "&";
+        }
+        $i++;
+    }
+    if($param == "") {
+        header('location: ../sistema');
+    } else {
+        header('location: ../sistema?' . $param);
+    }
 }
 ?>
 <html>
@@ -14,20 +30,20 @@ if (isset($_SESSION["permissaoSistema"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="Pedro Cerqueira Mota, João Costa Neto, Rafael Requião" />
-    <link rel="stylesheet" href="../componentes/APIs/bootstrap.min.css">
-    <link rel="stylesheet" href="../componentes/APIs/icon.css">
+    <link rel="stylesheet" href="./componentes/APIs/bootstrap.min.css">
+    <link rel="stylesheet" href="./componentes/APIs/icon.css">
     <link rel="stylesheet" href="./css.css">
-    <link rel="stylesheet" href="../componentes/popup.css">
+    <link rel="stylesheet" href="./componentes/popup.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./componentes/loading.css">
     <link rel="icon" href="./icones/si.png">
-    <script src="../componentes/APIs/jquery.min.js"></script>
-    <script src="../componentes/APIs/sweetalert2@8.js"></script>
-    <script src="../componentes/APIs/floatingLabel.js"></script>
-    <script src="../componentes/APIs/popper.min.js"></script>
-    <script src="../componentes/APIs/bootstrap.min.js"></script>
-    <script src="../componentes/APIs/jquery.mask.min.js"></script>
-    <script src="../componentes/APIs/param.js"></script>
+    <script src="./componentes/APIs/jquery.min.js"></script>
+    <script src="./componentes/APIs/sweetalert2@8.js"></script>
+    <script src="./componentes/APIs/floatingLabel.js"></script>
+    <script src="./componentes/APIs/popper.min.js"></script>
+    <script src="./componentes/APIs/bootstrap.min.js"></script>
+    <script src="./componentes/APIs/jquery.mask.min.js"></script>
+    <script src="./componentes/APIs/param.js"></script>
     <script src="./javascript.js"></script>
     <script src="./componentes/Popup.js"></script>
     <script src="./componentes/request.js"></script>
@@ -101,75 +117,12 @@ if (isset($_SESSION["permissaoSistema"])) {
                 $(".divCarregamento").fadeOut(500);
                 $(".centro").fadeIn(500);
                 rightAlertas()
+                posInit()
             }, 500);
         }
         init()
-
-        login = new Campo("#login", "focus", "#senha")
-        senha = new Campo("#senha", "click", "#botao")
-        login.img("usuario")
-        senha.img("senha")
-
-        function logar() {
-            loginstr = $("#login").val()
-            senhastr = $("#senha").val()
-            if (loginstr != "" & senhastr != "") {
-                $("#erro").hide()
-                $("#waiting").show()
-                request = new Request()
-                request.add("login", loginstr)
-                request.add("senha", senhastr)
-                esperado = ["CON", "MAT", "SEN", "REG", "INA"] /* JÁ ESTA LOGADO, CONSEGUIU LOGAR, MATRICULA ERRADA, SENHA ERRADA, NAO CONFIRMOU REGISTRO, CONTA INATIVA */
-                request.send("POST", esperado, (resultado) => {
-                    $("#waiting").hide()
-                    $("#erro").show()
-                    if (resultado == undefined) {
-                        $(".erroTexto").text("Erro grave: Requisição falha")
-                    } else {
-                        resposta = resultado.resposta;
-                        erro = resultado.erro;
-                        if (resposta != null) {
-                            if (resposta == "INA") {
-                                $(".erroTexto").text("Essa conta está inativa")
-                                $("#erro").show()
-                            }
-                            if (resposta == "REG") {
-                                $("#erro").hide()
-                                window.location.href = "./registrar";
-                            }
-                            if (resposta == "MAT") {
-                                $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
-                                $("#erro").show()
-                            }
-                            if (resposta == "SEN") {
-                                $(".erroTexto").text("Sua senha está incorreta. Confira-a")
-                                $("#erro").show()
-                            }
-                            if (resposta == "CON") {
-                                $("#erro").hide()
-                                window.location.href = "./sistema";
-                            }
-                        } else {
-                            $(".erroTexto").text("Erro grave: Requisição confusa")
-                            alert(erro)
-                        }
-                    }
-                });
-            } else {
-                if (loginstr == "") {
-                    login.erro()
-                }
-                if (senhastr == "") {
-                    senha.erro()
-                }
-            }
-        }
-
-        function main() {
-            $("#erro").hide(500)
-            $("#waiting").hide(500)
-        }
     </script>
+    <div class="headerPopup"></div>
 </body>
 
 </html>

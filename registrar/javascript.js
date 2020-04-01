@@ -118,7 +118,9 @@ function ajaxDadosParte2() {
     if (jsonDados["tipo"] == "ALU") {
         request = new Request()
         request.add("id", id)
-        request.add("getTurmas", "")
+        request.add("getTurmasByCurso", "")
+        request.add("curso", jsonDados["cursoID"])
+        request.add("campus", jsonDados["campusID"])
         request.send("GET", ["JSON"], (resultado) => {
             resposta = resultado.resposta;
             erro = resultado.erro;
@@ -138,10 +140,11 @@ function ajaxDadosParte2() {
                         }
                         i++;
                     }
-                    $(".selectTurma").material_select();
-                    $(".selectTurma").click(function (event) {
-                        event.stopPropagation();
-                    });
+                    $(".selectTurma").selectpicker({
+                        liveSearchPlaceholder: "Pesquisa rápida",
+                        noneResultsText: "Nada foi encontrado",
+                        noneSelectedText: "Escolha uma opção"
+                    }, "refresh");
                     renderizarParte2()
                 }
             } else {
@@ -169,10 +172,11 @@ function ajaxDadosParte2() {
                     for (var disci in jsonDisciplinas) {
                         $(".selectDisciplinas").append("<option>" + jsonDisciplinas[disci] + "</option>")
                     }
-                    $(".selectDisciplinas").material_select();
-                    $(".selectDisciplinas").click(function (event) {
-                        event.stopPropagation();
-                    });
+                    $(".selectDisciplinas").selectpicker({
+                        liveSearchPlaceholder: "Pesquisa rápida",
+                        noneResultsText: "Nada foi encontrado",
+                        noneSelectedText: "Escolha uma opção"
+                    }, "refresh");
                     renderizarParte2()
                 }
             } else {
@@ -191,16 +195,14 @@ function renderizarParte2() {
     arrayNomes = nomes(jsonDados["nome"])
     for (i = 0; i < arrayNomes.length; i++) {
         var name = arrayNomes[i];
-        $(".selectNome").append("<option>" + name + "</option>")
+        $("select.selectNome").append("<option>" + name + "</option>")
     }
-    $(".selectNome").material_select();
-    $(".selectNome").click(function (event) {
-        event.stopPropagation();
-    });
+    $(".selectNome").selectpicker("refresh");
 
     $("#resp1").text(jsonDados["nome"])
     $("#resp2").text(jsonDados["matricula"])
     $("#resp3").text(jsonDados["curso"])
+    $("#resp4").text(jsonDados["campus"])
     if (jsonDados["tipo"] == "ALU") {
         $(".tipoParte2").text("Aluno")
     }
@@ -216,11 +218,15 @@ function renderizarParte2() {
     $("#botaoConfirmar1").show()
     $("#botaoConfirmar2").show()
     $("#partes").text("Parte 2")
-    $(".parte1").fadeOut(500)
-    $(".parte2").fadeIn(500)
-    $(".parte3").hide()
-    resizer()
-    $(".btnChave").removeClass("disabled")
+    $(".parte1").fadeOut()
+    setTimeout(function () {
+        $(".parte2").fadeIn(1000)
+        $(".parte3").hide()
+        $(".btnChave").removeClass("disabled")
+    }, 300);
+    setTimeout(function () {
+        resizer()
+    }, 500);
 }
 
 function nomes(completo) {
@@ -243,18 +249,18 @@ function pegarIDdisciplina(disci) {
 }
 
 function pegarDisciplinas() {
-    arrayDisciplinas = $("#selectDisciplinas").val();
-    arrayDisciplinasID = [];
-    for (i = 0; i < arrayDisciplinas.length; i++) {
-        var disci = arrayDisciplinas[i];
+    r = $("#selectDisciplinas").val()
+    r2 = []
+    for (i = 0; i < r.length; i++) {
+        di = r[i]
         Object.keys(jsonDisciplinas).forEach(function (node) {
             var valor = jsonDisciplinas[node];
-            if (disci == valor) {
-                arrayDisciplinasID.push(node)
+            if (di == valor) {
+                r2.push(node)
             }
         });
     }
-    return arrayDisciplinasID.join("-");
+    return r2.join("-")
 }
 
 function inscreverUsuario() {
@@ -274,7 +280,7 @@ function inscreverUsuario() {
                 request = new Request()
                 request.add("id", jsonDados["id"])
                 request.add("registrarUsuario", "")
-                request.add("nomePreferencial", $("#selectNome").val())
+                request.add("nomePreferencial", $("select.selectNome").val())
                 request.add("email", $("#email").val())
                 request.add("senha", $("#senha1").val())
 
@@ -288,27 +294,37 @@ function inscreverUsuario() {
                 } else {
                     request.add("disciplinas", "null")
                 }
-                request.send("GET", ["NOME", "TURMA", "DISCI", "SENHA", "ID", "{}", "ERROR"], (resultado) => {
+                request.send("GET", ["EML", "NOME", "TURMA", "DISCI", "SENHA", "ID", "{}", "ERROR"], (resultado) => {
                     resposta = resultado.resposta;
                     erro = resultado.erro;
                     if (resposta != null) {
+                        if (resposta == "EML") {
+                            dispararErro("Esse email já foi usado anteriormente")
+                            sairCarregamento()
+                        }
                         if (resposta == "NOME") {
                             dispararErro("Erro na requisição: nome inválido")
+                            sairCarregamento()
                         }
                         if (resposta == "TURMA") {
                             dispararErro("Erro na requisição: turma inválida")
+                            sairCarregamento()
                         }
                         if (resposta == "DISCI") {
                             dispararErro("Erro na requisição: disciplina inválida")
+                            sairCarregamento()
                         }
                         if (resposta == "SENHA") {
                             dispararErro("Erro na requisição: senha inválida")
+                            sairCarregamento()
                         }
                         if (resposta == "ID") {
                             dispararErro("Erro na requisição: id inválido")
+                            sairCarregamento()
                         }
                         if (resposta == "ERROR") {
                             dispararErro("Erro na requisição: erro grave")
+                            sairCarregamento()
                         }
                         if (resposta == "{}") {
                             enviarEmailConfirmação()

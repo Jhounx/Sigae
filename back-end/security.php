@@ -7,9 +7,10 @@ function proteger($string) {
 }
 
 function verificarSessao($permissoes, $id = '') {
-    if ($GLOBALS['debug'] == false) {
+    if ($GLOBALS["debug"] == false) {
         if (!isset($_SESSION)) {
             session_name('sessao');
+            session_set_cookie_params(3600 * 24);
             session_start();
         }
         if (isset($_GET['id'])) {
@@ -25,7 +26,7 @@ function verificarSessao($permissoes, $id = '') {
             }
         }
         if ($setou == 0) {
-            echo 'Requisição negada! Não há uma sessão armazenada nesse dispositivo';
+            echo 'Requisição negada! Sessão inválida';
             die();
         }
     }
@@ -34,6 +35,7 @@ function verificarSessao($permissoes, $id = '') {
 function addPermissao($id, $nome) {
     if (!isset($_SESSION)) {
         session_name('sessao');
+        session_set_cookie_params(3600 * 24);
         session_start();
     }
     $_SESSION[$nome] = $id;
@@ -42,6 +44,7 @@ function addPermissao($id, $nome) {
 function removerPermissao($nome) {
     if (!isset($_SESSION)) {
         session_name('sessao');
+        session_set_cookie_params(3600 * 24);
         session_start();
     }
     $_SESSION[$nome] = null;

@@ -1,0 +1,175 @@
+/* DIV Botões */
+
+.botoes {
+    display: inline-flex;
+}
+
+@media only screen and (max-width: 540px)  {
+    .botoes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn {
+        margin-top: 10px;
+    }
+}
+
+.btn {
+    color: white !important;
+    width: 250px !important;
+    margin-right: 10px !important;
+    padding-left: 15px !important;
+}
+
+/* Body */
+
+.collapsible {
+    margin-top: 15px;
+}
+
+.collapsible-header {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: bold;
+}
+
+.erro {
+    font-size: 16px;
+    color: crimson;
+    margin-top: 8px;
+    margin-left: 2px;
+    display: none;
+}
+
+.editado {
+    font-weight: bold;
+    color: rgb(38, 166, 154);
+    margin-left: 3px;
+    display: none;
+}
+
+.collapsible-body {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.labelLi {
+    font-size: 20px;
+    color: rgb(112, 121, 201);
+    margin-top: 0px;
+    margin-left: 1px;
+}
+
+.dropdown-menu {
+    max-height: unset !important;
+    min-width: 100% !important;
+    border-radius: 0px !important;
+    border: none !important;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.filter-option-inner-inner {
+    text-transform: none !important;
+}
+
+.bootstrap-select {
+    width: 100% !important;
+}
+
+.dropdown-toggle {
+    color: rgb(78, 95, 120) !important;
+    background-color: #f8f9fa !important;
+    border-color: #f8f9fa;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    width: 100% !important;
+}
+
+.show>.btn-light.dropdown-toggle {
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.bootstrap-select .dropdown-toggle:focus,
+.bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+    outline: none !important;
+}
+
+.form-control {
+    border-bottom: 1px solid #e9ecef !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.dropdown-header {
+    padding-left: 15px !important;
+}
+
+.selected {
+    background-color: rgb(247, 247, 247) !important;
+}
+
+.inner>ul>li>.active {
+    background-color: rgb(112, 121, 201) !important;
+    color: white !important;
+    outline: none;
+    border: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.inner>ul>li>a:active {
+    background-color: rgb(112, 121, 201) !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.icone-tab {
+    color: rgb(83, 106, 141)
+}
+
+.selected {
+    background-color: rgb(112, 121, 201) !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
+div .selectpicker >.dropdown-menu>.inner>ul>li>.selected {
+    background-color: rgb(112, 121, 201) !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
+div .selectpicker >.dropdown-menu>.inner>ul>li>a:active {
+    background-color: rgb(247, 247, 247) !important;
+    color: black !important;
+}
+
+.alert-primary {
+    background-color: rgb(78, 95, 120);
+    color: rgb(241, 242, 243);
+    border-color: rgb(78, 95, 120);
+    padding-bottom: 10px;
+}
+
+@media only screen and (max-width : 482px) {
+    .input-field {
+        width: 100%;
+    }
+}

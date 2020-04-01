@@ -1,4 +1,4 @@
-var nodeID;
+var node_ID;
 
 function init_diaPopup() {
     $(".tituloPopup").text("Dia: " + diaP + "/" + mesP + "/" + anoP)
@@ -8,22 +8,23 @@ function init_diaPopup() {
 
 function renderAtendimentos() {
     $(".divAtendimentos").empty()
-    nodeID = 0;
+    node_ID = 0;
     new NodeAtendimento("16:00", "Solange Moura", "D-202", "Desenho Técnico", "Atendimento", "CONFIRMADO")
     new NodeAtendimento("14:20", "Ana Carolina Sokolonski Anton", "D-108", "Informática", "Atendimento", "NÃO CONFIRMADO")
+    
 }
 
-class NodeAtendimento {
+NodeAtendimento = class NodeAtendimento {
 
     constructor(horario, docente, sala, disciplina, tipo, estado) {
-        nodeID++;
-        this.id = nodeID;
+        node_ID++;
+        this.id = node_ID;
         this.aberto = false;
         $(".divAtendimentos").append("\
         <li>\
-            <div id=\"nodeAtendimento-" + nodeID + "\" class=\"collapsible-header divHeaderAtendimentos\">\
+            <div id=\"nodeAtendimento-" + node_ID + "\" class=\"collapsible-header divHeaderAtendimentos\">\
                 <div class=\"paiDiaPopup\">\
-                    <div class=\"divMaterial\"><i id=\"icone-atendimento-" + nodeID + "\" class=\"material-icons icone-popupDia\">keyboard_arrow_right</i></div>\
+                    <div class=\"divMaterial\"><i id=\"icone-atendimento-" + node_ID + "\" class=\"material-icons icone-popupDia\">keyboard_arrow_right</i></div>\
                     <div>\
                         <div>"+ horario + "</div>\
                         <div>"+ disciplina + "</div>\
@@ -45,7 +46,7 @@ class NodeAtendimento {
             </div>\
         </li>")
         var classe = this
-        $("#nodeAtendimento-" + nodeID).click(function () {
+        $("#nodeAtendimento-" + node_ID).click(function () {
             // alert("clicocu")
             classe.toggle()
         });

@@ -1,4 +1,4 @@
-var linhas = 0, conjuntos = 0, nodes = 0, arrayNodes = []; arrayLinhas = []
+var linhas = 0, conjuntos = 0, nodes = 0, arrayNodes = [], arrayLinhas = []
 
 function sideMenus() {
     //Início
@@ -23,15 +23,15 @@ function sideMenus() {
     node3 = new Node("Meu usuário", "people")
     conjunto3 = new Conjunto()
     node3.add(conjunto3)
-    linha7 = new Linha("Alterar meus dados", null, "#conjunto3", "--alterarDados");
-    linha8 = new Linha("Alterar minha senha", null, "#conjunto3", "mudarSenha()");
+    linha7 = new Linha("Alterar meus dados", null, "#conjunto3", "--mudarDados");
+    linha8 = new Linha("Alterar minha senha", null, "#conjunto3", "alterarSenhaShow()");
 
     //Configurações
     node4 = new Node("Configurações", "settings")
     conjunto4 = new Conjunto()
     node4.add(conjunto4)
-    linha9 = new Linha("Alterar configurações", null, "#conjunto4", "--alterarConfig");
-    linha10 = new Linha("Abrir menu de alertas", null, "#conjunto4", "abrirConsole()");
+    linha9 = new Linha("Alterar notificações", null, "#conjunto4", "alterarNotificacoesShow()");
+    linha10 = new Linha("Abrir console", null, "#conjunto4", "abrirConsole()");
     linha11 = new Linha("Sobre o SiGAÊ", null, "#conjunto4", "sobreSigae()");
 
     //Finalizar sessão
@@ -44,8 +44,11 @@ function modulos() {
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, false, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
+    
+    mudarDados = new Modulo("mudarDados", "../modulos/mudarDados", "Alterar dados", "build", true, true, linha7);
+    //mudarDados.wait()
 
-    erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", false, false, null);
+    erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
 
     setModuloParam()
 }
@@ -56,6 +59,7 @@ function setModuloParam() {
         linha1.rodar()
     } else {
         var achou = false;
+        /* PROCURAR MÓDULO */
         for (var i = 0; i < arrayModulos.length; i++) {
             var moduloDoArray = arrayModulos[i]
             if (moduloDoArray.id == moduloParam) {
@@ -68,7 +72,6 @@ function setModuloParam() {
         }
     }
 }
-
 
 /* funções da sidenav */
 function closeAll(except) {
@@ -107,6 +110,15 @@ function selectAtual() {
     selectLinha(moduloAtual.linha)
 }
 
+function getLinhaByNome(nome) {
+    for(var i = 0; i < arrayLinhas.length; i++) {
+        c = "--" + nome;
+        if(arrayLinhas[i].action == c) {
+            return arrayLinhas[i];
+        }
+    }
+}
+
 function nodeDaLinha(linha) {
     for (var i = 0; i < arrayLinhas.length; i++) {
         obj = arrayLinhas[i]
@@ -140,40 +152,79 @@ class Linha {
         this.render()
     }
 
+    getActionType() {
+        if (this.action.startsWith("--")) {
+            return "MODULO"
+        }
+        if (this.action.endsWith("()")) {
+            return "FUNCTION"
+        }
+    }
+
+    getModuloHREF() {
+        if (this.getActionType() == "MODULO") {
+            var modulo = this.action.substring(2)
+            return "href=\"?modulo=" + modulo + "\""
+        } else {
+            return ""
+        }
+    }
+
+    getFunction() {
+        if(this.getActionType() == "FUNCTION") {
+            var fun = this.action
+            fun = fun.slice(0, -2);
+            return fun;
+        }
+    }
+
     render() {
+        var href = this.getModuloHREF()
         if (this.conjunto == null) {
             if (this.icone == null) {
                 $(".divLinhas").append("\
-                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
-                    <div class=\"sideContainer\">\
-                        <span class=\"textoNode\">" + this.titulo + "</span>\
+                <a class=\"linkLinha\"" + href + ">\
+                    <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
+                        <div class=\"sideContainer\">\
+                            <a href=\"#\"><span class=\"textoNode\">" + this.titulo + "</span></a>\
+                        </div>\
                     </div>\
-                </div>")
+                </a>\
+                ")
             } else {
                 $(".divLinhas").append("\
-                <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
-                    <div class=\"sideContainer\">\
-                        <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
-                        <span class=\"textoNode\">" + this.titulo + "</span>\
+                <a class=\"linkLinha\"" + href + ">\
+                    <div class=\"linha\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
+                        <div class=\"sideContainer\">\
+                            <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
+                            <span class=\"textoNode\">" + this.titulo + "</span>\
+                        </div>\
                     </div>\
-                </div>")
+                </a>\
+                ")
             }
         } else {
             if (this.icone == null) {
                 $(this.conjunto).append("\
-                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
-                    <div class=\"sideContainer\">\
-                        <span class=\"textoChildren\">" + this.titulo + "</span>\
+                <a class=\"linkLinha\"" + href + ">\
+                    <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
+                        <div class=\"sideContainer\">\
+                            <span class=\"textoChildren\">" + this.titulo + "</span>\
+                        </div>\
                     </div>\
-                </div>")
+                </a>\
+                ")
             } else {
                 $(this.conjunto).append("\
-                <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
-                    <div class=\"sideContainer\">\
-                        <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
-                        <span class=\"textoChildren\">" + this.titulo + "</span>\
+                <a class=\"linkLinha\"" + href + ">\
+                    <div class=\"linha hidden\" id=\"linha" + linhas + "\" onclick=\"linha" + linhas + ".rodar('click')\">\
+                        <div class=\"sideContainer\">\
+                            <i class=\"material-icons iconeNode\">" + this.icone + "</i>\
+                            <span class=\"textoChildren\">" + this.titulo + "</span>\
+                        </div>\
                     </div>\
-                </div>")
+                </a>\
+                ")
             }
         }
     }
@@ -189,7 +240,7 @@ class Linha {
     rodar(click) {
         removeAllSelection()
         selectLinha(this)
-        if (this.action.startsWith("--")) {
+        if (this.getActionType() == "MODULO") {
             var modulo = this.action.substring(2), achou = false;
             for (var i = 0; i < arrayModulos.length; i++) {
                 var moduloDoArray = arrayModulos[i]
@@ -200,8 +251,6 @@ class Linha {
                         if (click == 'click') {
                             add_parametros("modulo", moduloDoArray.id, true)
                         }
-                    } else {
-                        removeParam()
                     }
                 }
             }
@@ -210,7 +259,7 @@ class Linha {
                 removeAllSelection()
             }
         }
-        if (this.action.endsWith("()")) {
+        if (this.getActionType() == "FUNCTION") {
             try {
                 var fun = this.action
                 fun = fun.slice(0, -2);
@@ -280,8 +329,6 @@ class Node {
 }
 
 class Conjunto {
-
-    // node;
 
     constructor() {
         conjuntos++;

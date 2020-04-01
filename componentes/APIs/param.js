@@ -1,7 +1,7 @@
 function get_parametro(param) {
     json = get_parametros()[0]
     for (coisa in json) {
-        if(coisa == param) {
+        if (coisa == param) {
             var c = json[coisa]
             return c;
         }
@@ -10,6 +10,26 @@ function get_parametro(param) {
 
 function removeParam() {
     window.history.replaceState(null, null, window.location.pathname);
+}
+
+function removeParamByKey(key) {
+    url = window.location.href
+    var final = url.split("?")[0], param, array = [], queryString = (url.indexOf("?") !== -1) ? url.split("?")[1] : "";
+    if (queryString !== "") {
+        array = queryString.split("&");
+        for (var i = array.length - 1; i >= 0; i -= 1) {
+            param = array[i].split("=")[0];
+            if (param === key) {
+                array.splice(i, 1);
+            }
+        }
+        if(array.length == 0) {
+            final = final + array.join("&");
+        } else {
+            final = final + "?" + array.join("&");
+        }
+    }
+    window.history.replaceState(null, null, final);
 }
 
 function get_parametros() {
@@ -28,13 +48,11 @@ function get_parametros() {
     return [json_parametros, parametros_puro]
 }
 
-function add_parametros(name, valor, remove) {
-    if(remove == true) {removeParam()}
-    var parametros_puro = window.location.search
-    if (parametros_puro == "") {
-        url = "?" + name + "=" + valor
-    } else {
-        url = parametros_puro + "&" + name + "=" + valor
-    }
-    window.history.replaceState({}, "", url);
+var numeroPagina = 0;
+
+function add_parametros(name, valor) {
+    var url = "?" + name + "=" + valor;
+    numeroPagina += 1;
+    window.history.pushState({ pagina: numeroPagina, valor: valor, url: url }, valor, url);
+    window.history.replaceState({ pagina: numeroPagina, valor: valor, url: url }, valor, url);
 }

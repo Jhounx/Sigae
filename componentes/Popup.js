@@ -51,10 +51,10 @@ class Popup {
             }
         });
         if (this.css == true) {
-            $("body").append("<link rel=\"stylesheet\" href=\" " + this.file + "/css.css\">");
+            $(".headerPopup").append("<link rel=\"stylesheet\" href=\" " + this.file + "/css.css\">");
         }
         if (this.js == true) {
-            $("body").append("<script src=\" " + this.file + "/javascript.js\"></script>");
+            $(".headerPopup").append("<script src=\" " + this.file + "/javascript.js\"></script>");
         }
     }
 
@@ -70,22 +70,22 @@ class Popup {
             showConfirmButton: false,
             allowOutsideClick: this.clickOut,
             allowEnterKey: false,
-            onOpen: function() {
+            onOpen: function () {
                 $("body").scrollTop(alturaScroll);
                 if (classe.js == true) {
                     window["init_" + classe.name]()
                 }
             },
-            onClose: function() {
+            onClose: function () {
                 $("body").animate({ scrollTop: alturaScroll }, 100);
                 try {
                     selectAtual()
                     window["close_" + classe.name]()
-                } catch(ex) {}
+                } catch (ex) { }
             },
             html: `${classe.html}`
         })
-        if(this.altura != null) {
+        if (this.altura != null) {
             $(".swal2-popup").css("cssText", "height: " + this.altura + " !important; width: " + this.largura + " !important; display:flex");
         } else {
             $(".swal2-popup").css("cssText", "width: " + this.largura + " !important; display:flex");
