@@ -3,3 +3,6 @@ function init_sobre() {
     $.fn.selectpicker.Constructor.BootstrapVersion = '4';
 }
 
+function kkkk() {
+    
+}

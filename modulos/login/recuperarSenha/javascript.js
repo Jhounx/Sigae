@@ -1,64 +1,96 @@
 function init_recuperarSenha() {
+    eventosDigitar()
 }
 
-function validarSenha1() {
-    $("#erro1").text("")
-    $("#senha1").removeAttr("style");
-    compararSenhas()
-    if ($("#senha1").val().length < 6) {
-        $("#erro1").text("A senha deve conter mais de 6 caracteres")
+function ganhouFocus(a) {
+    if(a == 1) {
+        $(".popupShow1").show()
+        $(".popupShow2").hide()
+    }
+    if(a == 2) {
+        if(!senhaIguais()) {
+            $(".popupShow2").show()
+            $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+        }
+    }
+}
+
+function perdeuFocus(a) {
+    if(a == 1) {
+        $(".popupShow1").fadeOut(250)
+    }
+}
+
+function eventosDigitar() {
+    $("#senha1").on("input", function () {
+        nota = notaDaSenha($("#senha1").val())
+        definirNota(nota)
+        senhaValida(nota)
+        if(senhaIguais() && senhaValida(nota)) {
+            $("#botaoFinalizar").removeAttr("disabled")
+        } else {
+            $("#botaoFinalizar").attr("disabled", true)
+        }
+    });
+    $("#senha2").on("input", function () {
+        nota = notaDaSenha($("#senha1").val())
+        if(senhaIguais()) {
+            $(".popupShow2").hide()
+            $("#senha2").removeAttr("style")
+        } else {
+            $(".popupShow2").show()
+            $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+        }
+        if(senhaIguais() && senhaValida(nota)) {
+            $("#botaoFinalizar").removeAttr("disabled")
+        } else {
+            $("#botaoFinalizar").attr("disabled", true)
+        }
+    });
+}
+
+function definirNota(nota) {
+    if(nota == 0) {
+        $("#força").text("Inválida")
+        $("#força").css("cssText", "color:crismon");
         $("#senha1").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        return true;
     }
-    if ($("#senha1").val().length > 30) {
-        $("#erro1").text("A senha deve conter menos de 30 caracteres")
+    if(nota == 20) {
+        $("#força").text("Ridícula")
+        $("#força").css("cssText", "color:crismon");
         $("#senha1").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        return true;
     }
-    return false;
-}
-
-function validarSenha2() {
-    $("#senha2").removeAttr("style");
-    $("#erro2").text("")
-    compararSenhas()
-    if ($("#senha2").val().length < 6) {
-        $("#erro2").text("A senha deve conter mais de 6 caracteres")
-        $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        return true;
-    }
-    if ($("#senha2").val().length > 30) {
-        $("#erro2").text("A senha deve conter menos de 30 caracteres")
-        $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        return true;
-    }
-    return false;
-}
-
-function compararSenhas() {
-    if ($("#senha1").val().length > 0) {
+    if(nota == 50) {
+        $("#força").text("Fraca")
+        $("#força").css("cssText", "color:rgb(220, 167, 20)");
         $("#senha1").removeAttr("style");
-        $("#erro1").text("")
     }
-    if ($("#senha2").val().length > 0) {
-        $("#senha2").removeAttr("style");
-        $("#erro2").text("")
+    if(nota == 75) {
+        $("#força").text("Forte")
+        $("#força").css("cssText", "color:rgb(20, 220, 110)");
+        $("#senha1").removeAttr("style");
     }
-    if ($("#senha1").val() != $("#senha2").val()) {
-        $("#erro1").text("Ambas as senhas devem ser iguais")
-        $("#erro2").text("Ambas as senhas devem ser iguais")
-        $("#senha1").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
-        return true;
+    if(nota == 100) {
+        $("#força").text("Muito forte")
+        $("#força").css("cssText", "color:forestgreen");
+        $("#senha1").removeAttr("style");
     }
-    return false;
+    $(".determinate").css("width", nota + "%")
 }
 
-function perdeuFocus() {
-    if(validarSenha1() | validarSenha2()) {
-        $("#botaoFinalizar").attr("disabled", true)
+function senhaValida(nota) {
+    if(nota >= 50 ) {
+        return true;
     } else {
-        $("#botaoFinalizar").removeAttr("disabled")
+        return false;
+    }
+}
+
+function senhaIguais() {
+    if($("#senha1").val() == $("#senha2").val()) {
+        return true;
+    } else {
+        return false;
     }
 }
 

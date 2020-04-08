@@ -5,7 +5,6 @@ function init() {
     sideMenus()
     definirVersao()
     initSigae()
-
 }
 
 function initDados(data) {
@@ -31,25 +30,28 @@ function initSigae() {
 }
 
 function initMaterialize() {
-    $(".side-nav.fixed").css("display", "block");
-    $(".button-collapse").sideNav({
-        onOpen: function () {
-            $("body").addClass("noScrollSide")
-        },
-        onClose: function () {
-            $("body").removeClass("noScrollSide")
-            $(".hamburger").removeClass('is-active');
-            $(".footer").css('display', "block");
-        },
-        draggable: false
-    });
     $(document).ready(function () {
+        $(".side-nav.fixed").css("display", "block");
+        $(".button-collapse").sideNav({
+            onOpen: function () {
+                $("body").addClass("noScrollSide")
+            },
+            onClose: function () {
+                $("body").removeClass("noScrollSide")
+                $(".hamburger").removeClass('is-active');
+                $(".footer").css('display', "block");
+            },
+            draggable: false
+        });
         $('.hamburger').click(function () {
             $(this).toggleClass('is-active');
         });
         $('.consoleModal').modal({
             ready: function () { renderConsole() },
             complete: function () { selectAtual() }
+        });
+        $('.menuLiSelect').click(function (event) {
+            event.stopPropagation();
         });
     });
 
@@ -70,7 +72,7 @@ function posInit() {
 
 function popupsParam() {
     $param = get_parametro("senhaTrocada")
-    if($param != undefined) {
+    if ($param != undefined) {
         Swal.fire({
             position: "top-end",
             type: "success",

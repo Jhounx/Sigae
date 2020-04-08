@@ -1,6 +1,4 @@
 <?php
-include('./back-end/main.php');
-include('./back-end/logar.php');
 session_name('sessao');
 session_set_cookie_params(3600 * 24);
 session_start();

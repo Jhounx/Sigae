@@ -7,6 +7,7 @@ function proteger($string) {
 }
 
 function verificarSessao($permissoes, $id = '') {
+    sleep(1);
     if ($GLOBALS["debug"] == false) {
         if (!isset($_SESSION)) {
             session_name('sessao');
@@ -15,6 +16,9 @@ function verificarSessao($permissoes, $id = '') {
         }
         if (isset($_GET['id'])) {
             $id = proteger($_GET['id']);
+        }
+        if (isset($_POST['id'])) {
+            $id = proteger($_POST['id']);
         }
         $setou = 0;
         for ($i = 0; $i < count($permissoes); $i++) {
@@ -26,7 +30,7 @@ function verificarSessao($permissoes, $id = '') {
             }
         }
         if ($setou == 0) {
-            echo 'Requisição negada! Sessão inválida';
+            echo 'NEGADO';
             die();
         }
     }
@@ -51,7 +55,7 @@ function removerPermissao($nome) {
 }
 
 function getIDByCodigo($codigo) {
-    include('./main.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
     $query = mysqli_query($conn, "
     SELECT id FROM codigos_email where valor='$codigo'
     ");

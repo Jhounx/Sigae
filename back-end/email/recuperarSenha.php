@@ -1,7 +1,6 @@
 <?php
-    //sleep(2);
-    require('../main.php');
-    require('../security.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/security.php");
     if (isset($_GET['codigo'])) {
         $codigo = proteger($_GET['codigo']);
         $query = mysqli_query($conn, "SELECT * FROM codigos_email where valor='$codigo' and tipo = 'REC' limit 1");
@@ -34,6 +33,7 @@
     <script src="../../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../../componentes/APIs/bootstrap.min.js"></script>
     <script src="../../componentes/APIs/param.js"></script>
+    <script src="../../componentes/dados.js"></script>
     <script src="../../componentes/request.js"></script>
     <script src="../../componentes/Popup.js"></script>
     <script src="../../componentes/Misc.js"></script>

@@ -175,7 +175,7 @@ function ajaxDadosParte2() {
                     $(".selectDisciplinas").selectpicker({
                         liveSearchPlaceholder: "Pesquisa rápida",
                         noneResultsText: "Nada foi encontrado",
-                        noneSelectedText: "Escolha uma opção"
+                        noneSelectedText: "Escolha pelo menos uma opção"
                     }, "refresh");
                     renderizarParte2()
                 }
@@ -226,6 +226,7 @@ function renderizarParte2() {
     }, 300);
     setTimeout(function () {
         resizer()
+        initValidacao()
     }, 500);
 }
 
@@ -264,79 +265,77 @@ function pegarDisciplinas() {
 }
 
 function inscreverUsuario() {
-    if (validarDados() == false) {
-        Swal.fire({
-            title: "Continuar inscrição?",
-            text: "Verifique se seus dados estão corretos",
-            type: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sim, tudo está certo",
-            cancelButtonText: "Verificar novamente"
-        }).then((result) => {
-            if (result.value) {
-                carregamento()
-                request = new Request()
-                request.add("id", jsonDados["id"])
-                request.add("registrarUsuario", "")
-                request.add("nomePreferencial", $("select.selectNome").val())
-                request.add("email", $("#email").val())
-                request.add("senha", $("#senha1").val())
+    Swal.fire({
+        title: "Continuar inscrição?",
+        text: "Verifique se seus dados estão corretos",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, tudo está certo",
+        cancelButtonText: "Verificar novamente"
+    }).then((result) => {
+        if (result.value) {
+            carregamento()
+            request = new Request()
+            request.add("id", jsonDados["id"])
+            request.add("registrarUsuario", "")
+            request.add("nomePreferencial", $("select.selectNome").val())
+            request.add("email", $("#email").val())
+            request.add("senha", $("#senha1").val())
 
-                if (jsonDados["tipo"] == "ALU") {
-                    request.add("turma", $("#selectTurma").val())
-                } else {
-                    request.add("turma", "null")
-                }
-                if (jsonDados["tipo"] == "DOC") {
-                    request.add("disciplinas", pegarDisciplinas())
-                } else {
-                    request.add("disciplinas", "null")
-                }
-                request.send("GET", ["EML", "NOME", "TURMA", "DISCI", "SENHA", "ID", "{}", "ERROR"], (resultado) => {
-                    resposta = resultado.resposta;
-                    erro = resultado.erro;
-                    if (resposta != null) {
-                        if (resposta == "EML") {
-                            dispararErro("Esse email já foi usado anteriormente")
-                            sairCarregamento()
-                        }
-                        if (resposta == "NOME") {
-                            dispararErro("Erro na requisição: nome inválido")
-                            sairCarregamento()
-                        }
-                        if (resposta == "TURMA") {
-                            dispararErro("Erro na requisição: turma inválida")
-                            sairCarregamento()
-                        }
-                        if (resposta == "DISCI") {
-                            dispararErro("Erro na requisição: disciplina inválida")
-                            sairCarregamento()
-                        }
-                        if (resposta == "SENHA") {
-                            dispararErro("Erro na requisição: senha inválida")
-                            sairCarregamento()
-                        }
-                        if (resposta == "ID") {
-                            dispararErro("Erro na requisição: id inválido")
-                            sairCarregamento()
-                        }
-                        if (resposta == "ERROR") {
-                            dispararErro("Erro na requisição: erro grave")
-                            sairCarregamento()
-                        }
-                        if (resposta == "{}") {
-                            enviarEmailConfirmação()
-                        }
-                    } else {
-                        dispararErro("Erro interno no sistema. Requisição negada")
-                        alert(erro)
-                    }
-                });
+            if (jsonDados["tipo"] == "ALU") {
+                request.add("turma", $("#selectTurma").val())
+            } else {
+                request.add("turma", "null")
             }
-        })
-    }
+            if (jsonDados["tipo"] == "DOC") {
+                request.add("disciplinas", pegarDisciplinas())
+            } else {
+                request.add("disciplinas", "null")
+            }
+            request.send("GET", ["EML", "NOME", "TURMA", "DISCI", "SENHA", "ID", "{}", "ERROR"], (resultado) => {
+                resposta = resultado.resposta;
+                erro = resultado.erro;
+                if (resposta != null) {
+                    if (resposta == "EML") {
+                        dispararErro("Esse email já foi usado anteriormente")
+                        sairCarregamento()
+                    }
+                    if (resposta == "NOME") {
+                        dispararErro("Erro na requisição: nome inválido")
+                        sairCarregamento()
+                    }
+                    if (resposta == "TURMA") {
+                        dispararErro("Erro na requisição: turma inválida")
+                        sairCarregamento()
+                    }
+                    if (resposta == "DISCI") {
+                        dispararErro("Erro na requisição: disciplina inválida")
+                        sairCarregamento()
+                    }
+                    if (resposta == "SENHA") {
+                        dispararErro("Erro na requisição: senha inválida")
+                        sairCarregamento()
+                    }
+                    if (resposta == "ID") {
+                        dispararErro("Erro na requisição: id inválido")
+                        sairCarregamento()
+                    }
+                    if (resposta == "ERROR") {
+                        dispararErro("Erro na requisição: erro grave")
+                        sairCarregamento()
+                    }
+                    if (resposta == "{}") {
+                        enviarEmailConfirmação()
+                    }
+                } else {
+                    dispararErro("Erro interno no sistema. Requisição negada")
+                    alert(erro)
+                }
+            });
+        }
+    })
 }
 
 function enviarEmailConfirmação(novamente) {

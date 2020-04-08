@@ -1,8 +1,8 @@
 <?php
 if (isset($_GET['codigo'])) {
-    require('../main.php');
-    require('../misc.php');
-    require('../security.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/misc.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/security.php");
     $value = proteger($_GET['codigo']);
 
     $queryCodigosTexto = "SELECT * FROM codigos_email where valor='$value' and tipo = 'VAL' limit 1";
@@ -27,10 +27,10 @@ if (isset($_GET['codigo'])) {
 
 #Criar código e enviar email
 if (isset($_GET['emailValidacao']) && isset($_GET['id'])) {
-    require('../main.php');
-    require('../email/email.php');
-    require('../misc.php');
-    require('../security.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/misc.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/security.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/email/email.php");
 
     $id = proteger($_GET['id']);
     $queryPessoaTexto = "
@@ -76,10 +76,10 @@ if (isset($_GET['emailValidacao']) && isset($_GET['id'])) {
 }
 
 if (isset($_GET['emailTrocarSenha']) && isset($_GET['email'])) {
-    require('../main.php');
-    require('../email/email.php');
-    require('../misc.php');
-    require('../security.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/misc.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/security.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/email/email.php");
 
     $email = proteger($_GET['email']);
     $queryPessoaTexto = "

@@ -1,5 +1,5 @@
 .swal2-container.swal2-shown {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
 
 .linhaCampo {
@@ -23,6 +23,7 @@
     padding-right: 0px !important;
 
 }
+
 .btn-confirmar {
     color: white !important;
     width: 50%;
@@ -43,4 +44,97 @@
 
 .toast-ok {
     color: rgb(14, 141, 14);
+}
+
+/* Popup */
+
+.popupShow {
+    display: none;
+    position: absolute;
+    width: 250px;
+    height: 140px;
+    left: -210;
+    background-color: rgb(253, 253, 253);
+    border: 1px solid rgb(177, 177, 177);
+    -webkit-box-shadow: 5px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    -moz-box-shadow: 7px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    box-shadow: 7px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    padding: 10px;
+    transition: 200ms;
+}
+
+.popupShow:after {
+    content: '';
+    border-top: 1px solid rgb(177, 177, 177);
+    border-right: 1px solid rgb(177, 177, 177);
+    background-color: rgb(253, 253, 253);
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    right: -11;
+    top: 26;
+    box-shadow: 0 -5px 5px -5px rgba(69, 56, 69, 0.19);
+    box-shadow: 5px 0 5px -5px rgba(69, 56, 69, 0.19);
+}
+
+.popupShow2 {
+    width: 250px;
+    height: 60px;
+    top: 232;
+    left: -210;
+}
+
+.progress {
+    margin-bottom: 5px;
+}
+
+.forcaTitulo {
+    font-size: 18px
+}
+
+.forcaSub {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.diferentes {
+    display:flex;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    align-items: center;
+}
+
+#força {
+    color: crimson;
+}
+
+/* Responsive */
+
+@media only screen and (max-width: 878px) {
+    .popupShow {
+        left: 55;
+        top: -10;
+    }
+
+    .popupShow2 {
+        top: 305 !important;
+        top: -11;
+    }
+
+    .popupShow2:after {
+        transform: rotate(225deg);
+        top: -11 !important;
+    }
+
+    .popupShow:after {
+        top: auto;
+        left: 10px;
+        bottom: -11px;
+        border-bottom: 1px solid rgb(177, 177, 177);
+        border-top: 0px solid rgb(177, 177, 177);
+        
+    }
 }

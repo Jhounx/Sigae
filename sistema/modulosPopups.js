@@ -14,7 +14,7 @@ function alterarSenhaShow() {
     $mandou = false;
     Swal.fire({
         title: "Deseja continuar?",
-        html: '<div style="text-align:center">Podemos enviar um e-mail para que possamos continuar a alteração da senha?</div>',
+        html: '<div style="text-align:center">Podemos enviar um e-mail para que <br>possamos continuar a alteração da senha?</div>',
         type: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

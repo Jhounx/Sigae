@@ -1,5 +1,5 @@
 /* Funcionalidades de versão */
-var versao = "Dev 1.10"
+var versao = "Dev 1.11"
 
 function definirVersao() {
     $(".versao").text(versao)

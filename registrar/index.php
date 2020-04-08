@@ -1,3 +1,11 @@
+<?php
+session_name('sessao');
+session_set_cookie_params(3600 * 24);
+session_start();
+if (isset($_SESSION['permissaoSistema'])) {
+    header('location: ../');
+}
+?>
 <html>
 
 <head>
@@ -21,6 +29,7 @@
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
     <script src="../componentes/APIs/param.js"></script>
+    <script src="../componentes/dados.js"></script>
     <script src="./javascript.js"></script>
     <script src="./validacao.js"></script>
     <script src="../componentes/request.js"></script>
@@ -123,7 +132,6 @@
                                 <option disabled selected>Escolha uma opção</option>
                             </select>
                         </div>
-                        <label class="msgInputError" id="erro1"></label>
                     </div>
                     <!-- Sua turma -->
                     <div class="row justify-content-center linha linhaTurma" style="display:none">
@@ -142,7 +150,6 @@
                                 <option disabled selected>Escolha uma opção</option>
                             </select>
                         </div>
-                        <label class="msgInputError" id="erro2"></label>
                     </div>
                     <!-- Disciplinas ministradas -->
                     <div class="row justify-content-center linha linhaDisciplina" style="display:none">
@@ -160,7 +167,6 @@
                             <select id="selectDisciplinas" multiple data-live-search="true" class="selectDisciplinas">
                             </select>
                         </div>
-                        <label class="msgInputError" id="erro3"></label>
                     </div>
                     <!-- E-mail -->
                     <div class="row justify-content-center linha">
@@ -175,10 +181,10 @@
                             O e-mail também servirá para recuperar a conta caso haja perda de senha
                         </div>
                         <div class="input-field">
-                            <input spellcheck="false" id="email" type="email" autocomplete="false" onfocusout="perdeuFocus('#email')" oninput="this.value=this.value.toLowerCase()">
+                            <input spellcheck="false" id="email" type="email" autocomplete="false" oninput="this.value=this.value.toLowerCase()">
                             <label for="email">E-mail</label>
                         </div>
-                        <label class="msgInputError" id="erro4"></label>
+                        <label class="msgInputError" id="erro1"></label>
                     </div>
                     <!-- Senha -->
                     <div class="row justify-content-center linha">
@@ -191,18 +197,26 @@
                             Digite uma senha que contenha entre 6 e 30 caracteres:
                         </div>
                         <div class="input-field">
-                            <input spellcheck="false" id="senha1" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha1')">
+                            <div class="popupShow popupShow1">
+                                <h7 class="forcaTitulo"><b>Força de senha: </b><a id="força">Inválida</a></h7>
+                                <div class="progress">
+                                    <div class="determinate"></div>
+                                </div>
+                                <h6 class="forcaSub">
+                                    Mínimo de 6 caracteres. Não use uma senha de outros sites, ou algo muito óbvio - como o seu próprio nome
+                                </h6>
+                            </div>
+                            <input spellcheck="false" id="senha1" type="password" autocomplete="false" onfocus="ganhouFocus('#senha1')" onfocusout="perdeuFocus('#senha1')">
                             <label for="senha1">Senha</label>
                         </div>
-                        <label class="msgInputError" id="erro5"></label>
                         <div class="input-field">
-                            <input spellcheck="false" id="senha2" type="password" autocomplete="false" onfocusout="perdeuFocus('#senha2')">
+                            <input spellcheck="false" id="senha2" type="password" autocomplete="false" onfocus="ganhouFocus('#senha2')" onfocusout="perdeuFocus('#senha2')">
                             <label for="senha2">Repetir senha</label>
                         </div>
-                        <label class="msgInputError" id="erro6"></label>
+                        <label class="msgInputError" id="erro2"></label>
                     </div>
                     <div class="row justify-content-center linha">
-                        <a class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="inscreverUsuario()">Finalizar registro</a>
+                        <a disabled class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="inscreverUsuario()">Finalizar registro</a>
                     </div>
                     <script>
                         $(window).on("resize", function() {

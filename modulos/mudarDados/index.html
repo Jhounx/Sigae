@@ -1,7 +1,7 @@
 <modulo>
     <div class="botoes">
-        <a class="waves-effect waves-light btn"><i class="material-icons left">save</i>Salvar dados</a>
-        <a class="waves-effect waves-light btn" onclick="linha7.rodar()"><i class="material-icons left">undo</i>Desfazer alterações</a>
+        <a disabled id="salvarDados" class="waves-effect waves-light btn btn-top" onclick="salvarDados()"><i class="material-icons left">save</i>Salvar dados</a>
+        <a disabled id="undoDados" class="waves-effect waves-light btn btn-top" onclick="linha8.rodar()"><i class="material-icons left">undo</i>Desfazer alterações</a>
     </div>
     <ul class="collapsible" data-collapsible="accordion">
         <li id="l1">
@@ -9,9 +9,7 @@
             </div>
             <div class="collapsible-body">
                 <h2 class="labelLi">Selecione uma opção</h2>
-                <select class="selectpicker selectNome">
-
-                </select>
+                <select class="selectpicker selectNome"></select>
             </div>
         </li>
         <li id="l2">
@@ -50,11 +48,36 @@
             <div class="collapsible-header"><i class="material-icons icone-tab">add_a_photo</i>Alterar foto de perfil<div class="editado" id="ed5">(alterado)</div>
             </div>
             <div class="collapsible-body">
-                <div class="row justify-content-center">
-                    <img src="../icones/semFoto.png" width="180" height="180" class="circle responsive-img">
+                <div id="parte1">
+                    <div class="row justify-content-center">
+                        <img id="previewImage" src="../back-end/fotos/fotos.php?request" width="120" height="120" class="circle responsive-img">
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom: 10px;">
+                        <a class="waves-effect waves-light btn" onclick="$('#inputImage').click()"><i class="material-icons left">folder_open</i>Procurar foto...</a>
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom: 10px;">
+                        <a id="resetFoto" disabled class="waves-effect waves-light btn" onclick="resetFoto()"><i class="material-icons left">undo</i>Redefinir alteração</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a id="deletarFoto" class="waves-effect waves-light btn" onclick="deletarFoto()"><i class="material-icons left">delete_forever</i>Remover foto</a>
+                    </div>
+                    <input id="inputImage" type="file" accept="image/x-png,image/gif,image/jpeg"/>
                 </div>
-                <div class="row justify-content-center">
-                    <input type="file" class="file-input" required>
+                <div id="parte2">
+                    <div class="row justify-content-center">
+                        <div class="containerEdicao">
+                            <img id="imagemCrop">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom: 10px;">
+                        <a class="waves-effect waves-light btn" onclick="redimensionarImagem()"><i class="material-icons left">add_a_photo</i>Definir foto</a>
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom: 10px;">
+                        <a class="waves-effect waves-light btn" onclick="rotacionarFoto()"><i class="material-icons left">autorenew</i>Rotacionar foto</a>
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom: 10px;">
+                        <a class="waves-effect waves-light btn" onclick="retornarParte1()"><i class="material-icons left">undo</i>Cancelar</a>
+                    </div>
                 </div>
             </div>
         </li>

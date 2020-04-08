@@ -305,8 +305,71 @@ body {
     display: none;
 }
 
+/* Popup */
+
+.popupShow {
+    display: none;
+    position: absolute;
+    width: 250px;
+    height: 140px;
+    left: -270;
+    background-color: rgb(253, 253, 253);
+    top: -14px;
+    border: 1px solid rgb(177, 177, 177);
+    -webkit-box-shadow: 5px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    -moz-box-shadow: 7px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    box-shadow: 7px 7px 5px -4px rgba(69, 56, 69, 0.19);
+    padding: 10px;
+    transition: 200ms;
+}
+
+.popupShow:after {
+    content: '';
+    border-top: 1px solid rgb(177, 177, 177);
+    border-right: 1px solid rgb(177, 177, 177);
+    background-color: rgb(253, 253, 253);
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    right: -11;
+    top: 26;
+    box-shadow: 0 -5px 5px -5px rgba(69, 56, 69, 0.19);
+    box-shadow: 5px 0 5px -5px rgba(69, 56, 69, 0.19);
+}
+
+.progress {
+    margin-bottom: 5px;
+}
+
+.forcaTitulo {
+    font-size: 18px;
+    color: #545454;
+}
+
+.forcaSub {
+    color: #545454;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#força {
+    color: crimson;
+}
 
 /* MISC */
+
+div.selectNome > .dropdown-menu > .inner > ul > .disabled {
+    display: none !important;
+}
+
+div.selectTurma > .dropdown-menu > .inner > ul > .disabled, .dropdown-divider.optgroup-1div {
+    display: none !important;
+}
+
+.bs-searchbox > input {
+    margin-bottom: -2px !important;
+}
 
 .toastTexto {
     margin-left: 8px;

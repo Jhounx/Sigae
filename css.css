@@ -1,6 +1,6 @@
 body {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     background: linear-gradient(#606c88, #3f4c6b);
     position: relative !important;
 }
@@ -125,6 +125,10 @@ button:focus {
 }
 
 /* Alertas */
+
+.swal2-top-end {
+    height: 100px !important;
+}
 
 .divContainer {
     display: inline-flex;

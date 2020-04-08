@@ -29,21 +29,26 @@ class Request {
 
         }).done(function (resposta) {
             var objeto = new ObjectResposta()  
-            if (esperado[0] == "JSON") {
-                try {
-                    var json = JSON.parse(resposta);
-                    objeto.resposta = json;
-                } catch (e) {
-                    objeto.erro = resposta;
-                }
+            if(resposta == "NEGADO") {
+                window.location.href="../?expirado=true";
+                return;
             } else {
-                for (var i = 0; i < esperado.length; i++) {
-                    if (esperado[i] == resposta) {
-                        objeto.resposta = resposta;
+                if (esperado[0] == "JSON") {
+                    try {
+                        var json = JSON.parse(resposta);
+                        objeto.resposta = json;
+                    } catch (e) {
+                        objeto.erro = resposta;
                     }
-                }
-                if (objeto.resposta == null) {
-                    objeto.erro = resposta;
+                } else {
+                    for (var i = 0; i < esperado.length; i++) {
+                        if (esperado[i] == resposta) {
+                            objeto.resposta = resposta;
+                        }
+                    }
+                    if (objeto.resposta == null) {
+                        objeto.erro = resposta;
+                    }
                 }
             }
             callback(objeto);

@@ -16,26 +16,27 @@ function sideMenus() {
     node2 = new Node("Alunos e professores", "school")
     conjunto2 = new Conjunto()
     node2.add(conjunto2)
-    linha5 = new Linha("Alunos", null, "#conjunto2", "--alunos");
-    linha6 = new Linha("Docentes e monitores", null, "#conjunto2", "--docentes");
+    linha5 = new Linha("Minha Turma", null, "#conjunto2", "--minhaTurma");
+    linha6 = new Linha("Alunos", null, "#conjunto2", "--alunos");
+    linha7 = new Linha("Docentes e monitores", null, "#conjunto2", "--docentes");
 
     //Meu usuário
     node3 = new Node("Meu usuário", "people")
     conjunto3 = new Conjunto()
     node3.add(conjunto3)
-    linha7 = new Linha("Alterar meus dados", null, "#conjunto3", "--mudarDados");
-    linha8 = new Linha("Alterar minha senha", null, "#conjunto3", "alterarSenhaShow()");
+    linha8 = new Linha("Alterar meus dados", null, "#conjunto3", "--mudarDados");
+    linha9 = new Linha("Alterar minha senha", null, "#conjunto3", "alterarSenhaShow()");
 
     //Configurações
     node4 = new Node("Configurações", "settings")
     conjunto4 = new Conjunto()
     node4.add(conjunto4)
-    linha9 = new Linha("Alterar notificações", null, "#conjunto4", "alterarNotificacoesShow()");
-    linha10 = new Linha("Abrir console", null, "#conjunto4", "abrirConsole()");
-    linha11 = new Linha("Sobre o SiGAÊ", null, "#conjunto4", "sobreSigae()");
+    linha10 = new Linha("Alterar notificações", null, "#conjunto4", "alterarNotificacoesShow()");
+    linha11 = new Linha("Abrir console", null, "#conjunto4", "abrirConsole()");
+    linha12 = new Linha("Sobre o SiGAÊ", null, "#conjunto4", "sobreSigae()");
 
     //Finalizar sessão
-    linha12 = new Linha("Finalizar sessão", "exit_to_app", null, "finalizarSessao()");
+    linha13 = new Linha("Finalizar sessão", "exit_to_app", null, "finalizarSessao()");
 
     modulos()
 }
@@ -44,8 +45,13 @@ function modulos() {
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, false, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
+    atendimentosInscritos = new Modulo("atendimentosInscritos", "../modulos/atendimentosInscritos", "Meus atendimentos inscritos", "perm_contact_calendar", true, true, linha4);
+
+    minhaTurma = new Modulo("minhaTurma", "../modulos/pessoal/minhaTurma", "Minha Turma", "school", true, true, linha5);
+    alunos = new Modulo("alunos", "../modulos/pessoal/alunos", "Alunos", "perm_contact_calendar", true, true, linha6);
+    docentes = new Modulo("docentes", "../modulos/pessoal/docentes", "Docentes e monitores", "school", true, true, linha7);
     
-    mudarDados = new Modulo("mudarDados", "../modulos/mudarDados", "Alterar dados", "build", true, true, linha7);
+    mudarDados = new Modulo("mudarDados", "../modulos/mudarDados", "Alterar dados", "build", true, true, linha8);
     //mudarDados.wait()
 
     erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
@@ -251,11 +257,13 @@ class Linha {
                         if (click == 'click') {
                             add_parametros("modulo", moduloDoArray.id, true)
                         }
+                    } else {
+                        removeParamByKey("modulo")
                     }
                 }
             }
             if(achou == false) {
-                erro("O módulo '" + modulo + "' não existe")
+                acionarErro("O módulo '" + modulo + "' não existe")
                 removeAllSelection()
             }
         }
@@ -265,7 +273,7 @@ class Linha {
                 fun = fun.slice(0, -2);
                 window[fun]()
             } catch (err) {
-               erro("A função '" + this.action + "' não existe")
+                acionarErro("A função '" + this.action + "' não existe")
                removeAllSelection()
             }
         }

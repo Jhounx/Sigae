@@ -70,7 +70,7 @@ class Modulo {
                 if (eval("typeof init_" + classe.id) == "function") {
                     window["init_" + classe.id]()
                 } else {
-                    erro("A função " + "'init_" + classe.id + "' não existe")
+                    acionarErro("A função " + "'init_" + classe.id + "' não existe")
                 }
             }
         }, 500);

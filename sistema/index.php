@@ -1,6 +1,8 @@
 <?php
-include('../back-end/logar.php');
-include('../back-end/dados.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/back-end/main.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/back-end/dados.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/back-end/security.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/back-end/logar.php');
 session_name('sessao');
 session_set_cookie_params(3600 * 24);
 session_start();
@@ -12,6 +14,7 @@ if (!isset($_SESSION['permissaoSistema'])) {
     header('location: ../?expirado=true');
 }
 $id = $_SESSION['permissaoSistema'];
+$dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
 ?>
 <html>
 
@@ -24,6 +27,7 @@ $id = $_SESSION['permissaoSistema'];
     <link rel="stylesheet" href="../componentes/APIs/bootstrap.min.css">
     <link rel="stylesheet" href="../componentes/APIs/materialize.min.css">
     <link rel="stylesheet" href="../componentes/APIs/hamburgers.min.css">
+    <link rel="stylesheet" href="../componentes/APIs/cropper.min.css">
     <link rel="stylesheet" href="../componentes/APIs/icon.css">
     <link rel="stylesheet" href="./css.css">
     <link rel="stylesheet" href="./responsive.css">
@@ -36,6 +40,7 @@ $id = $_SESSION['permissaoSistema'];
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
+    <script src="../componentes/APIs/cropper.min.js"></script>
     <script src="./javascript.js"></script>
     <script src="./modulosPopups.js"></script>
     <script src="../componentes/ModuloRender.js"></script>
@@ -49,6 +54,7 @@ $id = $_SESSION['permissaoSistema'];
     <script src="../componentes/APIs/calendarize.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
     <script src="../componentes/APIs/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.js"></script>
 </head>
 
 <body style="width: 100% !important">
@@ -94,7 +100,7 @@ $id = $_SESSION['permissaoSistema'];
                     <div class="sideDiv">
                         <div class="divTitulo">
                             <div style="margin-top: 10px;margin-bottom: 10px;" class="row justify-content-center">
-                                <img class="materialboxed circle" width="100" height="100" src="../icones/semFoto.png">
+                                <img class="materialboxed circle" width="100" height="100" src="../back-end/fotos/fotos.php?request">
                             </div>
                             <h2 class="nome"></h2>
                             <h2 class="tipo"></h2>
@@ -132,19 +138,36 @@ $id = $_SESSION['permissaoSistema'];
             </footer>
             <script id="scriptJson">
                 <?php
-                $dados = pegarDadosUsuario($id);
+                //$dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
                 echo "initDados('$dados')"
                 ?>
             </script>
             <script>
                 init()
-                document.addEventListener("DOMContentLoaded", function(event) {
-                    setTimeout(function() {
-                        $("#scriptJson").remove();
-                        $(".divCarregamento").hide()
-                        $(".tudo").fadeIn(1200);
-                        posInit()
-                    }, 500);
+                var l1 = false, l2 = false;
+                $(window).on("load", function() {
+                    l1 = true;
+                    if (l2 == true) {
+                        setTimeout(function() {
+                            $("#scriptJson").remove();
+                            $(".divCarregamento").hide()
+                            $(".tudo").fadeIn(1200);
+                            posInit()
+                            console.log("1")
+                        }, 500);
+                    }
+                });
+                document.fonts.ready.then(function() {
+                    l2 = true;
+                    if(l1 == true) {
+                        setTimeout(function() {
+                            $("#scriptJson").remove();
+                            $(".divCarregamento").hide()
+                            $(".tudo").fadeIn(1200);
+                            posInit()
+                            console.log("2")
+                        }, 500);
+                    }
                 });
             </script>
         </div>
@@ -167,10 +190,10 @@ $id = $_SESSION['permissaoSistema'];
             <div class="noAlertas">Não há nenhum novo alerta ou erro</div>
         </div>
         <!-- notificacoes -->
-        <div class="notificacoesDiv"></div>
+        <!-- <div class="notificacoesDiv"></div>
         <div class="circuloNotificacao">
             <i class="material-icons notificacoesMenu">menu</i>
-        </div>
+        </div> -->
     </div>
     <div class="headerPopup"></div>
 </body>

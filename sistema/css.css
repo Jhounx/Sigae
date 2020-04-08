@@ -82,6 +82,7 @@ html {
     bottom: 100px !important;
     height: calc(100vh) !important;
     overflow-y: hidden;
+    z-index: 2000 !important;
 }
 
 #sidenav-overlay {
@@ -314,6 +315,7 @@ modulo {
 
 .consoleModal {
     overflow-y: hidden !important;
+    z-index: 5000 !important;
 }
 
 .modal-content {
@@ -416,7 +418,6 @@ modulo {
 #dropdownConsole {
     width: 200px !important;
 }
-
 /* Notificação */
 
 .circuloNotificacao {

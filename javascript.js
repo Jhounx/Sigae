@@ -31,7 +31,7 @@ function posInit() {
     esqueciSenha.setJS(true)
     esqueciSenha.invoker()
 
-    sobre = new Popup("sobre", "../modulos/sobre", "Sobre o SiGAÊ", "500px", "620px");
+    sobre = new Popup("sobre", "../modulos/sobre", "Sobre o SiGAÊ");
     sobre.setCss(true)
     sobre.setJS(true)
     sobre.setScroll(true)

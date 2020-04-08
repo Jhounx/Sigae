@@ -1,8 +1,7 @@
 <?php
 /* Verificar chave, criar sessão e retornar dados*/
 function validarKey($key) {
-    include('./main.php');
-    //include('./security.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
     $queryString = "
     select id,nome,matricula,campus,estado,tipo,codigo_acesso,curso from alunos
     where codigo_acesso='$key'
@@ -69,8 +68,7 @@ function validarKey($key) {
 
 /* Realizar registro */
 function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $disciplina) {
-    require('./main.php');
-    require_once('./dados.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
 
     if(emailJaCadastrado($email)) {
         return "EML";
@@ -143,7 +141,7 @@ function registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $discipl
 }
 
 function emailJaCadastrado($email) {
-    include('./main.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
     $queryString = "
         select email from alunos
         where email='$email'
@@ -159,7 +157,7 @@ function emailJaCadastrado($email) {
 }
 
 function cancelarInscricao($id) {
-    include('./main.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
     $query = "
         UPDATE alunos SET `nome.preferencia` = '', senha = '', turma = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
         UPDATE docentes SET `nome.preferencia` = '', senha = '', disciplinas = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
@@ -174,7 +172,7 @@ function cancelarInscricao($id) {
 }
 
 function trocarSenha($id, $senha) {
-    include('./main.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
     removerPermissao($id, "trocarSenha");
     if (strlen($senha) < 6) {
         return "INV";
@@ -193,7 +191,8 @@ function trocarSenha($id, $senha) {
 }
 
 function registroAcabou($id) {
-    include('./main.php');require('./misc.php');
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/misc.php");
     $queryString = "
         select id,estado from alunos
         where id='$id' and estado='ATV'
