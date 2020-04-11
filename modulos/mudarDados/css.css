@@ -17,7 +17,7 @@
     }
 }
 
-.btn {
+.btn-top, .btn-baixo {
     color: white !important;
     width: 250px !important;
     margin-right: 10px !important;
@@ -62,82 +62,6 @@
 
 .input-field {
     width: 100%;
-}
-
-.labelLi {
-    font-size: 20px;
-    color: rgb(112, 121, 201);
-    margin-top: 0px;
-    margin-left: 1px;
-}
-
-.dropdown-menu {
-    max-height: unset !important;
-    min-width: 100% !important;
-    border-radius: 0px !important;
-    border: none !important;
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-.filter-option-inner-inner {
-    text-transform: none !important;
-}
-
-.bootstrap-select {
-    width: 100% !important;
-}
-
-.dropdown-toggle {
-    color: rgb(78, 95, 120) !important;
-    background-color: #f8f9fa !important;
-    border-color: #f8f9fa;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-    width: 100% !important;
-}
-
-.show>.btn-light.dropdown-toggle {
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2) !important;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2) !important;
-}
-
-.bootstrap-select .dropdown-toggle:focus,
-.bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
-    outline: none !important;
-}
-
-.form-control {
-    border-bottom: 1px solid #e9ecef !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-}
-
-.dropdown-header {
-    padding-left: 15px !important;
-}
-
-.selected {
-    background-color: rgb(247, 247, 247) !important;
-    color: white !important;
-}
-
-.inner>ul>li>.active {
-    background-color: rgb(245, 245, 245);
-    color: #212529;
-    outline: none;
-    border: none !important;
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    box-shadow: none !important;
-}
-
-.inner>ul>li>a:active {
-    background-color: rgb(245, 245, 245);
-    color: #212529;
-    outline: none !important;
-    border: none !important;
 }
 
 .icone-tab {

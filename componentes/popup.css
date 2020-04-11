@@ -9,13 +9,14 @@
     overflow-y: hidden;
 }
 
-
 .swal2-container::-webkit-scrollbar {
     display: none;
+    z-index: 9060 !important;
 }
 
 .swal2-container {
     scrollbar-width: none;
+    z-index: 9060 !important;
 }
 
 .swal2-title {

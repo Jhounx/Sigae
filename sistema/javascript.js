@@ -15,15 +15,18 @@ function initSigae() {
     if (jsonDados["tipo"] == "ALU") {
         tipoString = "Discente";
         $("#linha3").hide()
+        $("#linha6").hide()
     }
     if (jsonDados["tipo"] == "DOC") {
         tipoString = "Docente";
         $("#linha4").hide()
+        $("#linha5").hide()
     }
     if (jsonDados["tipo"] == "ADM") {
         tipoString = "Administrador";
         $("#linha3").hide()
         $("#linha4").hide()
+        $("#linha5").hide()
     }
     $(".nome").text(jsonDados["nomePreferencia"])
     $(".tipo").text(tipoString)

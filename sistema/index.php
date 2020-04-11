@@ -32,6 +32,7 @@ $dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
     <link rel="stylesheet" href="./css.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="../componentes/loading.css">
+    <link rel="stylesheet" href="../componentes/select.css">
     <link rel="stylesheet" href="../componentes/popup.css">
     <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
     <link rel="icon" href="../icones/si.png">
@@ -138,7 +139,6 @@ $dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
             </footer>
             <script id="scriptJson">
                 <?php
-                //$dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
                 echo "initDados('$dados')"
                 ?>
             </script>
@@ -153,7 +153,6 @@ $dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
                             $(".divCarregamento").hide()
                             $(".tudo").fadeIn(1200);
                             posInit()
-                            console.log("1")
                         }, 500);
                     }
                 });
@@ -165,7 +164,6 @@ $dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
                             $(".divCarregamento").hide()
                             $(".tudo").fadeIn(1200);
                             posInit()
-                            console.log("2")
                         }, 500);
                     }
                 });
