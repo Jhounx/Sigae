@@ -3,6 +3,7 @@ body {
     height: 100% !important;
     background: linear-gradient(#606c88, #3f4c6b);
     position: relative !important;
+    min-height: 100%;
 }
 
 .centro {
@@ -39,7 +40,6 @@ body {
 .linha4 {
     margin-top: 8px
 }
-
 
 .titulo {
     white-space: nowrap;

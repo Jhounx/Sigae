@@ -19,7 +19,6 @@ class Modulo {
     }
 
     invoker() {
-
         $("modulo").remove();
         $(".content-head").empty()
         $(".breadcrumbs").hide();

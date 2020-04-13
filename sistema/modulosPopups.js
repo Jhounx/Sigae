@@ -31,9 +31,8 @@ function alterarSenhaShow() {
                     $(".swal2-content > div").hide()
 
                     request = new Request()
-                    request.add("emailTrocarSenha", "")
+                    request.add("enviarEmailTrocarSenha", "")
                     request.add("email", getEmail())
-                    request.setURL("../back-end/email/requestEmail.php")
                     request.send("GET", ["OK", "EML", "INV"], (resultado) => {
                         resposta = resultado.resposta;
                         erro = resultado.erro;

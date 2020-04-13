@@ -23,7 +23,7 @@ function init() {
 }
 
 function posInit() {
-    comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "82%");
+    comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "85%");
     comoCriar.setScroll(true)
     comoCriar.invoker()
     esqueciSenha = new Popup("esqueciSenha", "../modulos/login/esqueciSenha", "Esqueci minha senha", "500px", "460px");
@@ -193,7 +193,7 @@ class Campo {
                     $(enterComponent).focus();
                 }
                 if (enterClick == "click") {
-                    $(enterComponent).focus();
+                    document.activeElement.blur();
                     $(enterComponent).click();
                 }
             }

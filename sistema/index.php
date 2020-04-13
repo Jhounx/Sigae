@@ -1,20 +1,18 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/back-end/main.php');
-require($_SERVER['DOCUMENT_ROOT'] . '/back-end/dados.php');
-require($_SERVER['DOCUMENT_ROOT'] . '/back-end/security.php');
-require($_SERVER['DOCUMENT_ROOT'] . '/back-end/logar.php');
+require $_SERVER['DOCUMENT_ROOT'] . "/back-end/autoloader.php";
+$user = new Usuario();
 session_name('sessao');
 session_set_cookie_params(3600 * 24);
 session_start();
 if (isset($_GET['finalizarSessao'])) {
-    logout();
+    $user->logout();
     header('location: ../');
 }
 if (!isset($_SESSION['permissaoSistema'])) {
     header('location: ../?expirado=true');
 }
 $id = $_SESSION['permissaoSistema'];
-$dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
+$dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
 ?>
 <html>
 
@@ -101,7 +99,7 @@ $dados = pegarDadosUsuario($_SESSION['permissaoSistema']);
                     <div class="sideDiv">
                         <div class="divTitulo">
                             <div style="margin-top: 10px;margin-bottom: 10px;" class="row justify-content-center">
-                                <img class="materialboxed circle" width="100" height="100" src="../back-end/fotos/fotos.php?request">
+                                <img class="materialboxed circle" width="100" height="100" src="../back-end/request.php?pegarFoto">
                             </div>
                             <h2 class="nome"></h2>
                             <h2 class="tipo"></h2>

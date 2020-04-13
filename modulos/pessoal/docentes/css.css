@@ -1,6 +1,13 @@
+.geral {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+}
+
 .topBar {
     width: 100%;
-    height: 135px;
+    height: 105px;
     background-color: rgb(245, 245, 245);
     border-radius: 5px;
 }
@@ -50,9 +57,24 @@
 
 /* Table */
 
+.flexTabela {
+    flex-grow: 1;
+    background-color: rgb(250, 250, 250);
+}
+
 .tableDiv {
     width: 100%;
     overflow-x: auto;
+    padding-bottom: 60px;
+}
+
+.tabela {
+    display: none;
+}
+
+#carregamentoTabela {
+    z-index: 1000;
+    /* display: none; */
 }
 
 .responsive-table {
@@ -92,15 +114,71 @@ td, th {
     padding-left: 10px;
 }
 
+thead>tr {
+    cursor:auto !important;
+}
+
+tbody>tr {
+    background-color: white;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: rgb(241, 241, 241);
+}
+
+
+
 /* Pagination */
+
+.divPagination {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgb(59, 59, 75);
+}
 
 .pagination {
     margin-top: 12px;
 }
 
+.numero {
+    width: 32px !important;
+    height: 32px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.aPage {
+    padding: 0px !important;
+    color: white !important;
+}
+
+.numero:hover {
+    background-color: rgb(74, 80, 88);
+}
+
 .pontinhos {
     display: flex !important;
-    align-items: center !important;
+    color: white !important;
+    position: relative;
+    width: 20px !important;
+    height: 32px !important;
+}
+
+.aPontinhos {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    padding: 0px !important;
+}
+
+.setasA {
+    color: white;
+}
+
+.disabled {
+    color: rgb(192, 206, 226) !important;
 }
 
 @media only screen and (max-width : 640px) {

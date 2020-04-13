@@ -1,57 +1,77 @@
 <modulo>
-    <div class="topBar">
-        <div class="title">Docentes e monitores do campus <b>Null</b></div>
-        <div class="toolbar">
-            <input class="browser-default campoFiltro" placeholder="Digite para filtrar" type="text">
-            <select class="selectpicker selectFiltro">
-                <option>Filtrar por nome</option>
-                <option>Filtrar por disciplina ministrada</option>
-                <option>Filtrar por turma ministrada</option>
-            </select>
+    <div class="geral">
+        <div class="topBar">
+            <div class="title">Docentes e monitores do campus <b>Null</b></div>
+            <div class="toolbar">
+                <input class="browser-default campoFiltro" placeholder="Digite para filtrar" type="text">
+                <select class="selectpicker selectFiltro">
+                    <option>Filtrar por nome</option>
+                    <option>Filtrar por disciplina ministrada</option>
+                    <option>Filtrar por turma ministrada</option>
+                </select>
+            </div>
+        </div>
+        <div class="flexTabela">
+            <div class="tableDiv">
+                <div class="loaderDiv">
+                    <img class="imgCarregamento" id="carregamentoTabela" src="../icones/spinner.svg" style="/* display: none; */">
+                </div>
+                <table class="tabela striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Disciplinas</th>
+                            <th class="text-right">Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover" onclick="">
+                            <td>
+                                <div class="corpoNome">
+                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
+                                    <div class="nomeLabel">hjhkjhkjh</div>
+                                </div>
+                            </td>
+                            <td>Informática</td>
+                            <td class="text-right">Docente</td>
+                        </tr>
+                        <tr class="hover" onclick="">
+                            <td>
+                                <div class="corpoNome">
+                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
+                                    <div class="nomeLabel">hjhkjhkjh</div>
+                                </div>
+                            </td>
+                            <td>Informática</td>
+                            <td class="text-right">Docente</td>
+                        </tr>
+                        <tr class="hover" onclick="">
+                            <td>
+                                <div class="corpoNome">
+                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
+                                    <div class="nomeLabel">hjhkjhkjh</div>
+                                </div>
+                            </td>
+                            <td>Informática</td>
+                            <td class="text-right">Docente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="divPagination">
+                <ul class="pagination page-top">
+                    <li class="disabled setas"><a class="setasA disabled"><i class="material-icons icone disabled">chevron_left</i></a></li>
+                    <li class="active numero"><a class="aPage">1</a></li>
+                    <li class="pontinhos"><a class="aPontinhos">...</a></li>
+                    <li class="waves-effect numero"><a class="aPage">2</a></li>
+                    <li class="waves-effect numero"><a class="aPage">3</a></li>
+                    <li class="waves-effect numero"><a class="aPage">4</a></li>
+                    <li class="waves-effect numero"><a class="aPage">5</a></li>
+                    <li class="pontinhos"><a class="aPontinhos">...</a></li>
+                    <li class="waves-effect numero"><a class="aPage">x</a></li>
+                    <li class="waves-effect setas"><a class="setasA"><i class="material-icons setasA">chevron_right</i></a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="tableDiv">
-        <table class="striped">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Disciplinas</th>
-                    <th class="text-right">Tipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="hover" onclick="">
-                    <td>
-                        <div class="corpoNome">
-                            <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
-                            <div class="nomeLabel">hjhkjhkjh</div>
-                        </div>
-                    </td>
-                    <td>Informática</td>
-                    <td class="text-right">Docente</td>
-                </tr>
-                <tr class="hover" onclick="">
-                    <td>Ciro Batista de Santana</td>
-                    <td>Matemática, estatística</td>
-                    <td class="text-right">Docente</td>
-                </tr>
-                <tr class="hover" onclick="">
-                    <td>Alberto Álvaro Leal Neto</td>
-                    <td>Sociologia, Filosofia, Geografia, Desenho</td>
-                    <td class="text-right">Monitor</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <ul class="pagination page-top">
-        <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
-        <li class="active"><a>1</a></li>
-        <li class="waves-effect"><a>2</a></li>
-        <li class="waves-effect"><a>3</a></li>
-        <li class="waves-effect"><a>4</a></li>
-        <li class="waves-effect"><a>5</a></li>
-        <li class="pontinhos">...</li>
-        <li class="waves-effect"><a>x</a></li>
-        <li class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
-    </ul>
 </modulo>

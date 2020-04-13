@@ -37,7 +37,7 @@
     }
 }
 
-@media only screen and (max-height : 800px) {
+/* @media only screen and (max-height : 800px) {
     .navbar {
         height: 80px;
     }
@@ -45,37 +45,12 @@
     .side-nav {
         top: 80px !important;
     }
-}
+} */
 
 /* reduz ainda mais o titulo */
 @media only screen and (max-width : 854px) {
     .titulo {
         font-size: 14px;
-    }
-}
-
-/* diminui a navbar */
-@media only screen and (max-height : 700px) {
-    .navbar {
-        height: 70px;
-    }
-
-    .side-nav {
-        top: 70px !important;
-    }
-
-    .imgTitulo {
-        margin-top: 7px;
-        width: 142px;
-        height: 50px;
-    }
-
-    .button-collapse {
-        margin-top: 10px !important;
-    }
-
-    .titulo {
-        margin-top: 25px;
     }
 }
 

@@ -108,7 +108,7 @@ function carregarDados() {
     if (jsonDados["tipo"] == "ALU") {
         $("#l3").hide();
     }
-    if (jsonDados["tipo"] == "DOC") {
+    if (jsonDados["tipo"] == "DOC" || jsonDados["tipo"] == "MON") {
         $("#l2").hide();
     }
     if (jsonDados["tipo"] == "ADM") {

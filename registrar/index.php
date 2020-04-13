@@ -54,13 +54,15 @@ if (isset($_SESSION['permissaoSistema'])) {
         <div class="tudo">
             <div class="topo">
                 <div class="row justify-content-center">
-                    <img src="../icones/sigae.svg">
+                    <a href="../">
+                        <img src="../icones/sigae.svg">
+                    </a>
                 </div>
                 <h1 class="titulo">Registrar usuário - <b id="partes">Parte 1</b></h1>
             </div>
             <!-- Parte 1 -->
             <div class="parte1 parte">
-                <div class="row justify-content-center">
+                <!-- <div class="row justify-content-center linhaValidar"> -->
                     <div class="contentChave">
                         <div class="input-field inputChave">
                             <input id="campoChave" type="tel">
@@ -83,7 +85,7 @@ if (isset($_SESSION['permissaoSistema'])) {
                             </div>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
             <!-- Parte 2 -->
             <div class="parte2 parte">

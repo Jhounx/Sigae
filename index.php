@@ -1,4 +1,6 @@
 <?php
+require $_SERVER['DOCUMENT_ROOT'] . "/back-end/autoloader.php";
+$user = new Usuario();
 session_name('sessao');
 session_set_cookie_params(3600 * 24);
 session_start();

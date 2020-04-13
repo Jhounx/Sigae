@@ -23,9 +23,8 @@ function enviarEmail() {
     $("#waitingEmail").show()
     $("#botaoEnviarRecuperacao").attr("disabled", true)
     request = new Request()
-    request.add("emailTrocarSenha", "")
+    request.add("enviarEmailTrocarSenha", "")
     request.add("email", $("#recuperarEmail").val())
-    request.setURL("../back-end/email/requestEmail.php")
     request.send("GET", ["OK", "EML", "INV"], (resultado) => {
         resposta = resultado.resposta;
         erro = resultado.erro;

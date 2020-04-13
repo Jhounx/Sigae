@@ -22,6 +22,11 @@ function initSigae() {
         $("#linha4").hide()
         $("#linha5").hide()
     }
+    if (jsonDados["tipo"] == "MON") {
+        tipoString = "Monitor";
+        $("#linha4").hide()
+        $("#linha5").hide()
+    }
     if (jsonDados["tipo"] == "ADM") {
         tipoString = "Administrador";
         $("#linha3").hide()

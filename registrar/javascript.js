@@ -154,7 +154,7 @@ function ajaxDadosParte2() {
             }
         });
     }
-    if (jsonDados["tipo"] == "DOC") {
+    if (jsonDados["tipo"] == "DOC" || jsonDados["tipo"] == "MON") {
         request = new Request()
         request.add("id", id)
         request.add("getDisciplinas", "")
@@ -208,6 +208,10 @@ function renderizarParte2() {
     }
     if (jsonDados["tipo"] == "DOC") {
         $(".tipoParte2").text("Docente")
+        $("#perg3").hide()
+    }
+    if (jsonDados["tipo"] == "MON") {
+        $(".tipoParte2").text("Monitor")
         $("#perg3").hide()
     }
     if (jsonDados["tipo"] == "ADM") {
@@ -289,7 +293,7 @@ function inscreverUsuario() {
             } else {
                 request.add("turma", "null")
             }
-            if (jsonDados["tipo"] == "DOC") {
+            if (jsonDados["tipo"] == "DOC" || jsonDados["tipo"] == "MON") {
                 request.add("disciplinas", pegarDisciplinas())
             } else {
                 request.add("disciplinas", "null")
@@ -346,8 +350,7 @@ function enviarEmailConfirmação(novamente) {
 
     request = new Request()
     request.add("id", jsonDados["id"])
-    request.add("emailValidacao", "")
-    request.setURL("../back-end/email/requestEmail.php")
+    request.add("enviarEmailValidacao", "")
     request.send("GET", ["OK", "INV", "EML"], (resultado) => {
         resposta = resultado.resposta;
         erro = resultado.erro;

@@ -1,11 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/back-end/dados.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/back-end/security.php");
+require $_SERVER['DOCUMENT_ROOT'] . "/back-end/autoloader.php";
+$user = new Usuario();
+$em = new Email();
+$foto = new Foto();
 ob_start();
 
 ########## Permitir requisições sem identificador ##########
-$array = mysqli_fetch_assoc(mysqli_query($conn, 'SELECT * FROM global'));
+$array = mysqli_fetch_assoc(mysqli_query($user->conn, 'SELECT * FROM global'));
 if ($array['debug'] == 'SIM') {
     $GLOBALS['debug'] = true;
 } else {
@@ -18,21 +19,28 @@ if ($array['debug'] == 'SIM') {
 
 /* Verificar o login */
 if (isset($_POST['login']) and isset($_POST['senha'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/logar.php");
-    $login = proteger($_POST['login']);
-    $senha = proteger($_POST['senha']);
-    $retorno = logar($login, $senha);
+    $login = $user->proteger($_POST['login']);
+    $senha = $user->proteger($_POST['senha']);
+    $retorno = $user->logar($login, $senha);
     if ($retorno == '') {
         return 'Estado do usuário inválido';
     }
     echo $retorno;
 }
 
+if (isset($_GET['pegarFoto'])) {
+    if (isset($_GET['id'])) {
+        $id = $user->proteger($_GET['id']);
+        $foto->show($id);
+    } else {
+        $foto->show();
+    }
+}
+
 /* Validar key e retornar JSON dos dados */
 if (isset($_GET['validarKey']) && isset($_GET['codigo'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-    $codigo = proteger($_GET['codigo']);
-    echo(validarKey($codigo));
+    $codigo = $user->proteger($_GET['codigo']);
+    echo($user->validarKey($codigo));
 }
 
 /* Realizar o registro */
@@ -43,72 +51,65 @@ if (isset($_GET['registrarUsuario']) &&
     isset($_GET['senha']) &&
     isset($_GET['turma']) &&
     isset($_GET['disciplinas'])) {
-    verificarSessao(['permissaoRegistro']);
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-    $id = proteger($_GET['id']);
-    $nomePreferencial = proteger($_GET['nomePreferencial']);
-    $email = proteger($_GET['email']);
-    $senha = proteger($_GET['senha']);
-    $turma = proteger($_GET['turma']);
-    $disciplinas = proteger($_GET['disciplinas']);
-    echo(registrarAluno($id, $nomePreferencial, $email, $senha, $turma, $disciplinas));
+    $user->verificarPermissao(['permissaoRegistro']);
+    $id = $user->proteger($_GET['id']);
+    $nomePreferencial = $user->proteger($_GET['nomePreferencial']);
+    $email = $user->proteger($_GET['email']);
+    $senha = $user->proteger($_GET['senha']);
+    $turma = $user->proteger($_GET['turma']);
+    $disciplinas = $user->proteger($_GET['disciplinas']);
+    echo($user->registrar($id, $nomePreferencial, $email, $senha, $turma, $disciplinas));
 }
 
 /* Cancelar registro */
 if (isset($_GET['cancelarInscricao']) && isset($_GET['id'])) {
-    verificarSessao(['permissaoRegistro']);
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-    $id = proteger($_GET['id']);
-    echo(cancelarInscricao($id));
+    $user->verificarPermissao(['permissaoRegistro']);
+    $id = $user->proteger($_GET['id']);
+    echo($user->cancelarInscricao($id));
 }
 
 /* Trocar dados */
 
 if (isset($_POST['alterarDados'])) {
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/back-end/dados.php");
-    verificarSessao(['permissaoSistema']);
-    $id = proteger($_POST['id']);
+    $user->verificarPermissao(['permissaoSistema']);
+    $id = $user->proteger($_POST['id']);
     $nomePreferencia = null;
     $turma = null;
     $disci = null;
     $email = null;
     $img = null;
     if (isset($_POST['nomePreferencia'])) {
-        $nomePreferencia = proteger($_POST['nomePreferencia']);
+        $nomePreferencia = $user->proteger($_POST['nomePreferencia']);
     }
     if (isset($_POST['turma'])) {
-        $turma = proteger($_POST['turma']);
+        $turma = $user->proteger($_POST['turma']);
     }
     if (isset($_POST['disci'])) {
-        $disci = proteger($_POST['disci']);
+        $disci = $user->proteger($_POST['disci']);
     }
     if (isset($_POST['email'])) {
-        $email = proteger($_POST['email']);
+        $email = $user->proteger($_POST['email']);
     }
     if (isset($_POST['img'])) {
-        $img = proteger($_POST['img']);
+        $img = $user->proteger($_POST['img']);
     }
-    echo(mudarDados($id, $nomePreferencia, $turma, $disci, $email, $img));
+    echo($user->mudarDados($id, $nomePreferencia, $turma, $disci, $email, $img));
 }
 
 /* Trocar senha */
 if (isset($_GET['trocarSenha']) && isset($_GET['codigo']) && isset($_GET['senha'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/main.php");
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-
-    $codigo = proteger($_GET['codigo']);
-    $senha = proteger($_GET['senha']);
-    $id = getIDByCodigo($codigo);
-    verificarSessao(['trocarSenha'], $id);
-    echo(trocarSenha($id, $senha));
+    $codigo = $user->proteger($_GET['codigo']);
+    $senha = $user->proteger($_GET['senha']);
+    $id = $user->pegarIDporCodigoEmails($codigo);
+    $user->verificarPermissao(['trocarSenha'], $id);
+    echo($user->trocarSenha($id, $senha));
 }
 
 /* Verificar se o registro acabou */
 if (isset($_GET['registroAcabou']) && isset($_GET['id'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-    verificarSessao(['permissaoRegistro']);
-    $id = proteger($_GET['id']);
-    echo(registroAcabou($id));
+    $user->verificarPermissao(['permissaoRegistro']);
+    $id = $user->proteger($_GET['id']);
+    echo($user->verificarSeJaValidou($id));
 }
 
 ##################################################
@@ -117,38 +118,171 @@ if (isset($_GET['registroAcabou']) && isset($_GET['id'])) {
 
 /* Pegar todas as turmas */
 if (isset($_GET['getTurmas']) && isset($_GET['campus'])) {
-    verificarSessao(['permissaoSistema']);
-    echo(getTurmas());
+    $user->verificarPermissao(['permissaoSistema']);
+    echo($user->getTurmas());
 }
 
 /* Verificar se turma específica existe. SIM/NAO*/
 if (isset($_GET['turmaExiste']) && isset($_GET['turma'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/registro.php");
-    verificarSessao(['permissaoSistema', 'permissaoRegistro']);
-    $turma = proteger($_GET['turma']);
-    echo validarTurma($turma);
+    $user->verificarPermissao(['permissaoSistema', 'permissaoRegistro']);
+    $turma = $user->proteger($_GET['turma']);
+    echo $user->validarTurma($turma);
 }
 
 /* Pegar turmas pelo curso */
 if (isset($_GET['getTurmasByCurso']) && isset($_GET['curso']) && isset($_GET['campus'])) {
-    verificarSessao(['permissaoSistema', 'permissaoRegistro']);
-    $curso = proteger($_GET['curso']);
-    $campus = proteger($_GET['campus']);
-    echo getTurmasByCurso($curso, $campus);
+    $user->verificarPermissao(['permissaoSistema', 'permissaoRegistro']);
+    $curso = $user->proteger($_GET['curso']);
+    $campus = $user->proteger($_GET['campus']);
+    echo $user->getTurmasByCurso($curso, $campus);
 }
 
 /* Pegar todas as disciplinas */
 if (isset($_GET['getDisciplinas'])) {
-    verificarSessao(['permissaoSistema', 'permissaoRegistro']);
-    echo getDisciplinas();
+    $user->verificarPermissao(['permissaoSistema', 'permissaoRegistro']);
+    echo $user->getDisciplinas();
 }
 
 /* Verificar se disciplinas específica existe. SIM/NAO*/
 if (isset($_GET['disciplinasExiste']) && isset($_GET['disciplina'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/back-end/dados.php");
-    verificarSessao(['permissaoSistema', 'permissaoRegistro']);
-    $disciplina = proteger($_GET['disciplina']);
-    echo validarDisciplina($disciplina);
+    $user->verificarPermissao(['permissaoSistema', 'permissaoRegistro']);
+    $disciplina = $user->proteger($_GET['disciplina']);
+    echo $user->validarDisciplina($disciplina);
+}
+
+##################################################
+# TITULO III - JSON dos dados de pessoas
+##################################################
+
+/* Pegar docentes */
+if (isset($_GET['pegarDocentes']) && isset($_GET['pagina'])) {
+    $pagina = $user->proteger($_GET['pagina']);
+    //verificarSessao(['permissaoSistema']);
+
+    //echo($user->getDocentes($pagina));
+}
+
+if (isset($_GET['numeroLinhas']) && isset($_GET['tabela'])) {
+    $tabela = $user->proteger($_GET['tabela']);
+    //verificarSessao(['permissaoSistema']);
+
+    //echo($user->numeroLinhas($tabela));
+}
+
+##################################################
+# TITULO IV - Emails
+##################################################
+
+if (isset($_GET['validacaoRegistro']) && isset($_GET['codigo'])) {
+    $value = $user->proteger($_GET['codigo']);
+
+    $queryCodigosTexto = "SELECT * FROM codigos_email where valor='$value' and tipo = 'VAL' limit 1";
+    $queryCodigo = mysqli_query($user->conn, $queryCodigosTexto);
+    $array = mysqli_fetch_assoc($queryCodigo);
+    if ($user->mysqli_exist($queryCodigo)) {
+        $id = $array['id'];
+        $queryPessoaTexto = "
+        UPDATE alunos SET estado = 'ATV' WHERE id='$id';
+        UPDATE docentes SET estado = 'ATV' WHERE id='$id';
+        UPDATE admins SET estado = 'ATV' WHERE id='$id';
+        DELETE FROM codigos_email WHERE id='$id'";
+        if (mysqli_multi_query($user->conn, $queryPessoaTexto)) {
+            header('Location: ../../?reg=true');
+        } else {
+            echo('Error grave: ' . $user->conn -> error);
+        }
+    } else {
+        echo 'Esse código não é válido. Tente novamente';
+    }
+}
+
+#Criar código e enviar email
+if (isset($_GET['enviarEmailValidacao']) && isset($_GET['id'])) {
+    $id = $user->proteger($_GET['id']);
+    $queryPessoaTexto = "
+    select id, `nome.preferencia`, email, estado from alunos where id= '$id' and estado='REG'
+    union
+    select id, `nome.preferencia`, email, estado from docentes where id= '$id' and estado='REG'
+    union
+    select id, `nome.preferencia`, email, estado from admins where id= '$id' and estado='REG'
+    limit 1";
+    $queryPessoa = mysqli_query($user->conn, $queryPessoaTexto);
+    if ($user->mysqli_exist($queryPessoa)) {
+        $arrayPessoa = mysqli_fetch_assoc($queryPessoa);
+        $email = $arrayPessoa['email'];
+        $nome = $arrayPessoa['nome.preferencia'];
+
+        $queryCodigosTexto = "SELECT * FROM codigos_email where id='$id' and tipo = 'VAL' limit 1";
+        $queryCodigo = mysqli_query($user->conn, $queryCodigosTexto);
+        $array = mysqli_fetch_assoc($queryCodigo);
+        if ($user->mysqli_exist($queryCodigo)) {
+            $link = $user->host . '/back-end/requestEmail.php?codigo=' . $array['valor'];
+            if ($em->enviarEmail('SiGAÊ - Validação de email', 'validarEmail.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
+                echo 'OK';
+            } else {
+                echo 'EML';
+            }
+        } else {
+            $codigo = $user->randomString('1234567890', 50);
+            $link = $user->host . '/back-end/requestEmail.php?codigo=' . $codigo;
+            $queryInsert = "INSERT INTO codigos_email (id, valor, tipo) VALUES ('$id', '$codigo', 'VAL');";
+            if (!mysqli_query($user->conn, $queryInsert)) {
+                echo('Error grave: ' . $user->conn -> error);
+                die();
+            }
+            if ($em->enviarEmail('SiGAÊ - Validação de email', 'validarEmail.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
+                echo 'OK';
+            } else {
+                echo 'EML';
+            }
+        }
+    } else {
+        echo 'INV';
+    }
+}
+
+if (isset($_GET['enviarEmailTrocarSenha']) && isset($_GET['email'])) {
+    $email = $user->proteger($_GET['email']);
+    $queryPessoaTexto = "
+    select id, `nome.preferencia`, email, estado from alunos where email='$email' and estado='ATV' 
+    union
+    select id, `nome.preferencia`, email, estado from docentes where email='$email' and estado='ATV'
+    union
+    select id, `nome.preferencia`, email, estado from admins where email='$email' and estado='ATV'
+    limit 1";
+    $queryPessoa = mysqli_query($user->conn, $queryPessoaTexto);
+    if ($user->mysqli_exist($queryPessoa)) {
+        $arrayPessoa = mysqli_fetch_assoc($queryPessoa);
+        $id = $arrayPessoa['id'];
+        $nome = $arrayPessoa['nome.preferencia'];
+        $queryCodigosTexto = "SELECT * FROM codigos_email where id='$id' and tipo = 'REC' limit 1";
+
+        $queryCodigo = mysqli_query($user->conn, $queryCodigosTexto);
+        $array = mysqli_fetch_assoc($queryCodigo);
+        if ($user->mysqli_exist($queryCodigo)) {
+            $link = $user->host . '/back-end/requestEmail.php?codigo=' . $array['valor'];
+            if ($em->enviarEmail('SiGAÊ - Recuperação de senha', 'recuperacaoSenha.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
+                echo 'OK';
+            } else {
+                echo 'EML';
+            }
+        } else {
+            $codigo = $user->randomString('1234567890', 50);
+            $link = $user->host . '/back-end/requestEmail.php?codigo=' . $codigo;
+            $queryInsert = "INSERT INTO codigos_email (id, valor, tipo) VALUES ('$id', '$codigo', 'REC');";
+            if (!mysqli_query($user->conn, $queryInsert)) {
+                echo('Error grave: ' . $user->conn -> error);
+                die();
+            }
+            if ($em->enviarEmail('SiGAÊ - Recuperação de senha', 'recuperacaoSenha.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
+                echo 'OK';
+            } else {
+                echo 'EML';
+            }
+        }
+    } else {
+        echo 'INV';
+    }
 }
 
 $conteudo = ob_get_contents();

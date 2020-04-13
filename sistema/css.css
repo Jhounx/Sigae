@@ -313,6 +313,10 @@ modulo {
 
 /* Console */
 
+.modal-overlay {
+    z-index: 4000 !important;
+}
+
 .consoleModal {
     overflow-y: hidden !important;
     z-index: 5000 !important;
