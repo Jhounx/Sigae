@@ -1,6 +1,6 @@
 <?php 
  
-class Validacao extends Foto {
+class Validacao extends Banco {
 
     function validarKey($key) {
         $queryString = "

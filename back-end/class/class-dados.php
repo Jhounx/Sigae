@@ -1,13 +1,12 @@
 <?php
 
 class Dados extends Registro {
-
     public function getTurmas() {
-        $query = "
+        $query = '
         SELECT tabelaTurma.codigo, tabelaTurma.curso, tabelaCurso.nome
         FROM turmas as tabelaTurma
         LEFT JOIN cursos as tabelaCurso
-        on tabelaTurma.curso = tabelaCurso.id";
+        on tabelaTurma.curso = tabelaCurso.id';
         $resultadoQuery = $this->conn->query($query);
         $arr = [];
         while ($linha = mysqli_fetch_array($resultadoQuery)) {
@@ -15,6 +14,7 @@ class Dados extends Registro {
             $curso = $linha['nome'];
             $arr[$curso][] = $turma;
         }
+
         return json_encode($arr);
     }
 
@@ -32,6 +32,7 @@ class Dados extends Registro {
             $curso = $linha['nome'];
             $arr[$curso][] = $turma;
         }
+
         return json_encode($arr);
     }
 
@@ -71,6 +72,120 @@ class Dados extends Registro {
             } else {
                 return json_encode($arr);
             }
+        }
+    }
+
+    public function getTodosDocentes($pagina, $campus, $value = null) {
+        sleep(1);
+        $pagina--;
+        $minimo = $pagina * 10;
+        if($value != null) {
+            $result = mysqli_query($this->conn, "SELECT id,nome,disciplinas,tipo from docentes where estado='ATV' and campus='$campus' and nome like '$value%' limit $minimo, 10");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT id,nome,disciplinas,tipo from docentes where estado='ATV' and campus='$campus' limit $minimo, 10");
+        }
+        $array = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $nome = $row['nome'];
+            $disci = $row['disciplinas'];
+            $tipo = $row['tipo'];
+            $array[$nome]['id'] = $id; 
+            $array[$nome]['disci'] = $disci;
+            $array[$nome]['tipo'] = $tipo;
+        }
+        if(count($array) == 0) {
+            return "{}";
+        }
+        return json_encode($array);
+    }
+
+    public function getTodosDiscentes($pagina, $campus, $value = null) {
+        sleep(1);
+        $pagina--;
+        $minimo = $pagina * 10;
+        if($value != null) {
+            $result = mysqli_query($this->conn, "SELECT id,nome,turma,tipo from alunos where estado='ATV' and campus='$campus' and nome like '$value%' limit $minimo, 10");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT id,nome,turma,tipo from alunos where estado='ATV' and campus='$campus' limit $minimo, 10");
+        }
+        $array = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $nome = $row['nome'];
+            $turma = $row['turma'];
+            $tipo = $row['tipo'];
+            $array[$nome]['id'] = $id; 
+            $array[$nome]['turma'] = $turma;
+            $array[$nome]['tipo'] = $tipo;
+        }
+        if(count($array) == 0) {
+            return "{}";
+        }
+        return json_encode($array);
+    }
+
+    public function getTodosDiscentesTurma($pagina, $turma, $campus, $value = null) {
+        sleep(1);
+        $pagina--;
+        $minimo = $pagina * 10;
+        if($value != null) {
+            $result = mysqli_query($this->conn, "SELECT id,nome,turma,tipo from alunos where estado='ATV' and turma='$turma' and campus='$campus' and nome like '$value%' limit $minimo, 10");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT id,nome,turma,tipo from alunos where estado='ATV' and turma='$turma' and campus='$campus' limit $minimo, 10");
+        }
+        $array = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $nome = $row['nome'];
+            $turma = $row['turma'];
+            $tipo = $row['tipo'];
+            $array[$nome]['id'] = $id; 
+            $array[$nome]['turma'] = $turma;
+            $array[$nome]['tipo'] = $tipo;
+        }
+        if(count($array) == 0) {
+            return "{}";
+        }
+        return json_encode($array);
+    }
+
+    function quantidadeDeRegistrosDiscentes($campus, $busca = '') {
+        if($busca == '') {
+            $query = mysqli_query($this->conn, "SELECT id FROM alunos where estado='ATV' and campus='$campus'");
+        } else {
+            $query = mysqli_query($this->conn, "SELECT id FROM alunos where estado='ATV' and campus='$campus' and nome like '$busca%'");
+        }
+        if($this->mysqli_exist($query)) {
+            return mysqli_num_rows($query);
+        } else {
+            return "0";
+        }
+    }
+
+    function quantidadeDeRegistrosDocentes($campus, $busca = '') {
+        if($busca == '') {
+            $query = mysqli_query($this->conn, "SELECT id FROM docentes where estado='ATV' and campus='$campus'");
+        } else {
+            $query = mysqli_query($this->conn, "SELECT id FROM docentes where estado='ATV' and campus='$campus' and nome like '$busca%'");
+        }
+        if($this->mysqli_exist($query)) {
+            return mysqli_num_rows($query);
+        } else {
+            return "0";
+        }
+    }
+
+    function quantidadeDeRegistrosTurma($campus, $turma, $busca = '') {
+        if($busca == '') {
+            $query = mysqli_query($this->conn, "SELECT id FROM alunos where estado='ATV' and turma='$turma' and campus='$campus'");
+        } else {
+            $query = mysqli_query($this->conn, "SELECT id FROM alunos where estado='ATV' and turma='$turma' and campus='$campus' and nome like '$busca%'");
+        }
+        if($this->mysqli_exist($query)) {
+            return mysqli_num_rows($query);
+        } else {
+            return "0";
         }
     }
 }

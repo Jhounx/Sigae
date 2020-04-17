@@ -6,8 +6,8 @@
 }
 
 .topBar {
+    position: relative;
     width: 100%;
-    height: 105px;
     background-color: rgb(245, 245, 245);
     border-radius: 5px;
 }
@@ -15,13 +15,13 @@
 .title {
     color: rgb(69, 69, 85);
     font-size: 18px;
-    margin-left: 15px;
-    padding-top: 10px;
+    padding-top: 5px;
+    margin-left: 14px;
 }
 
 .toolbar {
     height: 30px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 15px;
     display: inline-flex;
 }
@@ -35,29 +35,18 @@
     padding-left: 10px;
 }
 
-.selectFiltro {
-    width: 300px !important;
-    margin-left: 10px !important;
-    height: 100% !important;
-}
-
-.bootstrap-select:not(.input-group-btn), .bootstrap-select[class*=col-] {
-    display: block !important;
-}
-
-.dropdown-toggle {
-    height: 100% !important;
-    border: 0.5px solid #9e9e9e !important;
-    padding-left: 6px !important;
-}
-
-.filter-option {
-    margin-top: -5px !important;
+.totalDiv {
+    margin-left: 15px;
+    margin-top: 6px;
+    font-size: 16px;
+    color: rgb(74, 80, 88);
+    padding-bottom: 5px;
 }
 
 /* Table */
 
 .flexTabela {
+    position: relative;
     flex-grow: 1;
     background-color: rgb(250, 250, 250);
 }
@@ -68,13 +57,14 @@
     padding-bottom: 60px;
 }
 
-.tabela {
+.tbody {
     display: none;
 }
 
 #carregamentoTabela {
     z-index: 1000;
-    /* display: none; */
+    width: 120px !important;
+    height: 120px !important;
 }
 
 .responsive-table {
@@ -90,18 +80,17 @@ th {
     border-radius: 0px !important;
 }
 
-tr {
-    cursor: pointer;
-}
-
 .hover:hover {
-    background-color: rgb(192, 206, 226) !important;
-    color: white !important;
-    transition: all 200ms;
+    background-color: rgb(241, 241, 241) !important;
 }
 
-td, th {
+td,
+th {
     padding: 18px !important;
+}
+
+.linkTabela, .linkTabela:active, .linkTabela:hover {
+    color: rgb(69, 69, 85);
 }
 
 .corpoNome {
@@ -111,11 +100,16 @@ td, th {
 .nomeLabel {
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+td {
+    font-size: 18px;
 }
 
 thead>tr {
-    cursor:auto !important;
+    cursor: auto !important;
 }
 
 tbody>tr {
@@ -123,14 +117,32 @@ tbody>tr {
 }
 
 table.striped>tbody>tr:nth-child(odd) {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(252, 252, 252);
 }
 
+.circle-imagem {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px;
+    min-height: 80px;
+}
+
+.nenhumResultado {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(59, 59, 75)
+}
 
 
 /* Pagination */
 
 .divPagination {
+    display: none;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -140,51 +152,52 @@ table.striped>tbody>tr:nth-child(odd) {
 
 .pagination {
     margin-top: 12px;
+    margin-left: 10px;
 }
 
-.numero {
-    width: 32px !important;
-    height: 32px !important;
+.paginationTexto {
+    display: inline-flex;
+    font-size: 20px;
+    color: white;
     margin-left: 5px;
-    margin-right: 5px;
 }
 
-.aPage {
-    padding: 0px !important;
-    color: white !important;
+.pagAtual {
+    margin-left: 7px;
+    margin-right: 7px;
+    color: rgb(238, 110, 115);
 }
 
-.numero:hover {
-    background-color: rgb(74, 80, 88);
+.pagTotal {
+    width: 30px;
+    text-align: center;
+    margin-left: 7px;
+    color: rgb(238, 110, 115);
 }
 
-.pontinhos {
-    display: flex !important;
-    color: white !important;
-    position: relative;
-    width: 20px !important;
-    height: 32px !important;
-}
-
-.aPontinhos {
-    width: 100%;
-    position: absolute;
-    bottom: 0px;
-    padding: 0px !important;
-}
-
-.setasA {
+.setas {
     color: white;
 }
 
+.setaDireitaA {
+    padding-left: 0px;
+}
+
+.home {
+    cursor: pointer;
+    color: white;
+    padding-top: 1px;
+    margin-right: 3px;
+    font-size: 28px;
+}
+
 .disabled {
-    color: rgb(192, 206, 226) !important;
+    color: #999;
 }
 
 @media only screen and (max-width : 640px) {
 
     .topBar {
-        height: 125px !important;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -195,18 +208,43 @@ table.striped>tbody>tr:nth-child(odd) {
         margin-left: 0px;
     }
 
-    .selectFiltro {
-        margin-left: 0px !important;
-        margin-top: 10px;
-    }
-
     .campoFiltro {
+        margin-top: 5px;
         width: 300px !important;
     }
 
     .title {
         margin-left: 0px;
+        text-align: justify;
+        text-align-last: center;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-left: 0px;
+    }
+    
+    .totalDiv {
+        padding-top: 3px;
+    }
 
+    /* Tabela */
+
+    .corpoNome {
+        width: 150px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    td {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
 }

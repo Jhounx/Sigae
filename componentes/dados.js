@@ -51,12 +51,30 @@ function getTodasDisciplinas() {
 }
 
 
-function getDisciplinas() {
-    a = jsonDados["disciplinas"];
+function getDisciplinas(json) {
+    if(json == null) {
+        json = jsonDados["disciplinas"];
+    }
     r = [];
-    for (i in a) {
+    for (i in json) {
         if(i != undefined) {
             r.push(i);
+        }
+    }
+    return r;
+}
+
+function getDisciplinasNome(json) {
+    if(json == "null") {
+        return [];
+    }
+    if(json == null) {
+        json = jsonDados["disciplinas"];
+    }
+    r = [];
+    for (i in json) {
+        if(i != undefined) {
+            r.push(json[i]);
         }
     }
     return r;
@@ -75,6 +93,36 @@ function disciplinaNomeToID(arrayNomes) {
         });
     }
     return arrayID;
+}
+
+function disciplinaIDtoNome(arrayID) {
+    dados = getTodasDisciplinas()
+    a = []
+    for(i = 0; i < arrayID.length; i++) {
+        id = arrayID[i];
+        Object.keys(dados).forEach(function (key) {
+            value = dados[key]
+            if(id == key) {
+                a.push(dados[key])
+            }
+        });
+    }
+    return a;
+}
+
+function getTipoNome(tipoID) {
+    if(tipoID == "ALU") {
+        return "Aluno";
+    }
+    if(tipoID == "DOC") {
+        return "Docente";
+    }
+    if(tipoID == "MON") {
+        return "Monitor";
+    }
+    if(tipoID == "ADM") {
+        return "Administrador";
+    }
 }
 
 function validarEmail(email) {

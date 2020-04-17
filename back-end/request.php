@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . "/back-end/autoloader.php";
+require $_SERVER['DOCUMENT_ROOT'] . '/back-end/autoloader.php';
 $user = new Usuario();
 $em = new Email();
 $foto = new Foto();
@@ -154,19 +154,91 @@ if (isset($_GET['disciplinasExiste']) && isset($_GET['disciplina'])) {
 # TITULO III - JSON dos dados de pessoas
 ##################################################
 
-/* Pegar docentes */
-if (isset($_GET['pegarDocentes']) && isset($_GET['pagina'])) {
-    $pagina = $user->proteger($_GET['pagina']);
-    //verificarSessao(['permissaoSistema']);
-
-    //echo($user->getDocentes($pagina));
+if (isset($_GET['pegarDadoUsuario'])) {
+    $id = $user->proteger($_GET['id']);
+    $pedido = $user->proteger($_GET['pedido']);
+    $user->verificarPermissao(['permissaoSistema'], $id);
+    if (isset($_GET['turma'])) {
+        $turma = $user->proteger($_GET['turma']);
+        echo($user->pegarDadosUsuario($pedido, $id, false, $turma));
+    } else {
+        echo($user->pegarDadosUsuario($pedido, $id, false));
+    }
 }
 
-if (isset($_GET['numeroLinhas']) && isset($_GET['tabela'])) {
-    $tabela = $user->proteger($_GET['tabela']);
-    //verificarSessao(['permissaoSistema']);
+/* Pegar docentes */
+if (isset($_GET['pegarTodosDocentes']) && isset($_GET['pagina']) && isset($_GET['campus'])) {
+    $pagina = $user->proteger($_GET['pagina']);
+    $campus = $user->proteger($_GET['campus']);
+    $user->verificarPermissao(['permissaoSistema']);
+    if (isset($_GET['busca'])) {
+        $busca = $user->proteger($_GET['busca']);
+        echo($user->getTodosDocentes($pagina, $campus, $busca));
+    } else {
+        echo($user->getTodosDocentes($pagina, $campus));
+    }
+}
 
-    //echo($user->numeroLinhas($tabela));
+/* Pegar discentes */
+if (isset($_GET['pegarTodosDiscentes']) && isset($_GET['pagina']) && isset($_GET['campus'])) {
+    $pagina = $user->proteger($_GET['pagina']);
+    $campus = $user->proteger($_GET['campus']);
+    $user->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    if (isset($_GET['value'])) {
+        $busca = $user->proteger($_GET['busca']);
+        echo($user->getTodosDiscentes($pagina, $campus, $busca));
+    } else {
+        echo($user->getTodosDiscentes($pagina, $campus));
+    }
+}
+
+if (isset($_GET['pegarTodaTurma']) && isset($_GET['pagina']) && isset($_GET['turma']) && isset($_GET['campus'])) {
+    $pagina = $user->proteger($_GET['pagina']);
+    $turma = $user->proteger($_GET['turma']);
+    $campus = $user->proteger($_GET['campus']);
+    $user->verificarPermissao(['permissaoSistema']);
+    if (isset($_GET['busca'])) {
+        $value = $user->proteger($_GET['busca']);
+        echo($user->getTodosDiscentesTurma($pagina, $turma, $campus, $value));
+    } else {
+        echo($user->getTodosDiscentesTurma($pagina, $turma, $campus));
+    }
+}
+
+
+
+if (isset($_GET['quantidadeDeRegistrosDocentes']) && isset($_GET['campus'])) {
+    $campus = $user->proteger($_GET['campus']);
+    $user->verificarPermissao(['permissaoSistema']);
+    if (isset($_GET['busca'])) {
+        $busca = $user->proteger($_GET['busca']);
+        echo($user->quantidadeDeRegistrosDocentes($campus, $busca));
+    } else {
+        echo($user->quantidadeDeRegistrosDocentes($campus));
+    }
+}
+
+if (isset($_GET['quantidadeDeRegistrosDiscentes']) && isset($_GET['campus'])) {
+    $campus = $user->proteger($_GET['campus']);
+    $user->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    if (isset($_GET['busca'])) {
+        $busca = $user->proteger($_GET['busca']);
+        echo($user->quantidadeDeRegistrosDiscentes($campus, $busca));
+    } else {
+        echo($user->quantidadeDeRegistrosDiscentes($campus));
+    }
+}
+
+if (isset($_GET['quantidadeDeRegistrosTurma']) && isset($_GET['campus']) && isset($_GET['turma'])) {
+    $campus = $user->proteger($_GET['campus']);
+    $turma = $user->proteger($_GET['turma']);
+    $user->verificarPermissao(['permissaoSistema']);
+    if (isset($_GET['busca'])) {
+        $busca = $user->proteger($_GET['busca']);
+        echo($user->quantidadeDeRegistrosTurma($campus, $turma, $busca));
+    } else {
+        echo($user->quantidadeDeRegistrosTurma($campus, $turma));
+    }
 }
 
 ##################################################
@@ -286,9 +358,9 @@ if (isset($_GET['enviarEmailTrocarSenha']) && isset($_GET['email'])) {
 }
 
 $conteudo = ob_get_contents();
-if (empty($conteudo)) {
+if (empty($conteudo) && $conteudo != '0') {
     echo '
-    <h1>SiGAÊ - Página de requisições</h1>
-    Nenhum dado foi requisitado!
-    ';
+<h1>SiGAÊ - Página de requisições</h1>
+Nenhum dado foi requisitado!
+';
 }

@@ -42,7 +42,7 @@ function sideMenus() {
 }
 
 function modulos() {
-    inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, false, linha1);
+    inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, true, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
     atendimentosInscritos = new Modulo("atendimentosInscritos", "../modulos/atendimentosInscritos", "Meus atendimentos inscritos", "perm_contact_calendar", true, true, linha4);
@@ -50,10 +50,8 @@ function modulos() {
     minhaTurma = new Modulo("minhaTurma", "../modulos/pessoal/minhaTurma", "Minha Turma", "school", true, true, linha5);
     alunos = new Modulo("alunos", "../modulos/pessoal/alunos", "Alunos", "perm_contact_calendar", true, true, linha6);
     docentes = new Modulo("docentes", "../modulos/pessoal/docentes", "Docentes e monitores", "school", true, true, linha7);
-    //docentes.wait()
     
     mudarDados = new Modulo("mudarDados", "../modulos/mudarDados", "Alterar dados", "build", true, true, linha8);
-    //mudarDados.wait()
 
     erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
 

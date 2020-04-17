@@ -1,12 +1,18 @@
 <?php
-class Foto extends Banco {
+class Foto {
 
     public function show($id = null) {
         if($id == null) {
-            if ($this->getIDnoCookie("permissaoSistema") != null) {
-                $id = $this->getIDnoCookie("permissaoSistema");
+            if (!isset($_SESSION)) {
+                session_name('sessao');
+                session_start();
+            }
+            $id = $_SESSION["permissaoSistema"];
+            if(isset($_SESSION['permissaoSistema'])) {
+                $id = $_SESSION["permissaoSistema"];
             } else {
                 echo "Acesso negado";
+                die();
             }
         }
         header('Content-Type: image/png');

@@ -1,20 +1,17 @@
 <modulo>
     <div class="geral">
         <div class="topBar">
-            <div class="title">Docentes e monitores do campus <b>Null</b></div>
+            <div class="title">Docentes e monitores do campus <b id="campusTitle">Null</b></div>
             <div class="toolbar">
-                <input class="browser-default campoFiltro" placeholder="Digite para filtrar" type="text">
-                <select class="selectpicker selectFiltro">
-                    <option>Filtrar por nome</option>
-                    <option>Filtrar por disciplina ministrada</option>
-                    <option>Filtrar por turma ministrada</option>
-                </select>
+                <input class="browser-default campoFiltro" spellcheck="false" placeholder="Digite para filtrar" type="text">
             </div>
+            <div class="totalDiv">Total de <b id="totalPessoas">0</b> registros em <b id="totalPaginas">0</b> páginas</div>
         </div>
         <div class="flexTabela">
+            <div class="nenhumResultado">Nenhum resultado encontrado</div>
             <div class="tableDiv">
                 <div class="loaderDiv">
-                    <img class="imgCarregamento" id="carregamentoTabela" src="../icones/spinner.svg" style="/* display: none; */">
+                    <img class="imgCarregamento" id="carregamentoTabela" src="../icones/spinner.svg">
                 </div>
                 <table class="tabela striped">
                     <thead>
@@ -24,52 +21,21 @@
                             <th class="text-right">Tipo</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="hover" onclick="">
-                            <td>
-                                <div class="corpoNome">
-                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
-                                    <div class="nomeLabel">hjhkjhkjh</div>
-                                </div>
-                            </td>
-                            <td>Informática</td>
-                            <td class="text-right">Docente</td>
-                        </tr>
-                        <tr class="hover" onclick="">
-                            <td>
-                                <div class="corpoNome">
-                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
-                                    <div class="nomeLabel">hjhkjhkjh</div>
-                                </div>
-                            </td>
-                            <td>Informática</td>
-                            <td class="text-right">Docente</td>
-                        </tr>
-                        <tr class="hover" onclick="">
-                            <td>
-                                <div class="corpoNome">
-                                    <img class="circle" src="../back-end/fotos/fotos.php?request" width="80" height="80">
-                                    <div class="nomeLabel">hjhkjhkjh</div>
-                                </div>
-                            </td>
-                            <td>Informática</td>
-                            <td class="text-right">Docente</td>
-                        </tr>
+                    <tbody class="tbody">
                     </tbody>
                 </table>
             </div>
             <div class="divPagination">
-                <ul class="pagination page-top">
-                    <li class="disabled setas"><a class="setasA disabled"><i class="material-icons icone disabled">chevron_left</i></a></li>
-                    <li class="active numero"><a class="aPage">1</a></li>
-                    <li class="pontinhos"><a class="aPontinhos">...</a></li>
-                    <li class="waves-effect numero"><a class="aPage">2</a></li>
-                    <li class="waves-effect numero"><a class="aPage">3</a></li>
-                    <li class="waves-effect numero"><a class="aPage">4</a></li>
-                    <li class="waves-effect numero"><a class="aPage">5</a></li>
-                    <li class="pontinhos"><a class="aPontinhos">...</a></li>
-                    <li class="waves-effect numero"><a class="aPage">x</a></li>
-                    <li class="waves-effect setas"><a class="setasA"><i class="material-icons setasA">chevron_right</i></a></li>
+                <ul class="pagination">
+                    <li class="waves-effect setas setaEsquerda"><a onclick="anteriorPage()"><i class="material-icons icone">chevron_left</i></a></li>
+                    <i class="material-icons home" onclick="carregarPagina(1)">home</i>
+                    <div class="paginationTexto">
+                        <div></div>
+                        Página
+                        <div class="pagAtual">x</div>&nbsp;de
+                        <div class="waves-effect pagTotal" onclick="ultimaPage()">y</div>
+                    </div>
+                    <li class="waves-effect setas setaDireita"><a class="setasA" onclick="proximoPage()"><i class="material-icons setaDireitaA">chevron_right</i></a></li>
                 </ul>
             </div>
         </div>

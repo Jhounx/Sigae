@@ -88,7 +88,7 @@ window.onpopstate = function (event) {
 
         if (moduloAtual.id != window.history.state.valor) {
             linha = getLinhaByNome(window.history.state.valor)
-            linha.rodar()
+            linha.rodar(true)
         }
 
     } else {

@@ -1,0 +1,53 @@
+.waitingUsuario {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.conteudoUsuario {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.linhaUsuario {
+    display: flex;
+}
+
+.caixaUsuario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    margin-top: 10px;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    scrollbar-width: none;
+}
+
+.caixaUsuario::-webkit-scrollbar { 
+    display: none;
+}
+
+.icone-usuario {
+    font-size: 30px;
+    margin-right: 3px;
+}
+
+.pergUsuario {
+    font-size: 20px;
+    display: inline-flex;
+}
+
+.bUsuario {
+    white-space: nowrap;
+}
+
+.pUsuario {
+    margin-left: 3px;
+    white-space: nowrap;
+}

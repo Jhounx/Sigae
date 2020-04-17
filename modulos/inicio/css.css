@@ -10,8 +10,43 @@ modulo {
     white-space: nowrap;
 }
 
-.divInicioLinks {
-    margin-top: 30px;
+.divChipInicio {
+    border-radius: 5px;
+    width: 290px;
+    height: 45px;
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.centroInicio {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.icon-chip-inicio {
+    margin-left: 5px;
+    color: azure;
+    width: 24px !important;
+}
+
+.text-noti {
+    font-size: 19px;
+    margin-left: 5px;
+    color: azure;
+}
+
+#not1 {
+    background-color: rgb(238, 110, 115);
+}
+
+#not2 {
+    background-color: rgb(10, 87, 23);
+}
+
+#not3 {
+    background-color: rgb(87, 79, 161);
 }
 
 .linkCard {

@@ -1,0 +1,250 @@
+.geral {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+}
+
+.topBar {
+    position: relative;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.title {
+    color: rgb(69, 69, 85);
+    font-size: 18px;
+    padding-top: 5px;
+    margin-left: 14px;
+}
+
+.toolbar {
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 15px;
+    display: inline-flex;
+}
+
+.campoFiltro {
+    width: 260px;
+    height: 100%;
+    outline: 0 !important;
+    border: 0.5px solid #9e9e9e;
+    border-radius: 2px;
+    padding-left: 10px;
+}
+
+.totalDiv {
+    margin-left: 15px;
+    margin-top: 6px;
+    font-size: 16px;
+    color: rgb(74, 80, 88);
+    padding-bottom: 5px;
+}
+
+/* Table */
+
+.flexTabela {
+    position: relative;
+    flex-grow: 1;
+    background-color: rgb(250, 250, 250);
+}
+
+.tableDiv {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 60px;
+}
+
+.tbody {
+    display: none;
+}
+
+#carregamentoTabela {
+    z-index: 1000;
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.responsive-table {
+    overflow-x: auto;
+}
+
+thead {
+    background: rgb(74, 80, 88);
+    color: white;
+}
+
+th {
+    border-radius: 0px !important;
+}
+
+.hover:hover {
+    background-color: rgb(241, 241, 241) !important;
+}
+
+td,
+th {
+    padding: 18px !important;
+}
+
+.linkTabela, .linkTabela:active, .linkTabela:hover {
+    color: rgb(69, 69, 85);
+}
+
+.corpoNome {
+    display: inline-flex;
+}
+
+.nomeLabel {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+td {
+    font-size: 18px;
+}
+
+thead>tr {
+    cursor: auto !important;
+}
+
+tbody>tr {
+    background-color: white;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: rgb(252, 252, 252);
+}
+
+.circle-imagem {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px;
+    min-height: 80px;
+}
+
+.nenhumResultado {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(59, 59, 75)
+}
+
+
+/* Pagination */
+
+.divPagination {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgb(59, 59, 75);
+}
+
+.pagination {
+    margin-top: 12px;
+    margin-left: 10px;
+}
+
+.paginationTexto {
+    display: inline-flex;
+    font-size: 20px;
+    color: white;
+    margin-left: 5px;
+}
+
+.pagAtual {
+    margin-left: 7px;
+    margin-right: 7px;
+    color: rgb(238, 110, 115);
+}
+
+.pagTotal {
+    width: 30px;
+    text-align: center;
+    margin-left: 7px;
+    color: rgb(238, 110, 115);
+}
+
+.setas {
+    color: white;
+}
+
+.setaDireitaA {
+    padding-left: 0px;
+}
+
+.home {
+    cursor: pointer;
+    color: white;
+    padding-top: 1px;
+    margin-right: 3px;
+    font-size: 28px;
+}
+
+.disabled {
+    color: #999;
+}
+
+@media only screen and (max-width : 640px) {
+
+    .topBar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .toolbar {
+        display: block;
+        margin-left: 0px;
+    }
+
+    .campoFiltro {
+        margin-top: 5px;
+        width: 300px !important;
+    }
+
+    .title {
+        margin-left: 0px;
+        text-align: justify;
+        text-align-last: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-left: 0px;
+    }
+    
+    .totalDiv {
+        padding-top: 3px;
+    }
+
+    /* Tabela */
+
+    .corpoNome {
+        width: 150px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    td {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}

@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . "/back-end/autoloader.php";
+require $_SERVER['DOCUMENT_ROOT'] . '/back-end/autoloader.php';
 $user = new Usuario();
 session_name('sessao');
 session_set_cookie_params(3600 * 24);
@@ -39,7 +39,6 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
-    <script src="../componentes/APIs/cropper.min.js"></script>
     <script src="./javascript.js"></script>
     <script src="./modulosPopups.js"></script>
     <script src="../componentes/ModuloRender.js"></script>
@@ -53,7 +52,7 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
     <script src="../componentes/APIs/calendarize.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
     <script src="../componentes/APIs/bootstrap-select.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.js"></script>
+    <script src="../componentes/APIs/cropper.min.js"></script>
 </head>
 
 <body style="width: 100% !important">
@@ -71,7 +70,7 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
 
     <div class="tudo">
         <div class="sistema">
-            <header style="height: 100px !important;">
+            <header style="height: 100px !important;min-height: 100px!important;">
                 <div class="navbar-fixed">
                     <nav class="navbar">
                         <div class="navbarEsquerda">
@@ -111,7 +110,7 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
                     </div>
                 </ul>
                 <div class="content">
-                    <div>
+                    <div class="breadcrumbsDiv">
                         <div class="breadcrumbs breadcrumbs-tooltipped" data-position="bottom" data-tooltip="">
                             <i class="small material-icons breadcrumbs-icone"></i>
                             <h4 class="breadcrumbsTitulo"></h4>
@@ -142,28 +141,13 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
             </script>
             <script>
                 init()
-                var l1 = false, l2 = false;
                 $(window).on("load", function() {
-                    l1 = true;
-                    if (l2 == true) {
-                        setTimeout(function() {
-                            $("#scriptJson").remove();
-                            $(".divCarregamento").hide()
-                            $(".tudo").fadeIn(1200);
-                            posInit()
-                        }, 500);
-                    }
-                });
-                document.fonts.ready.then(function() {
-                    l2 = true;
-                    if(l1 == true) {
-                        setTimeout(function() {
-                            $("#scriptJson").remove();
-                            $(".divCarregamento").hide()
-                            $(".tudo").fadeIn(1200);
-                            posInit()
-                        }, 500);
-                    }
+                    setTimeout(function() {
+                        $("#scriptJson").remove();
+                        $(".divCarregamento").hide()
+                        $(".tudo").fadeIn(1200);
+                        posInit()
+                    }, 500);
                 });
             </script>
         </div>

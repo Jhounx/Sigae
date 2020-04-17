@@ -50,15 +50,15 @@ class Popup {
                 classe.html = data;
             }
         });
+    }
+
+    show() {
         if (this.css == true) {
             $(".headerPopup").append("<link rel=\"stylesheet\" href=\" " + this.file + "/css.css\">");
         }
         if (this.js == true) {
             $(".headerPopup").append("<script src=\" " + this.file + "/javascript.js\"></script>");
         }
-    }
-
-    show() {
         var classe = this, alturaScroll;
         alturaScroll = $('body').scrollTop();
         Swal.fire({
@@ -77,6 +77,7 @@ class Popup {
                 }
             },
             onClose: function () {
+                $(".headerPopup").empty();
                 $("body").animate({ scrollTop: alturaScroll }, 100);
                 try {
                     selectAtual()
@@ -95,5 +96,9 @@ class Popup {
         } else {
             $(".swal2-content").css("cssText", "overflow-y: hidden");
         }
+    }
+
+    close() {
+        Swal.close()
     }
 }

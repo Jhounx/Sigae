@@ -35,6 +35,12 @@ function initSigae() {
     }
     $(".nome").text(jsonDados["nomePreferencia"])
     $(".tipo").text(tipoString)
+    $(window).on('resize', function () {
+        $(function () {
+            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            $("html, body").css({"height": h });
+        });
+    });
 }
 
 function initMaterialize() {

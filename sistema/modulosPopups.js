@@ -4,6 +4,11 @@ function popupsSistema() {
     sobre.setJS(true)
     sobre.setScroll(true)
     sobre.invoker()
+
+    usuario = new Popup("usuario", "../modulos/usuario", "", "520px", "560px");
+    usuario.setCss(true)
+    usuario.setJS(true)
+    usuario.invoker()
 }
 
 function mudarDadosShow() {
@@ -60,4 +65,9 @@ function alterarSenhaShow() {
             });
         }
     })
+}
+
+function usuarioShow(id) {
+    usuario.show()
+    ajaxUsuario(id)
 }

@@ -257,7 +257,7 @@ function deletarFoto() {
 
 function resetFoto() {
     deselect("5")
-    $("#previewImage").attr("src", "../back-end/fotos/fotos.php?request")
+    $("#previewImage").attr("src", "../back-end/request.php?pegarFoto")
     $("#resetFoto").attr("disabled", true)
     $("#deletarFoto").removeAttr("disabled")
     imgSetada = false

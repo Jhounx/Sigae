@@ -36,7 +36,11 @@
 }
 
 .swal2-content {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+}
+
+.swal2-actions {
+    z-index: 0 !important;
 }
 
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {

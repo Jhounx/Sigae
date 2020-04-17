@@ -23,7 +23,7 @@ function removeParamByKey(key) {
                 array.splice(i, 1);
             }
         }
-        if(array.length == 0) {
+        if (array.length == 0) {
             final = final + array.join("&");
         } else {
             final = final + "?" + array.join("&");
@@ -51,8 +51,23 @@ function get_parametros() {
 var numeroPagina = 0;
 
 function add_parametros(name, valor) {
+    url = "";
+    parans = get_parametros()[0];
     var url = "?" + name + "=" + valor;
     numeroPagina += 1;
     window.history.pushState({ pagina: numeroPagina, valor: valor, url: url }, valor, url);
     window.history.replaceState({ pagina: numeroPagina, valor: valor, url: url }, valor, url);
+}
+
+function set_parametros(param, value) {
+    var params = get_parametros()
+    params[0][param] = value
+    var url = '?'
+    for (coisa in params[0]) {
+        if(coisa != "") {
+            url = url + coisa + '=' + params[0][coisa] + '&'
+        }
+    }
+    url = url.substring(0, url.length - 1);
+    history.replaceState({}, "", url);
 }

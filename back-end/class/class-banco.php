@@ -1,13 +1,13 @@
 <?php
-set_error_handler(function () {
-    die('<h1>Falha na conexão com o banco de dados</h1>');
-});
+// set_error_handler(function () {
+//     die('<h1>Falha na conexão com o banco de dados</h1>');
+// });
 class Banco {
 
-    private $servidor = '';
-    private $usuario = '';
-    private $senhaDB = '';
-    private $dbname = '';
+    private $servidor = 'localhost';
+    private $usuario = 'root';
+    private $senhaDB = 'vertrigo';
+    private $dbname = 'temp';
 
     public $conn;
     public $host;
@@ -41,7 +41,7 @@ class Banco {
         return $_SESSION[$permissao];
     }
 
-    public function verificarPermissao($permissoes, $id = '') {
+    public function verificarPermissao($permissoes, $id = '', $tipo = '') {
         if ($GLOBALS["debug"] == false) {
             if (!isset($_SESSION)) {
                 session_name('sessao');
@@ -54,12 +54,24 @@ class Banco {
             if (isset($_POST['id'])) {
                 $id = $this->proteger($_POST['id']);
             }
+            $permissaoTipo = 0;
             $setou = 0;
+            if($tipo != '') {
+                $permissaoTipo = -1;
+            }
             for ($i = 0; $i < count($permissoes); $i++) {
                 $perm = $permissoes[$i];
                 if (isset($_SESSION[$perm])) {
                     if ($_SESSION[$perm] == $id) {
                         $setou = 1;
+                        if($tipo != '') {
+                            for ($index = 0; $index < count($tipo); $index++) {
+                                $permitido = $tipo[$index];
+                                if($_SESSION["tipo"] == $permitido) {
+                                    $permissaoTipo = 1;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -67,7 +79,12 @@ class Banco {
                 echo 'NEGADO';
                 die();
             }
+            if ($permissaoTipo == -1) {
+                echo 'NEG';
+                die();
+            }
         }
+
     }
     
     function addPermissao($id, $nome) {

@@ -41,15 +41,24 @@ class Request {
                         objeto.erro = resposta;
                     }
                 } else {
-                    for (var i = 0; i < esperado.length; i++) {
-                        if (esperado[i] == resposta) {
+                    if(esperado[0] == "INTEGER") {
+                        if(!isNaN(resposta)) {
                             objeto.resposta = resposta;
+                        } else {
+                            objeto.erro = resposta;
+                        }
+                    } else {
+                        for (var i = 0; i < esperado.length; i++) {
+                            if (esperado[i] == resposta) {
+                                objeto.resposta = resposta;
+                            }
+                        }
+                        if (objeto.resposta == null) {
+                            objeto.erro = resposta;
                         }
                     }
-                    if (objeto.resposta == null) {
-                        objeto.erro = resposta;
-                    }
                 }
+                
             }
             callback(objeto);
         }).fail(function () {
