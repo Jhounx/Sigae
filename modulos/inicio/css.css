@@ -61,3 +61,12 @@ modulo {
 .linkCard:hover {
     color: rgb(38, 166, 154) !important;
 }
+
+@media only screen and (max-height: 685px) {
+    .divChipInicio {
+        margin-top: 10px;
+    }
+    #not3 {
+        margin-bottom: 15px;
+    }
+}

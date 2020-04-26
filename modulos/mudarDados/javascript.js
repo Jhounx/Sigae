@@ -2,9 +2,7 @@ var m1 = false, m2 = false, m3 = false, m4 = false, m5 = false;
 var imgSetada = false, cropper;
 
 function init_mudarDados() {
-    $(document).ready(function () {
-        $(".collapsible").collapsible();
-    });
+    $(".collapsible").collapsible();
     carregarDados()
     eventos()
 }
@@ -199,24 +197,32 @@ function eventos() {
         $(this).find("option:selected").each(function (key, value) {
             r.push(value.innerHTML);
         });
-        r = disciplinaNomeToID(r)
-        if (JSON.stringify(r) === JSON.stringify(getDisciplinas())) {
-            deselect("3")
+        if (r.length > 0 && r.length <= 5) {
+            $("#salvarDados").removeAttr("disabled")
+            r = disciplinaNomeToID(r)
+            if (JSON.stringify(r) === JSON.stringify(getDisciplinas())) {
+                deselect("3")
+            } else {
+                select("3")
+            }
         } else {
             select("3")
+            $("#salvarDados").attr("disabled", true)
         }
     });
     emailTemp = $("#email").val()
     $("input").keyup(function () {
-        if (validarEmail($("#email").val())) {
-            $("#erro2").hide()
-        } else {
-            $("#erro2").show()
-        }
         if (emailTemp == $("#email").val()) {
             deselect("4")
         } else {
             select("4")
+        }
+        if (validarEmail($("#email").val())) {
+            $("#erro2").hide()
+            $("#salvarDados").removeAttr("disabled")
+        } else {
+            $("#erro2").show()
+            $("#salvarDados").attr("disabled", true)
         }
     });
 

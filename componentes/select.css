@@ -69,8 +69,8 @@
 }
 
 .inner>ul>li>.active {
-    background-color: rgb(112, 121, 201);
-    color: white;
+    background-color: rgb(247, 247, 247);
+    color: #212529;
     outline: none;
     border: none !important;
     -webkit-box-shadow: none !important;

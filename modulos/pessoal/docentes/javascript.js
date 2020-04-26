@@ -9,13 +9,13 @@ var
 function init_docentes() {
     $(".selectFiltro").selectpicker();
     $("#campusTitle").text(getCampus())
-    if (get_parametro("pagina") != undefined) {
-        var n = Math.floor(Number(get_parametro("pagina")));
-        if (n !== Infinity && String(n) === get_parametro("pagina") && n > 0) {
+    if (paramExist("pagina")) {
+        var n = Math.floor(Number(getParam("pagina")));
+        if (n !== Infinity && String(n) == getParam("pagina") && n > 0) {
             pagina = n;
         } else {
             pagina = 1;
-            set_parametros("pagina", pagina)
+            setParam("pagina", pagina)
         }
     }
     eventos()
@@ -29,15 +29,15 @@ function eventos() {
             valorBusca = $(".campoFiltro").val()
             if (valorBusca.length > 0) {
                 carregarNumeroPaginas()
-                set_parametros("valorBusca", valorBusca)
+                setParam("valorBusca", valorBusca)
             } else {
                 carregarNumeroPaginas()
-                removeParamByKey("valorBusca", "")
+                removeParam("valorBusca")
             }
         }
     });
-    if (get_parametro("valorBusca") != null) {
-        valorBusca = get_parametro("valorBusca");
+    if (paramExist("valorBusca")) {
+        valorBusca = getParam("valorBusca");
         $(".campoFiltro").val(valorBusca)
     }
 }
@@ -137,7 +137,7 @@ function carregarPagina(p) {
         pagina = p;
         esconderTabela()
         $(".tbody").empty();
-        set_parametros("pagina", pagina)
+        setParam("pagina", pagina)
         definirPaginacao()
 
         request = new Request()

@@ -1,7 +1,50 @@
-.divTabela {
+modulo {
+    display: flex;
+    flex-direction: column;
+}
+
+.topBar {
+    display: inline-flex;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+    height: 55px;
+    align-items: center;
+}
+
+.btn-top {
+    color: white !important;
+    text-align: left;
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    text-transform: none !important;
+    margin-left: 15px;
+}
+
+.icone-top {
+    margin-right: 6px !important;
+}
+
+/* Tabela */
+
+.flexTabela {
+    position: relative;
+    flex-grow: 1;
+}
+
+.tableDiv {
     width: 100%;
     overflow-x: auto;
-    margin-bottom: 15px;
+}
+
+.tbody {
+    display: none;
+}
+
+#carregamentoTabela {
+    z-index: 1000;
+    width: 120px !important;
+    height: 120px !important;
 }
 
 .responsive-table {
@@ -17,17 +60,67 @@ th {
     border-radius: 0px !important;
 }
 
-tr {
+.hover:hover {
+    background-color: rgb(241, 241, 241) !important;
     cursor: pointer;
 }
 
-.hover:hover {
-    background-color: rgb(192, 206, 226) !important;
-    color: white !important;
-    transition: all 200ms;
-}
-
-td, th {
+td,
+th {
     padding: 18px !important;
 }
-@media only screen and (max-width : 1248px) {}
+
+.linkTabela,
+.linkTabela:active,
+.linkTabela:hover {
+    color: rgb(69, 69, 85);
+}
+
+.salaLinha {
+    white-space: nowrap;
+}
+
+td {
+    font-size: 18px;
+}
+
+thead>tr {
+    cursor: auto !important;
+}
+
+tbody>tr {
+    background-color: white;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: rgb(252, 252, 252);
+}
+
+.nenhumResultado {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(59, 59, 75)
+}
+
+@media only screen and (max-width : 525px) {
+    .topBar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-top {
+        margin-bottom: 10px;
+        width: 250px;
+    }
+
+    #botaoTop1 {
+        margin-top: 5px;
+    }
+}

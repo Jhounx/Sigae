@@ -15,12 +15,18 @@ class Request {
         this.url = value;
     }
 
+    abort() {
+        if(this.ajax != undefined) {
+            this.ajax.abort();
+        }
+    }
+
     send(requestType, esperado, callback) {
         var dados = {};
         for (var i = 0; i < this.parans.length; i++) {
             dados[this.parans[i]] = this.values[i];
         }
-        $.ajax({
+        this.ajax = $.ajax({
             url: this.url,
             type: requestType,
             async: true,
@@ -61,8 +67,11 @@ class Request {
                 
             }
             callback(objeto);
-        }).fail(function () {
-            callback("null request");
+        }).fail(function (request) {
+            if(request.statusText != "error" && request.statusText != "abort") {
+                alert(request.statusText )
+                callback("null request");
+            }
         })
     }
 }
@@ -72,5 +81,11 @@ class ObjectResposta {
     constructor() {
         this.erro = null;
         this.resposta = null
+    }
+}
+
+function universalAbort() {
+    if (typeof request !== 'undefined' && request != undefined) {
+        request.abort()
     }
 }

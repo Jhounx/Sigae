@@ -1,4 +1,7 @@
 <?php
+/* Hierarquia das classes
+    Usuario > Dados > Registro > Validacao > Banco
+*/
 
 class Registro extends Validacao {
 
@@ -37,7 +40,10 @@ class Registro extends Validacao {
 	        }
 	        /* verificar disciplina */
 	        if ($tipo == 'DOC' || $tipo == 'MON') {
-	            $arrayDisci = explode('-', $disciplina);
+				$arrayDisci = explode('-', $disciplina);
+				if(count($arrayDisci) > 5 || count($arrayDisci) <= 0) {
+					return 'DISCI';
+				}
 	            for ($i = 0; $i < count($arrayDisci); $i++) {
 	                $disci = $arrayDisci[$i];
 	                if ($this->validarDisciplina($disci) == 'NAO') {

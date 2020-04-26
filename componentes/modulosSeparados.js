@@ -19,7 +19,7 @@ function alterarSenhaShow() {
     $mandou = false;
     Swal.fire({
         title: "Deseja continuar?",
-        html: '<div style="text-align:center">Podemos enviar um e-mail para que <br>possamos continuar a alteração da senha?</div>',
+        html: '<div style="text-align:center">Podemos enviar um e-mail para que <br>possamos continuar a alteração da senha?<br><br>Seu Email: <b>' + getEmail() + '</b></div>',
         type: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -67,7 +67,22 @@ function alterarSenhaShow() {
     })
 }
 
+/* Modulos separados */
+
 function usuarioShow(id) {
     usuario.show()
     ajaxUsuario(id)
+}
+
+function invoker_agendarAtendimento() {
+    setParam("modulo", "agendarAtendimento", "--agendarAtendimento")
+    agendarAtendimento.invoker()
+}
+
+function invoker_atendimentoDocente(id) {
+    if(id == undefined) {
+        id = getParam("id")
+    }
+    setParam("modulo", "atendimentoDocente&id=" + id, "--atendimentoDocente")
+    atendimentoDocente.invoker()
 }

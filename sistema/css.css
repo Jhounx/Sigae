@@ -153,6 +153,7 @@ body {
 .linkLinha {
     text-decoration: none !important;
     padding: 0px !important;
+    outline: 0 !important;
 }
 
 @media only screen and (min-width : 992px) {
@@ -215,7 +216,7 @@ main {
 }
 
 modulo {
-    flex-grow: 1
+    flex-grow: 1;
 }
 
 /*breadcrumbs*/
@@ -373,7 +374,6 @@ modulo {
 .consoleBotao:hover {
     cursor: pointer;
     color: rgb(38, 166, 154) !important;
-    text-decoration: underline !important;
 }
 
 .consoleBotao-ferramentas {

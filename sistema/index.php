@@ -9,7 +9,7 @@ if (isset($_GET['finalizarSessao'])) {
     header('location: ../');
 }
 if (!isset($_SESSION['permissaoSistema'])) {
-    header('location: ../?expirado=true');
+    header('location: ../?expirado');
 }
 $id = $_SESSION['permissaoSistema'];
 $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
@@ -34,22 +34,25 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
     <link rel="stylesheet" href="../componentes/popup.css">
     <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
     <link rel="icon" href="../icones/si.png">
+    <script src="./javascript.js"></script>
     <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/floatingLabel.js"></script>
-    <script src="./javascript.js"></script>
-    <script src="./modulosPopups.js"></script>
+    <script src="../componentes/modulosSeparados.js"></script>
     <script src="../componentes/ModuloRender.js"></script>
     <script src="../componentes/Popup.js"></script>
     <script src="../componentes/Modulos.js"></script>
     <script src="../componentes/Misc.js"></script>
+    <script src="../componentes/Atendimento.js"></script>
     <script src="../componentes/Console.js"></script>
     <script src="../componentes/request.js"></script>
     <script src="../componentes/dados.js"></script>
-    <script src="../componentes/APIs/param.js"></script>
+    <script src="../componentes/parans.js"></script>
+    <script src="../componentes/datas.js"></script>
     <script src="../componentes/APIs/calendarize.js"></script>
+    <script src="../componentes/APIs/moment.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
     <script src="../componentes/APIs/bootstrap-select.min.js"></script>
     <script src="../componentes/APIs/cropper.min.js"></script>

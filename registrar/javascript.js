@@ -8,9 +8,9 @@ function init() {
             verificarChave()
         }
     });
-    $codigoParam = get_parametro("id");
-    if ($codigoParam != undefined) {
-        $("#campoChave").val($codigoParam).trigger("input")
+    if(paramExist("id")) {
+        parametro = getParam("id")
+        $("#campoChave").val(parametro).trigger("input")
     }
     Materialize.updateTextFields();
     definirVersao();
@@ -175,7 +175,7 @@ function ajaxDadosParte2() {
                     $(".selectDisciplinas").selectpicker({
                         liveSearchPlaceholder: "Pesquisa rápida",
                         noneResultsText: "Nada foi encontrado",
-                        noneSelectedText: "Escolha pelo menos uma opção"
+                        noneSelectedText: "Escolha pelo menos uma opção",
                     }, "refresh");
                     renderizarParte2()
                 }

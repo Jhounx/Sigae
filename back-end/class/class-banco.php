@@ -1,7 +1,7 @@
 <?php
-// set_error_handler(function () {
-//     die('<h1>Falha na conexão com o banco de dados</h1>');
-// });
+//set_error_handler(function () {
+    //die('<h1>Falha na conexão com o banco de dados</h1>');
+//});
 class Banco {
 
     private $servidor = 'localhost';
@@ -21,38 +21,50 @@ class Banco {
         }
     }
 
+    /* Função simplificadora de mysqli_num_rows */
     function mysqli_exist($query) {
         $numeroLinha = mysqli_num_rows($query);
         return $numeroLinha > 0;
     }
 
+    /* Função obrigatória para $_GET ou $_POST, impede ataques por
+    SQL injection e XSS
+    */
     public function proteger($string) {
         $string = strip_tags($string);
         $string = addslashes($string);
         return $string;
     }
 
-    public function getIDnoCookie($permissao) {
+    /* Inicializa a sessão, obrigatório em funções onde deve ser usar $_SESSION */
+    function init_session() {
         if (!isset($_SESSION)) {
             session_name('sessao');
             session_set_cookie_params(3600 * 24);
             session_start();
         }
-        return $_SESSION[$permissao];
     }
 
+    /* Retornar a ID presente na sessão */
+    public function getIDnoCookie($permissao) {
+        $this->init_session();
+        for($i = 0; $i < count($permissao); $i++) {
+            if(isset($_SESSION[$permissao[$i]]) && $_SESSION[$permissao[$i]] != null) {
+                return $_SESSION[$permissao[$i]];
+            }
+        }
+    }
+
+    /* Verifica se o usuário tem permissão para um certo comando 
+        Parâmetro 1: array de permissões. Ex: ['permissaoSistema', 'permissaoRegistro']
+        Parâmetro 2: ID, se for invocado do request.php, deixe em branco
+        Parâmetro 3: Tipo do usuário. (DOC, ALU, MON)
+    */
     public function verificarPermissao($permissoes, $id = '', $tipo = '') {
         if ($GLOBALS["debug"] == false) {
-            if (!isset($_SESSION)) {
-                session_name('sessao');
-                session_set_cookie_params(3600 * 24);
-                session_start();
-            }
-            if (isset($_GET['id'])) {
-                $id = $this->proteger($_GET['id']);
-            }
-            if (isset($_POST['id'])) {
-                $id = $this->proteger($_POST['id']);
+            $this->init_session();
+            if($id == '') {
+                $id = $this->getIDnoCookie($permissoes);
             }
             $permissaoTipo = 0;
             $setou = 0;
@@ -87,21 +99,15 @@ class Banco {
 
     }
     
+    /* Adiciona à sessão uma certa permissão */
     function addPermissao($id, $nome) {
-        if (!isset($_SESSION)) {
-            session_name('sessao');
-            session_set_cookie_params(3600 * 24);
-            session_start();
-        }
+        $this->init_session();
         $_SESSION[$nome] = $id;
     }
     
+    /* Remove da sessão uma certa permissão */
     function removerPermissao($nome) {
-        if (!isset($_SESSION)) {
-            session_name('sessao');
-            session_set_cookie_params(3600 * 24);
-            session_start();
-        }
+        $this->init_session();
         $_SESSION[$nome] = null;
     }
 }

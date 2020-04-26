@@ -75,18 +75,6 @@
     border: none !important;
 }
 
-div .selectpicker>.dropdown-menu>.inner>ul>li>.selected {
-    background-color: rgb(112, 121, 201) !important;
-    color: white !important;
-    outline: none !important;
-    border: none !important;
-}
-
-div .selectpicker>.dropdown-menu>.inner>ul>li>a:active {
-    background-color: rgb(247, 247, 247) !important;
-    color: #212529 !important;
-}
-
 .alert-primary {
     background-color: rgb(78, 95, 120);
     color: rgb(241, 242, 243);

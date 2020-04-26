@@ -80,18 +80,10 @@ class Modulo {
         $(".breadcrumbs").show();
         $("modulo").show()
     }
-}
 
-window.onpopstate = function (event) {
-    event.preventDefault();
-    if (window.history.state) {
-
-        if (moduloAtual.id != window.history.state.valor) {
-            linha = getLinhaByNome(window.history.state.valor)
-            linha.rodar(true)
-        }
-
-    } else {
-        linha1.rodar()
+    setBreadcrumbs(text) {
+        $(".breadcrumbsTitulo").text(text)
+        $(".breadcrumbs").attr("data-tooltip", text);
+        $(".breadcrumbs-tooltipped").tooltip({ delay: 50 });
     }
-};
+}

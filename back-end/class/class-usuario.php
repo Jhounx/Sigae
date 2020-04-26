@@ -1,6 +1,9 @@
 <?php
+/* Hierarquia das classes
+    Usuario > Dados > Registro > Validacao > Banco
+*/
 
-class Usuario extends Dados {
+class Usuario extends Atendimentos {
     public function logar($login, $senha) {
         $senha_md5 = md5($senha);
         $queryString = "
@@ -26,9 +29,7 @@ class Usuario extends Dados {
                     return 'REG';
                 }
                 if ($array['estado'] == 'ATV') {
-                    session_name('sessao');
-                    session_set_cookie_params(3600 * 24);
-                    session_start();
+                    $this->init_session();
                     $_SESSION['permissaoSistema'] = $array['id'];
                     $_SESSION['tipo'] = $array['tipo'];
 
@@ -43,10 +44,7 @@ class Usuario extends Dados {
     }
 
     public function logout() {
-        if (!isset($_COOKIE['sessao'])) {
-            session_name('sessao');
-            session_start();
-        }
+        $this->init_session();
         session_destroy();
         session_write_close();
     }
@@ -80,11 +78,7 @@ class Usuario extends Dados {
 		$campusID = $array['campus'];
 		
 		if($remetente != false) {
-			if (!isset($_SESSION)) {
-                session_name('sessao');
-                session_set_cookie_params(3600 * 24);
-                session_start();
-			}
+			$this->init_session();
 			$tipoRemetente = $_SESSION["tipo"];
 			if($tipoRemetente == "ALU") {
 				if($tipo == "ALU" || $tipo == "ADM") {
@@ -118,6 +112,7 @@ class Usuario extends Dados {
 
         $turmas = $this->getTurmasByCurso($cursoID, $campusID, false);
         $disciplinas = $this->getDisciplinas(false);
+        $salas = $this->getSalas($campusID, false);
 
         if ($dadosGerais == true) {
             $retorno = "{
@@ -139,7 +134,10 @@ class Usuario extends Dados {
 					$turmas
 				,
 				\"todasDisciplinas\": 
-					$disciplinas
+                    $disciplinas
+                ,
+                \"todasSalas\": 
+                    $salas
 			 }";
         } else {
 			$retorno = "{
@@ -201,6 +199,7 @@ class Usuario extends Dados {
                 $result = mysqli_multi_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+                    return 'ERR';
                 }
                 $this->conn->next_result();
                 $this->conn->next_result();
@@ -211,14 +210,19 @@ class Usuario extends Dados {
                 $result = mysqli_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+                    return 'ERR';
                 }
             }
             if ($disci != null) {
+                if(count(explode("-", $disci)) > 5 || count(explode("-", $disci)) <= 0) {
+                    return 'DIS';
+                }
                 $queryString =
                 "UPDATE docentes SET disciplinas = '$disci' WHERE id='$id' and estado='ATV';";
                 $result = mysqli_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+                    return 'ERR';
                 }
             }
             if ($email != null) {
@@ -230,6 +234,7 @@ class Usuario extends Dados {
                     $result = mysqli_multi_query($this->conn, $queryString);
                     if ($result == false) {
                         echo(mysqli_error($this->conn));
+                        return 'ERR';
                     }
                 } else {
                     return 'EML';

@@ -82,11 +82,30 @@ function posInit() {
     });
     popupsSistema()
     popupsParam()
+
+    window.onpopstate = function (event) {
+        event.preventDefault();
+        if (window.history.state) {
+            valor = window.history.state.value
+            if(valor != undefined && valor.startsWith("--")) {
+                arr = valor.substring(2)
+                if (moduloAtual.id != arr) {
+                    linha = getLinhaByNome(arr)
+                    if(linha != undefined) {
+                        linha.rodar(true)
+                    }
+                }
+            }
+        } else {
+            this.removeAllParans()
+            linha1.rodar()
+        }
+    };
 }
 
 function popupsParam() {
-    $param = get_parametro("senhaTrocada")
-    if ($param != undefined) {
+    if(paramExist("senhaTrocada")) {
+        parametro = getParam("senhaTrocada")
         Swal.fire({
             position: "top-end",
             type: "success",
@@ -94,7 +113,7 @@ function popupsParam() {
             showConfirmButton: false,
             timer: 2000
         })
-        removeParamByKey("senhaTrocada")
+        removeParam("senhaTrocada")
     }
 
 }

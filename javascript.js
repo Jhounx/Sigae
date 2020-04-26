@@ -107,8 +107,8 @@ function mainEmail() {
 }
 
 function rightAlertas() {
-    var parametro = get_parametro("expirado")
-    if (parametro != undefined) {
+    if(paramExist("expirado")) {
+        parametro = getParam("expirado")
         Swal.fire({
             position: 'top-end',
             html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeErro">lock</i><div class="expirado align-self-center">Sua sessão é inválida ou foi expirada!</div></div>',
@@ -130,8 +130,8 @@ function rightAlertas() {
         window.history.pushState("", "", "./");
         return;
     }
-    var parametro = get_parametro("reg")
-    if (parametro != undefined) {
+    if(paramExist("reg")) {
+        parametro = getParam("reg")
         Swal.fire({
             position: 'top-end',
             html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeOk">done</i><div class="expirado align-self-center">Sua conta foi registrada com sucesso!</div></div>',
@@ -153,8 +153,8 @@ function rightAlertas() {
         window.history.pushState("", "", "./");
         return;
     }
-    var parametro = get_parametro("senhaTrocada")
-    if (parametro != undefined) {
+    if(paramExist("senhaTrocada")) {
+        parametro = getParam("senhaTrocada")
         Swal.fire({
             position: 'top-end',
             html: '<div class="container d-flex h-100 divContainer" style="display:inline-flex"><i class="material-icons iconeOk">done</i><div class="expirado align-self-center">Sua senha foi alterada com sucesso!</div></div>',

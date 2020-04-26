@@ -42,39 +42,48 @@ function sideMenus() {
 }
 
 function modulos() {
+    /* Modulo das linhas*/
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, true, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
     atendimentosInscritos = new Modulo("atendimentosInscritos", "../modulos/atendimentosInscritos", "Meus atendimentos inscritos", "perm_contact_calendar", true, true, linha4);
-
     minhaTurma = new Modulo("minhaTurma", "../modulos/pessoal/minhaTurma", "Minha Turma", "school", true, true, linha5);
     alunos = new Modulo("alunos", "../modulos/pessoal/alunos", "Alunos", "perm_contact_calendar", true, true, linha6);
     docentes = new Modulo("docentes", "../modulos/pessoal/docentes", "Docentes e monitores", "school", true, true, linha7);
-    
     mudarDados = new Modulo("mudarDados", "../modulos/mudarDados", "Alterar dados", "build", true, true, linha8);
+    /* Módulos de invocação*/
+    agendarAtendimento = new Modulo("agendarAtendimento", "../modulos/agendarAtendimento", "Agendar atendimento", "perm_contact_calendar", true, true, null);
+    agendarAtendimento.wait()
 
+    atendimentoDocente = new Modulo("atendimentoDocente", "../modulos/atendimento/docentes", " ", "perm_contact_calendar", true, true, null);
+    atendimentoDocente.wait()
+    /* Módulos especiais */
     erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
 
     setModuloParam()
 }
 
 function setModuloParam() {
-    var moduloParam = get_parametro("modulo")
-    if (moduloParam == undefined) {
-        linha1.rodar()
-    } else {
+    if (paramExist("modulo")) {
+        moduloParam = getParam("modulo")
         var achou = false;
         /* PROCURAR MÓDULO */
         for (var i = 0; i < arrayModulos.length; i++) {
             var moduloDoArray = arrayModulos[i]
             if (moduloDoArray.id == moduloParam) {
                 var achou = true;
-                moduloDoArray.linha.rodar()
+                if(moduloDoArray.linha != null) {
+                    moduloDoArray.linha.rodar()
+                } else {
+                    eval("invoker_" + moduloDoArray.id + "()")
+                }
             }
         }
-        if(achou == false) {
+        if (achou == false) {
             erro404.invoker()
         }
+    } else {
+        linha1.rodar()
     }
 }
 
@@ -116,9 +125,9 @@ function selectAtual() {
 }
 
 function getLinhaByNome(nome) {
-    for(var i = 0; i < arrayLinhas.length; i++) {
+    for (var i = 0; i < arrayLinhas.length; i++) {
         c = "--" + nome;
-        if(arrayLinhas[i].action == c) {
+        if (arrayLinhas[i].action == c) {
             return arrayLinhas[i];
         }
     }
@@ -176,7 +185,7 @@ class Linha {
     }
 
     getFunction() {
-        if(this.getActionType() == "FUNCTION") {
+        if (this.getActionType() == "FUNCTION") {
             var fun = this.action
             fun = fun.slice(0, -2);
             return fun;
@@ -254,14 +263,14 @@ class Linha {
                     moduloDoArray.invoker()
                     if (moduloDoArray.linha.id != 1) {
                         if (click == 'click') {
-                            add_parametros("modulo", moduloDoArray.id, true)
+                            setParam("modulo", moduloDoArray.id, "--" + moduloDoArray.id)
                         }
                     } else {
-                        removeParamByKey("modulo")
+                        removeParam("modulo")
                     }
                 }
             }
-            if(achou == false) {
+            if (achou == false) {
                 acionarErro("O módulo '" + modulo + "' não existe")
                 removeAllSelection()
             }
@@ -273,7 +282,7 @@ class Linha {
                 window[fun]()
             } catch (err) {
                 acionarErro("A função '" + this.action + "' não existe")
-               removeAllSelection()
+                removeAllSelection()
             }
         }
     }

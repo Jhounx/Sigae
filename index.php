@@ -43,7 +43,7 @@ if (isset($_SESSION['permissaoSistema'])) {
     <script src="./componentes/APIs/popper.min.js"></script>
     <script src="./componentes/APIs/bootstrap.min.js"></script>
     <script src="./componentes/APIs/jquery.mask.min.js"></script>
-    <script src="./componentes/APIs/param.js"></script>
+    <script src="./componentes/parans.js"></script>
     <script src="./javascript.js"></script>
     <script src="./componentes/Popup.js"></script>
     <script src="./componentes/request.js"></script>

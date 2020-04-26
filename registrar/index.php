@@ -28,7 +28,7 @@ if (isset($_SESSION['permissaoSistema'])) {
     <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
-    <script src="../componentes/APIs/param.js"></script>
+    <script src="../componentes/parans.js"></script>
     <script src="../componentes/dados.js"></script>
     <script src="./javascript.js"></script>
     <script src="./validacao.js"></script>
@@ -166,7 +166,7 @@ if (isset($_SESSION['permissaoSistema'])) {
                             Essa opção pode ser alterada posteriormente
                         </div>
                         <div class="input-disciplinas inputSelectDisciplinas">
-                            <select id="selectDisciplinas" multiple data-live-search="true" class="selectDisciplinas">
+                            <select id="selectDisciplinas" multiple data-live-search="true" class="selectDisciplinas" multiple data-max-options="5" data-max-options-text="Limite de seleções atingido">
                             </select>
                         </div>
                     </div>

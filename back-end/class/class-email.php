@@ -1,4 +1,7 @@
 <?php
+/* Hierarquia das classes
+    Usuario > Dados > Registro > Validacao > Banco
+*/
 
 class Email extends Banco {
 

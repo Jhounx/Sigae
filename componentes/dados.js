@@ -50,6 +50,10 @@ function getTodasDisciplinas() {
     return jsonDados["todasDisciplinas"];
 }
 
+function getTodasSalas() {
+    return jsonDados["todasSalas"];
+}
+
 
 function getDisciplinas(json) {
     if(json == null) {

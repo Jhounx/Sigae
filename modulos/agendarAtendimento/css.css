@@ -1,0 +1,167 @@
+.botoes {
+    display: inline-flex;
+}
+
+.btn-top, .btn-baixo {
+    color: white !important;
+    width: 250px !important;
+    margin-right: 10px !important;
+    padding-left: 15px !important;
+}
+
+.collapsible {
+    margin-top: 15px;
+}
+
+.collapsible-header {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: bold;
+}
+
+.erro {
+    font-size: 16px;
+    color: crimson;
+    margin-top: 8px;
+    margin-left: 2px;
+    display: none;
+}
+
+.editado {
+    font-weight: bold;
+    color: rgb(38, 166, 154);
+    margin-left: 3px;
+    display: none;
+}
+
+.collapsible-body {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.icone-tab {
+    color: rgb(83, 106, 141)
+}
+
+.selected {
+    background-color: rgb(112, 121, 201) !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.labelLi {
+    margin-bottom: 10px;
+}
+
+/* Primária */
+
+#nomeAtendimento {
+    margin-bottom: 5px;
+}
+
+#descriAtendimento {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+/* Datepicker */
+
+.picker__holder {
+    overflow-y: hidden !important;
+}
+
+.navAux {
+    position: static !important;
+}
+
+.picker__date-display {
+    width: 250px;
+}
+
+.picker__weekday-display {
+    display: none;
+}
+
+.picker__input, .timepicker {
+    cursor: pointer;
+}
+
+.picker__frame {
+    height: 470px;
+}
+
+.picker__box {
+    height: 100%;
+}
+
+.picker__container__wrapper {
+    position: relative;
+}
+
+.picker__footer {
+    position: absolute;
+    bottom: 10;
+    width: 100%;
+}
+
+.picker__day--disabled {
+    background: #f5f5f5;
+    border-color: #f5f5f5;
+    color: #dddddd;
+    cursor: default;
+}
+
+.picker__day--selected {
+    background-color: #26a69a!important;
+}
+
+.picker__nav--prev:hover, .picker__nav--next:hover {
+    background-color: transparent !important;
+}
+
+.picker__day--infocus:hover {
+    font-weight: normal !important;
+}
+
+.picker__day--infocus:hover:not(.picker__day--disabled) {
+    background-color: rgb(250, 250, 250);
+}
+
+.inputDatas {
+    margin-bottom: 0px!important;
+}
+
+.lbDate {
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .picker__box {
+        display: flex;
+        flex-direction: column;
+    }
+    .picker__container__wrapper {
+        flex-grow: 1;
+    }
+}
+
+/* Timepicker */
+
+.text-primary {
+    color: azure !important
+}
+
+/* Switch */
+
+.switch {
+    margin-left: 2px;
+}

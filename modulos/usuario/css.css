@@ -51,3 +51,9 @@
     margin-left: 3px;
     white-space: nowrap;
 }
+
+/* Misc */
+
+.swal2-content {
+    overflow-x: visible !important;
+}
