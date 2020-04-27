@@ -79,10 +79,10 @@ function invoker_agendarAtendimento() {
     agendarAtendimento.invoker()
 }
 
-function invoker_atendimentoDocente(id) {
+function invoker_atendimento(id) {
     if(id == undefined) {
         id = getParam("id")
     }
-    setParam("modulo", "atendimentoDocente&id=" + id, "--atendimentoDocente")
-    atendimentoDocente.invoker()
+    setParam("modulo", "atendimento&id=" + id, "--atendimento")
+    atendimento.invoker()
 }

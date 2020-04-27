@@ -55,8 +55,8 @@ function modulos() {
     agendarAtendimento = new Modulo("agendarAtendimento", "../modulos/agendarAtendimento", "Agendar atendimento", "perm_contact_calendar", true, true, null);
     agendarAtendimento.wait()
 
-    atendimentoDocente = new Modulo("atendimentoDocente", "../modulos/atendimento/docentes", " ", "perm_contact_calendar", true, true, null);
-    atendimentoDocente.wait()
+    atendimento = new Modulo("atendimento", "../modulos/atendimento", " ", "perm_contact_calendar", true, true, null);
+    atendimento.wait()
     /* Módulos especiais */
     erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
 

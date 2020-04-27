@@ -78,7 +78,14 @@ class Atendimentos extends Dados {
     ##################################################
 
     public function pegarTodosAtendimentosDocente($id) {
-        $query = "SELECT * FROM atendimentos where docente = '$id'";
+        $query = "SELECT * FROM atendimentos where docente = '$id' order by estado DESC";
+        $resultadoQuery = $this->conn->query($query);
+        return $this->pegarAtendimentoQuery($resultadoQuery);
+    }
+
+    public function pegarTodosAtendimentosDiscente($id) {
+        $query = "SELECT * FROM atendimentos as tabelaAtendimento LEFT JOIN atendimentos_alunos as tabelaALunos
+        on tabelaAtendimento.id = tabelaALunos.atendimento where tabelaALunos.aluno = '$id' order by estado DESC";
         $resultadoQuery = $this->conn->query($query);
         return $this->pegarAtendimentoQuery($resultadoQuery);
     }

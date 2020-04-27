@@ -16,7 +16,7 @@ class Request {
     }
 
     abort() {
-        if(this.ajax != undefined) {
+        if (this.ajax != undefined) {
             this.ajax.abort();
         }
     }
@@ -34,46 +34,48 @@ class Request {
             dataType: "html"
 
         }).done(function (resposta) {
-            var objeto = new ObjectResposta()  
-            if(resposta == "NEGADO") {
-                window.location.href="../?expirado=true";
+            var objeto = new ObjectResposta()
+            if(resposta == "NEG") {
+                window.location.href="../?negado";
                 return;
+            }
+            if(resposta == "EXPIRADO") {
+                window.location.href="../?expirado";
+                return;
+            }
+            if (esperado[0] == "JSON") {
+                try {
+                    var json = JSON.parse(resposta);
+                    objeto.resposta = json;
+                } catch (e) {
+                    objeto.erro = resposta;
+                }
             } else {
-                if (esperado[0] == "JSON") {
-                    try {
-                        var json = JSON.parse(resposta);
-                        objeto.resposta = json;
-                    } catch (e) {
+                if (esperado[0] == "INTEGER") {
+                    if (!isNaN(resposta)) {
+                        objeto.resposta = resposta;
+                    } else {
                         objeto.erro = resposta;
                     }
                 } else {
-                    if(esperado[0] == "INTEGER") {
-                        if(!isNaN(resposta)) {
+                    for (var i = 0; i < esperado.length; i++) {
+                        if (esperado[i] == resposta) {
                             objeto.resposta = resposta;
-                        } else {
-                            objeto.erro = resposta;
-                        }
-                    } else {
-                        for (var i = 0; i < esperado.length; i++) {
-                            if (esperado[i] == resposta) {
-                                objeto.resposta = resposta;
-                            }
-                        }
-                        if (objeto.resposta == null) {
-                            objeto.erro = resposta;
                         }
                     }
+                    if (objeto.resposta == null) {
+                        objeto.erro = resposta;
+                    }
                 }
-                
             }
             callback(objeto);
-        }).fail(function (request) {
-            if(request.statusText != "error" && request.statusText != "abort") {
-                alert(request.statusText )
-                callback("null request");
-            }
-        })
-    }
+    }).fail(function(request) {
+        if (request.statusText != "error" && request.statusText != "abort") {
+            alert(request.statusText)
+            callback("null request");
+        }
+    })
+}
 }
 
 class ObjectResposta {

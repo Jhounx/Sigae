@@ -45,7 +45,11 @@ function removeParam(key) {
         a = []
         for (i = 0; i < todos.length; i++) {
             if (todos[i][0] != key) {
-                a.push(todos[i][0] + "=" + todos[i][1])
+                if(todos[i][1] != undefined) {
+                    a.push(todos[i][0] + "=" + todos[i][1])
+                } else {
+                    a.push(todos[i][0])
+                }
             }
         }
         if (a.length == 0) {

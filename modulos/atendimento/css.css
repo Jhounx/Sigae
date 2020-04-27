@@ -1,0 +1,229 @@
+/* Head */
+
+.allDiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.topTabs {
+    width: 100%;
+    height: 50px !important;
+}
+
+.bodyModulo {
+    flex-grow: 1;
+    background-color: rgb(252, 252, 252);
+    margin-bottom: 15px;
+}
+
+.btn {
+    margin-top: 15px;
+    color: white !important;
+    padding-left: 10px;
+    text-transform: none !important;
+}
+
+/* Tabs */
+.tabMaterialize {
+    width: unset !important;
+}
+
+.tabs {
+    background-color: rgb(223, 225, 232);
+    height: 100%;
+    border-radius: 1px;
+}
+
+.topTabs>ul>li>a {
+    text-decoration: none !important;
+    text-transform: none !important;
+    color: rgb(92, 102, 188) !important;
+    font-weight: bold;
+    padding: 0 15px;
+}
+
+.indicator {
+    background-color: rgb(92, 102, 188) !important;
+}
+
+/* Conteúdo tabela dados */
+
+.topBar {
+    display: inline-flex;
+    flex-flow: wrap;  
+    width: 100%;
+    min-height: 50px !important;
+    align-items: center;
+}
+
+.btn-acao {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: none;
+    width: 250px;
+}
+
+.texto {
+    font-weight: bold;
+    padding-left: 20px;
+    color: #444444;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.resposta {
+    color: #444444;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.bannerTd {
+    display: flex;
+}
+
+/* Banners */
+.banner {
+    padding: 5px;
+    margin-bottom: 0px !important;
+    border-left: 2px solid;
+    border-right: 0px solid;
+    border-top: 0px solid;
+    border-bottom: 0px solid;
+    border-radius: 0px 5px 5px 0px !important;
+}
+
+.alert-warning {
+    background-color: rgb(252, 243, 207) !important;
+    color: #333 !important;
+    border-color: rgb(241, 196, 15)
+}
+
+/* # divTabela # */
+
+/* Toolbar */
+
+.topBar2 {
+    height: 40px;
+    display: inline-flex;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+    align-items: center;
+}
+
+.btn-lista {
+    margin-left: 10px !important;
+}
+
+
+/* Tabela */
+.lista {
+    overflow-x: auto;
+}
+
+.lista>thead {
+    background: rgb(74, 80, 88);
+    color: white;
+}
+
+.lista>thead>tr>th {
+    border-radius: 0px;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: rgb(252, 252, 252);
+}
+
+.hover:hover {
+    background-color: rgb(241, 241, 241) !important;
+    cursor: pointer;
+}
+
+.linkTabela,
+.linkTabela:active,
+.linkTabela:hover {
+    color: rgb(69, 69, 85);
+}
+
+.salaLinha {
+    white-space: nowrap;
+}
+
+.lista>td {
+    font-size: 18px;
+}
+
+.lista>thead>tr {
+    cursor: auto !important;
+}
+
+.lista>tbody>tr {
+    background-color: white;
+}
+
+.linkTabela, .linkTabela:active, .linkTabela:hover {
+    color: rgb(69, 69, 85);
+}
+
+.tdbBox {
+    width: 40px;
+}
+
+.corpoNome {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nomeLabel {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+.circle-imagem {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.nenhumResultado {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(59, 59, 75)
+}
+ 
+.checkBoxLabel {
+    margin-left: 5px;
+}
+
+.checkBoxLabel:after{
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.checkBoxLabel:before{
+    width: 10px !important;
+    height: 18px !important;
+}
+
+@media only screen and (max-width: 1260px) {
+    .topBar {
+        justify-content: center;
+    }
+}
+
+#swal2-content {
+    text-align: center;
+    font-weight: bold;
+}

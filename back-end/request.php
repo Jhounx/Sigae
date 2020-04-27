@@ -263,6 +263,12 @@ if (isset($_GET['pegarTodosAtendimentosDocente'])) {
     echo $user->pegarTodosAtendimentosDocente($id);
 }
 
+if (isset($_GET['pegarTodosAtendimentosDiscente'])) {
+    $user->verificarPermissao(['permissaoSistema'], '', ['ALU']);
+    $id = $user->getIDnoCookie(["permissaoSistema"]);
+    echo $user->pegarTodosAtendimentosDiscente($id);
+}
+
 /* Pegar atendimento específico pelo seu ID */
 if (isset($_GET['pegarAtendimentoByID']) && isset($_GET['id'])) {
     $user->verificarPermissao(['permissaoSistema']);

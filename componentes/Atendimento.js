@@ -117,4 +117,13 @@ class Atendimento {
         return this.json["ultimaModificacao"]
     }
 
+    pegarUsuarios() {
+        return this.json["aluno"]
+    }
+
+    /*###############################*/
+    /*     Envio de requisições      */        
+    /*###############################*/
+
+    
 }

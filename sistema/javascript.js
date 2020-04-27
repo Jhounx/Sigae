@@ -87,16 +87,18 @@ function posInit() {
         event.preventDefault();
         if (window.history.state) {
             valor = window.history.state.value
-            if(valor != undefined && valor.startsWith("--")) {
-                arr = valor.substring(2)
-                if (moduloAtual.id != arr) {
-                    linha = getLinhaByNome(arr)
-                    if(linha != undefined) {
-                        linha.rodar(true)
-                    }
-                }
-            }
+            console.log(valor)
+            // if(valor != undefined && valor.startsWith("--")) {
+            //     arr = valor.substring(2)
+            //     if (moduloAtual.id != arr) {
+            //         linha = getLinhaByNome(arr)
+            //         if(linha != undefined) {
+            //             linha.rodar(true)
+            //         }
+            //     }
+            // }
         } else {
+            console.log("inicio")
             this.removeAllParans()
             linha1.rodar()
         }
@@ -105,7 +107,6 @@ function posInit() {
 
 function popupsParam() {
     if(paramExist("senhaTrocada")) {
-        parametro = getParam("senhaTrocada")
         Swal.fire({
             position: "top-end",
             type: "success",
@@ -115,7 +116,16 @@ function popupsParam() {
         })
         removeParam("senhaTrocada")
     }
-
+    if(paramExist("negado")) {
+        Swal.fire({
+            position: "top-end",
+            type: "error",
+            title: "Você não tem permissão para isso!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+        removeParam("negado")
+    }
 }
 
 function reload() {

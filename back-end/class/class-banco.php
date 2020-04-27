@@ -88,7 +88,7 @@ class Banco {
                 }
             }
             if ($setou == 0) {
-                echo 'NEGADO';
+                echo 'EXPIRADO';
                 die();
             }
             if ($permissaoTipo == -1) {
