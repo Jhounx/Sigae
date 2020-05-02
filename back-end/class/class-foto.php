@@ -1,4 +1,9 @@
 <?php
+/* Hierarquia das classes
+    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+
+    Esta classe gerencia as fotos. Esta não contata o banco de dados
+*/
 class Foto {
 
     public function show($id = null) {

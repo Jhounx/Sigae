@@ -1,6 +1,8 @@
 <?php
 /* Hierarquia das classes
-    Usuario > Dados > Registro > Validacao > Banco
+    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+
+    Esta classe gerencia dados de infraestrutura e outros diversos
 */
 
 class Dados extends Registro {

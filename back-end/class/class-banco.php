@@ -1,14 +1,22 @@
 <?php
-//set_error_handler(function () {
-    //die('<h1>Falha na conexão com o banco de dados</h1>');
-//});
+/* Hierarquia das classes
+    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+
+    Esta classe gerencia o banco de dados
+*/
+
+set_error_handler(function () {
+    die('<h1>Erro grave ao iniciar o sistema</h1>');
+});
 class Banco {
 
+    /* Chaves principais do sistema. CUIDADO, NÃO PUBLIQUE ESSES CAMPOS PREENCHIDOS*/
     private $servidor = 'localhost';
     private $usuario = 'root';
     private $senhaDB = 'vertrigo';
     private $dbname = 'temp';
 
+    /* Chaves super globais */
     public $conn;
     public $host;
 
@@ -45,7 +53,12 @@ class Banco {
         }
     }
 
-    /* Retornar a ID presente na sessão */
+    /* Retornar a ID presente na sessão 
+        Exemplo de invocação: verificarPermissao(['permissaoRegistro']);
+            Permissões disponíveis:
+                permissaoRegistro - Adquirida no /registrar
+                permissaoSistema - Adquirida ao logar-se no /sistema
+    */
     public function getIDnoCookie($permissao) {
         $this->init_session();
         for($i = 0; $i < count($permissao); $i++) {
