@@ -1,4 +1,4 @@
-var linhas = 0, conjuntos = 0, nodes = 0, arrayNodes = [], arrayLinhas = []
+var linhas = 0, conjuntos = 0, nodes = 0, arrayNodes = [], arrayLinhas = [], moduloInit
 
 function sideMenus() {
     //Início
@@ -46,7 +46,9 @@ function modulos() {
     inicio = new Modulo("inicio", "../modulos/inicio", "Início", "home", true, true, linha1);
     calendario = new Modulo("calendario", "../modulos/calendario", "Calendário de atendimentos", "perm_contact_calendar", true, true, linha2);
     atendimentosAgendados = new Modulo("atendimentosAgendados", "../modulos/atendimentosAgendados", "Meus atendimentos agendados", "perm_contact_calendar", true, true, linha3);
+    atendimentosAgendados.wait()
     atendimentosInscritos = new Modulo("atendimentosInscritos", "../modulos/atendimentosInscritos", "Meus atendimentos inscritos", "perm_contact_calendar", true, true, linha4);
+    atendimentosInscritos.wait()
     minhaTurma = new Modulo("minhaTurma", "../modulos/pessoal/minhaTurma", "Minha Turma", "school", true, true, linha5);
     alunos = new Modulo("alunos", "../modulos/pessoal/alunos", "Alunos", "perm_contact_calendar", true, true, linha6);
     docentes = new Modulo("docentes", "../modulos/pessoal/docentes", "Docentes e monitores", "school", true, true, linha7);
@@ -66,6 +68,7 @@ function modulos() {
 function setModuloParam() {
     if (paramExist("modulo")) {
         moduloParam = getParam("modulo")
+        moduloInit = moduloParam
         var achou = false;
         /* PROCURAR MÓDULO */
         for (var i = 0; i < arrayModulos.length; i++) {
@@ -148,6 +151,11 @@ function removeAllSelection() {
         obj = arrayLinhas[i]
         obj.removeSelect()
     }
+}
+
+function irInicio() {
+    linha1.rodar()
+    removeAllParans()
 }
 
 class Linha {
@@ -263,7 +271,7 @@ class Linha {
                     moduloDoArray.invoker()
                     if (moduloDoArray.linha.id != 1) {
                         if (click == 'click') {
-                            setParam("modulo", moduloDoArray.id, "--" + moduloDoArray.id)
+                            setParam("modulo", moduloDoArray.id, true, true)
                         }
                     } else {
                         removeParam("modulo")

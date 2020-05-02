@@ -35,8 +35,9 @@ function paramExist(param) {
     }
 }
 
-function removeAllParans() {
+function removeAllParans(except) {
     window.history.replaceState(null, null, window.location.pathname);
+
 }
 
 function removeParam(key) {
@@ -45,7 +46,7 @@ function removeParam(key) {
         a = []
         for (i = 0; i < todos.length; i++) {
             if (todos[i][0] != key) {
-                if(todos[i][1] != undefined) {
+                if (todos[i][1] != undefined) {
                     a.push(todos[i][0] + "=" + todos[i][1])
                 } else {
                     a.push(todos[i][0])
@@ -61,32 +62,45 @@ function removeParam(key) {
     }
 }
 
-function setParam(param, value, content) {
+function setParam(param, value, saveHistory, exclusive) {
     todos = getAllParans()
     a = []
     set = false
     url = ""
-    if (todos != undefined) {
+    if (todos != undefined && exclusive != true) {
         for (i = 0; i < todos.length; i++) {
             if (todos[i][0] == param) {
-                a.push(todos[i][0] + "=" + value)
+                if (value != undefined && value != '') {
+                    a.push(todos[i][0] + "=" + value)
+                } else {
+                    a.push(todos[i][0])
+                }
                 set = true
             } else {
-                a.push(todos[i][0] + "=" + todos[i][1])
+                if (todos[i][1] != undefined && todos[i][1] != '') {
+                    a.push(todos[i][0] + "=" + todos[i][1])
+                } else {
+                    a.push(todos[i][0])
+                }
+
             }
         }
         url = a.join("&")
     }
     if (set == false) {
-        if (todos == undefined) {
-            url = url + param + "=" + value;
+        separador = ''
+        if (todos != undefined && exclusive != true) {
+            separador = '&'
+        }
+        if (value != undefined && value != '') {
+            url = url + separador + param + "=" + value;
         } else {
-            url = url + "&" + param + "=" + value;
+            url = url + separador + param
         }
     }
-    if(content != undefined) {
-        window.history.pushState({ value: content, url: url }, null, "?" + param + "=" + value);
+    if (saveHistory) {
+        window.history.pushState(url, null, "?" + url);
     } else {
-        window.history.pushState(null, null, "?" + url);
+        window.history.replaceState(null, null, "?" + url);
     }
 }

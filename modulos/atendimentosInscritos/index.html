@@ -1,17 +1,27 @@
 <modulo>
     <div class="topBar">
-        <div class="divCheck">
-            <input type="checkbox" class="checkboxInput filled-in" id="mostrarCancelados"/>
-            <label class="checkBoxLabel" for="mostrarCancelados">Mostrar atendimentos cancelados</label>
+        <div class="dropdown divMenu">
+            <button class="waves-effect waves-light btn btn-top btn-filtro" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons icone-top left">arrow_drop_down</i>
+                Filtrar os atendimentos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input class="browser-default inputFiltrar" placeholder="Digite um termo qualquer" spellcheck="false" autocomplete="false" type="text">
+                <div class="dropdown-divider"></div>
+                <div class="divCheck">
+                    <input type="checkbox" class="checkboxInput filled-in" id="mostrarCancelados"/>
+                    <label class="checkBoxLabel" for="mostrarCancelados">Mostrar atendimentos cancelados</label>
+                </div>
+                <div class="divCheck">
+                    <input type="checkbox" class="checkboxInput filled-in" id="mostrarRealizados"/>
+                    <label class="checkBoxLabel" for="mostrarRealizados">Mostrar atendimentos já realizados</label>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flexTabela">
-        <div class="nenhumResultado">Nenhum resultado encontrado</div>
         <div class="tableDiv">
-            <div class="loaderDiv">
-                <img class="imgCarregamento" id="carregamentoTabela" src="../icones/spinner.svg">
-            </div>
-            <table class="tabela striped">
+            <table id="tabela" class="tabela striped">
                 <thead>
                     <tr>
                         <th>Data</th>
@@ -23,9 +33,10 @@
                 </thead>
 
                 <tbody class="tbody">
-                    
+
                 </tbody>
             </table>
+            <div class="nenhumResultado">Você não tem nenhum agendamento atualmente ativo</div>
         </div>
     </div>
 </modulo>

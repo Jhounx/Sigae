@@ -1,64 +1,55 @@
 <modulo>
     <div class="botoes">
-        <a disabled id="salvarDados" class="waves-effect waves-light btn btn-top" onclick=""><i class="material-icons left">save</i>Agendar atendimento</a>
+        <a disabled id="salvarDados" class="waves-effect waves-light btn btn-top" onclick=""><i class="material-icons left">save</i><div id="salvarDadosText">Agendar atendimento</div></a>
     </div>
-    <ul class="collapsible" data-collapsible="accordion">
         <li id="l1">
-            <div class="collapsible-header"><i class="material-icons icone-tab">create</i>Configurações primárias<div class="editado" id="ed1">(alterado)</div>
-            </div>
             <div class="collapsible-body">
-                <h2 class="labelLi">Configurações primárias</h2>
+                <h2 class="labelLi">Nome do atendimento</h2>
                 <div style="margin-top: 20px;" class="input-field">
-                    <input id="nomeAtendimento" type="text">
+                    <input id="nomeAtendimento" type="text" spellcheck="false" data-length="30">
                     <label for="nomeAtendimento">Nome do atendimento</label>
                 </div>
-                <div id="erro1" class="erro">Nome inválido</div>
+                <div id="erro1" class="erro"></div>
+
+                <h2 class="labelLi">Descrição do atendimento (opcional)</h2>
+                <div style="margin-top: 20px;" class="input-field">
+                    <input id="descAtendimento" type="text" spellcheck="false" data-length="60">
+                    <label for="descAtendimento">Descrição do atendimento</label>
+                </div>
+                <div id="erro2" class="erro"></div>
             </div>
         </li>
         <li id="l2">
-            <div class="collapsible-header"><i class="material-icons icone-tab">access_time</i>Datas e horários<div class="editado" id="ed1">(alterado)</div>
-            </div>
             <div class="collapsible-body">
                 <h2 class="lbDate labelLi">Selecione uma data</h2>
-                <input type="text" class="inputDatas datepicker" placeholder="Selecione uma data">
-                <div id="erro2" class="erro">A data é inválida</div>
+                <input type="text" class="inputDatas datepicker" spellcheck="false" placeholder="Selecione uma data">
+                <div id="erro3" class="erro"></div>
 
                 <h2 class="lbDate labelLi">Selecione um horário de início</h2>
-                <input type="text" class="inputDatas timepicker inicioPicker" placeholder="Selecione um horário">
-                <div id="erro3" class="erro">O horário é inválido</div>
+                <input type="text" class="inputDatas timepicker inicioPicker" spellcheck="false" placeholder="Selecione um horário">
+                <div id="erro4" class="erro"></div>
 
                 <h2 class="lbDate labelLi">Selecione um horário de término</h2>
-                <input type="text" class="inputDatas timepicker fimPicker" placeholder="Selecione um horário">
-                <div id="erro4" class="erro">O horário é inválido</div>
+                <input type="text" class="inputDatas timepicker fimPicker" spellcheck="false" placeholder="Selecione um horário">
+                <div id="erro5" class="erro"></div>
             </div>
 
         </li>
         <li id="l3">
-            <div class="collapsible-header"><i class="material-icons icone-tab">room</i>Salas e disciplinas<div class="editado" id="ed2">(alterado)</div>
-            </div>
             <div class="collapsible-body">
-                <h2 class="labelLi">Sala</h2>
-                <select class="selectpicker selectSalas" data-live-search="true" multiple data-max-options="1" data-max-options-text="Limite de seleções atingido">
-                </select>
-                <div id="erro5" class="erro">Selecione uma opção</div>
-
-                <h2 style="margin-top: 10px;" class="labelLi">Disciplina</h2>
-                <select class="selectpicker selectDisciplinas" data-live-search="true" multiple data-max-options="1" data-max-options-text="Limite de seleções atingido">
-                </select>
-                <div id="erro6" class="erro">Selecione uma opção</div>
+                <h2 class="labelLi">Selecione uma sala</h2>
+                <select class="selectpicker selectSalas" data-live-search="true" multiple data-max-options="1" data-max-options-text="Limite de seleções atingido"></select>
+                <h2 class="labelLi">Selecione uma disciplina</h2>
+                <select class="selectpicker selectDisciplinas" data-live-search="true" multiple data-max-options="1" data-max-options-text="Limite de seleções atingido"></select>
             </div>
         </li>
         <li id="l4">
-            <div class="collapsible-header"><i class="material-icons icone-tab">settings</i>Demais configurações<div class="editado" id="ed3">(alterado)</div>
-            </div>
             <div class="collapsible-body">
                 <h2 class="labelLi">Digite um limite de inscritos (para ilimitado, deixe em branco)</h2>
-                <div style="margin-top: 20px;" class="input-field">
-                    <input id="nomeAtendimento" type="number">
-                    <label for="nomeAtendimento">Limite de inscritos</label>
+                <div class="input-field">
+                    <input type="text" id="limiteInput" spellcheck="false">
+                    <label for="limiteInput">Limite de inscritos</label>
                 </div>
-                <div id="erro7" class="erro">Número inválido</div>
             </div>
         </li>
-    </ul>
 </modulo>

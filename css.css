@@ -71,7 +71,6 @@ button:focus {
     font-size: 16px;
     white-space: nowrap;
     -moz-user-select: none;
-    -khtml-user-select: none;
     -webkit-user-select: none;
     transition: color 0.7s;
 }
@@ -184,6 +183,7 @@ button:focus {
     background-position: 7px 8px;
     background-repeat: no-repeat;
     transition: background-image 0.4s;
+    filter: none;
 }
 
 .campo:focus {
@@ -243,9 +243,36 @@ h8 {
 #senha {
     content: url("../icones/senha.png");
     background-image: url(../icones/senha-disable.png);
+    padding-right: 50px;
+}
+
+.divSenha {
+    position: relative;
+}
+
+.icone-senha {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 15;
+    display: flex;
+    align-items: center;
+    color: rgb(144, 146, 148);
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 #recuperarEmail {
     content: url("../icones/email.png");
     background-image: url(../icones/email-disable.png);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
 }

@@ -4,14 +4,13 @@
 */
 
 class Atendimentos extends Dados {
-
     public function pegarAtendimentoQuery($resultadoQuery) {
         $array = [];
         while ($linha = mysqli_fetch_array($resultadoQuery)) {
             $idAtendimento = $linha['id'];
             $nome = $linha['nome'];
             $descricao = $linha['descricao'];
-            $data = $linha['data'];
+            $data = $linha['data_formatada'];
             $horarioInicio = $linha['horarioInicio'];
             $horarioFim = $linha['horarioFim'];
             $docentes = $linha['docente'];
@@ -20,8 +19,8 @@ class Atendimentos extends Dados {
             $campus = $linha['campus'];
             $tipo = $linha['tipo'];
             $limite = $linha['limite'];
-            if($limite == null) {
-                $limite = "none";
+            if ($limite == null) {
+                $limite = 'none';
             }
             $dataAgendamento = $linha['dataAgendamento'];
             $ultimaModificacao = $linha['ultimaModificacao'];
@@ -48,6 +47,7 @@ class Atendimentos extends Dados {
         if (count($array) == 0) {
             return '{}';
         }
+
         return json_encode($array);
     }
 
@@ -70,6 +70,7 @@ class Atendimentos extends Dados {
         if (count($array) == 0) {
             return [];
         }
+
         return $array;
     }
 
@@ -78,20 +79,22 @@ class Atendimentos extends Dados {
     ##################################################
 
     public function pegarTodosAtendimentosDocente($id) {
-        $query = "SELECT * FROM atendimentos where docente = '$id' order by estado DESC";
+        $query = "SELECT *, UNIX_TIMESTAMP(data) AS dataUNIX, DATE_FORMAT (data,'%d/%m/%Y') AS data_formatada  
+        FROM atendimentos WHERE docente='$id' ORDER BY FIELD(estado, 'CON', 'NAO', 'CAN', 'FIN') ASC, dataUNIX ASC";
         $resultadoQuery = $this->conn->query($query);
         return $this->pegarAtendimentoQuery($resultadoQuery);
     }
 
     public function pegarTodosAtendimentosDiscente($id) {
-        $query = "SELECT * FROM atendimentos as tabelaAtendimento LEFT JOIN atendimentos_alunos as tabelaALunos
-        on tabelaAtendimento.id = tabelaALunos.atendimento where tabelaALunos.aluno = '$id' order by estado DESC";
+        $query = "SELECT *, UNIX_TIMESTAMP(data) AS dataUNIX, DATE_FORMAT (data, '%d/%m/%Y') AS data_formatada FROM atendimentos as tabelaAtendimento 
+        LEFT JOIN atendimentos_alunos as tabelaALunos on tabelaAtendimento.id = tabelaALunos.atendimento where tabelaALunos.aluno = '$id' 
+        ORDER BY FIELD(estado, 'CON', 'NAO', 'CAN', 'FIN') ASC, dataUNIX ASC";
         $resultadoQuery = $this->conn->query($query);
         return $this->pegarAtendimentoQuery($resultadoQuery);
     }
 
     public function pegarAtendimentoByID($id) {
-        $query = "SELECT * FROM atendimentos where id = '$id' limit 1";
+        $query = "SELECT *, DATE_FORMAT (data, '%d/%m/%Y') AS data_formatada FROM atendimentos where id = '$id' limit 1";
         $resultadoQuery = $this->conn->query($query);
         return $this->pegarAtendimentoQuery($resultadoQuery);
     }

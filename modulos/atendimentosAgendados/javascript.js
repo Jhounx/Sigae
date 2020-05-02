@@ -4,19 +4,23 @@ function init_atendimentosAgendados() {
     carregarDados()
 }
 
-function mostrarTabela() {
-    $(".loaderDiv").hide()
-    $(".tbody").show()
-}
-
 function mostrarErro() {
+    $(".tableDiv").css("flex-direction", "column")
     $(".nenhumResultado").css("display", "flex")
-    $(".tbody").empty();
-    mostrarTabela()
 }
 
-function retirarErro() {
+function ocultarErro() {
+    $(".tableDiv").css("flex-direction", "row")
     $(".nenhumResultado").css("display", "none")
+}
+
+function verificarErro() {
+    var n = $(".tabela > tbody > tr:visible").length
+    if(n == 0) {
+        mostrarErro()
+    } else {
+        ocultarErro()
+    }
 }
 
 function carregarDados() {
@@ -27,8 +31,8 @@ function carregarDados() {
         resposta = resultado.resposta;
         erro = resultado.erro;
         if (resposta != null) {
-            if(JSON.stringify(resposta) == "{}") {
-                mostrarErro()
+            if (JSON.stringify(resposta) == "{}") {
+                verificarErro()
             } else {
                 Object.keys(resposta).forEach(function (nome) {
                     aten = new Atendimento(resposta[nome])
@@ -40,55 +44,107 @@ function carregarDados() {
                     estado = aten.pegarEstado()
                     renderizarLinha(id, data, inicio, fim, sala, estado)
                 });
-                mostrarTabela()
-                eventos()
-            } 
+                atendimentosAgendados.show()
+                verificarErro()
+            }
         } else {
             alert(erro)
             acionarErro("Requisição negada")
         }
+        eventos()
     })
 }
 
 function renderizarLinha(id, data, inicio, fim, sala, estado) {
-    cancel = ""
-    if(aten.pegarEstado(true) == "CAN") {
-        cancel = "cancel"
+    fixo = ""
+    if (aten.pegarEstado(true) == "CAN") {
+        fixo = "cancel"
+    }
+    if (aten.pegarEstado(true) == "FIN") {
+        fixo = "concluido"
     }
     a =
-    "\
-    <tr class=\"hover " + cancel + "\" onclick=\"invoker_atendimento('" + id + "')\">\
-        <td>" + data + "</td>\
-        <td>" + inicio + "</td>\
-        <td>" + fim + "</td>\
-        <td class=\"salaLinha\">" + sala + "</td>\
+        "\
+    <tr class=\"hover " + fixo + "\" onclick=\"invoker_atendimento('" + id + "')\">\
+        <td><a class=\"linkNaTabela\" href=\"?modulo=atendimento&id=" + id + "\">" + data + "</a></td>\
+        <td><a class=\"linkNaTabela\" href=\"?modulo=atendimento&id=" + id + "\">" + inicio + "</a></td>\
+        <td><a class=\"linkNaTabela\" href=\"?modulo=atendimento&id=" + id + "\">" + fim + "</a></td>\
+        <td><a class=\"linkNaTabela salaLinha\" href=\"?modulo=atendimento&id=" + id + "\">" + sala + "</a></td>\
         <td class=\"resposta bannerTd\">\
             <div id=\"linha-" + nLinhas + "\" class=\"alert banner\">" + estado + "</div>\
         </td>\
     </tr>\
     ";
     $(".tbody").append(a)
-    if(aten.pegarEstado(true) == "NAO") {
+    if (aten.pegarEstado(true) == "NAO") {
         $("#linha-" + nLinhas).addClass("alert-warning")
+        $("#linha-" + nLinhas).attr("id", "NAO");
     }
-    if(aten.pegarEstado(true) == "CON") {
+    if (aten.pegarEstado(true) == "CON") {
         $("#linha-" + nLinhas).addClass("alert-success")
+        $("#linha-" + nLinhas).attr("id", "CON");
     }
-    if(aten.pegarEstado(true) == "CAN") {
+    if (aten.pegarEstado(true) == "FIN") {
+        $("#linha-" + nLinhas).addClass("alert-success")
+        $("#linha-" + nLinhas).attr("id", "FIN");
+    }
+    if (aten.pegarEstado(true) == "CAN") {
         $("#linha-" + nLinhas).addClass("alert-danger")
+        $("#linha-" + nLinhas).attr("id", "CAN");
     }
     nLinhas++;
 }
 
 function eventos() {
-    check = false;
-    $(".checkboxInput").on("change", function(input) {
-        check = !check
-        if(check == true) {
+    checkCancel = false, checkRealizados = false;
+    $("#mostrarCancelados").on("change", function (input) {
+        checkCancel = !checkCancel
+        if (checkCancel == true) {
             $(".cancel").show()
         }
-        if(check == false) {
+        if (checkCancel == false) {
             $(".cancel").hide()
         }
+        if($(".inputFiltrar").val().length > 0) {
+            filtrarTabela($(".inputFiltrar").val().toLowerCase())
+        }
+        verificarErro()
     })
+    $("#mostrarRealizados").on("change", function (input) {
+        checkRealizados = !checkRealizados
+        if (checkRealizados == true) {
+            $(".concluido").show()
+        }
+        if (checkRealizados == false) {
+            $(".concluido").hide()
+        }
+        if($(".inputFiltrar").val().length > 0) {
+            filtrarTabela($(".inputFiltrar").val().toLowerCase())
+        }
+        verificarErro()
+    })
+    $(".linkNaTabela").click(function (e) {
+        e.preventDefault()
+    });
+    $(".dropdown-menu").click(function (e) {
+        e.stopPropagation();
+    });
+    $(".inputFiltrar").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        filtrarTabela(value)
+    });
+}
+
+function filtrarTabela(value) {
+    $("#tabela > tbody > tr").filter(function () {
+        e = $(this).find("td.bannerTd>div").attr("id")
+        if(checkCancel == false && e == "CAN") {
+            return;
+        }
+        if(checkRealizados == false && e == "FIN") {
+            return;
+        }
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        verificarErro()
+    });
 }

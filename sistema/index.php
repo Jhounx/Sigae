@@ -56,6 +56,7 @@ $dados = $user->pegarDadosUsuario($_SESSION['permissaoSistema']);
     <script src="../componentes/APIs/materialize.min.js"></script>
     <script src="../componentes/APIs/bootstrap-select.min.js"></script>
     <script src="../componentes/APIs/cropper.min.js"></script>
+    <script src="../componentes/APIs/jquery.mask.min.js"></script>
 </head>
 
 <body style="width: 100% !important">

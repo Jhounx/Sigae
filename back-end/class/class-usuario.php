@@ -51,114 +51,64 @@ class Usuario extends Atendimentos {
 
     /* PEGAR DADOS DO USUÁRIO */
     public function pegarDadosUsuario($id, $remetente = false, $dadosGerais = true, $turmaRemetente = null) {
+        $this->init_session();
+        $tipoRemetente = $_SESSION['tipo'];
         $queryString = "
 	    select nome,`nome.preferencia`,matricula,email,campus,tipo,turma,curso,estado from alunos
-	    where id='$id' and estado='ATV'
-	    union
+	    where id='$id' and estado='ATV' union
 	    select nome,`nome.preferencia`,matricula,email,campus,tipo,disciplinas,email,estado from docentes
-	    where id= '$id' and estado='ATV'
-	    union
+	    where id= '$id' and estado='ATV' union
 	    select nome,`nome.preferencia`,matricula,email,campus,tipo,email,email,estado from admins
-	    where id= '$id' and estado='ATV'
-	    limit 1";
-		$query = mysqli_query($this->conn, $queryString);
-		if(!$this->mysqli_exist($query)) {
-			echo "{}";
-			exit();
-		}
-		$array = mysqli_fetch_assoc($query);
-        $nome = $array['nome'];
-        $nomePreferencia = $array['nome.preferencia'];
-        $matricula = $array['matricula'];
-        $email = $array['email'];
+	    where id= '$id' and estado='ATV' limit 1";
+        $jsonDisci = ' ';
+        $query = mysqli_query($this->conn, $queryString);
+        if (!$this->mysqli_exist($query)) {
+            echo '{}';
+            exit();
+        }
+        $array = mysqli_fetch_assoc($query);
         $tipo = $array['tipo'];
-        $cursoID = $array['curso'];
-        $curso = 'null';
         $turma = $array['turma'];
-		$campusID = $array['campus'];
-		
-		if($remetente != false) {
-			$this->init_session();
-			$tipoRemetente = $_SESSION["tipo"];
-			if($tipoRemetente == "ALU") {
-				if($tipo == "ALU" || $tipo == "ADM") {
-                    if($turmaRemetente != $turma) {
-                        echo "{}";
-                        exit();
-                    }
-				}
-			}
-			if($tipoRemetente == "DOC") {
-				if($tipo == "ADM") {
-					echo "{}";
-					exit();
-				}
-			}
-		}
-
-        $campus = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM campus where id='$campusID'"))['nome'];
-        if ($tipo == 'ALU') {
-            $curso = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM cursos where id='$cursoID'"))['nome'];
-        }
-        $jsonDisci = '';
         if ($tipo == 'DOC' || $tipo == 'MON') {
-            $cursoID = 'null';
-            $jsonDisci = $this->disciplinasUsuario($id);
-            $turma = 'null';
+            $jsonDisci = $this->tirar_fundo(json_encode($this->disciplinasUsuario($id)));
         }
-        if ($tipo == 'ADM') {
-            $turma = 'null';
+        if ($remetente != false) {
+            if ($tipoRemetente == 'ALU' and ($tipo == 'ALU' || $tipo == 'ADM') and $turmaRemetente != $turma) {
+                echo '{}';
+                exit();
+            }
+            if ($tipoRemetente == 'DOC' and $tipo == 'ADM') {
+                echo '{}';
+                exit();
+            }
+        }
+        $campus = $array['campus'];
+        $array['nomePreferencia'] = $array['nome.preferencia'];
+        $array['campusID'] = $campus;
+        $array['campus'] = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM campus where id='$campus'"))['nome'];
+        $curso = 'null';
+        if ($tipo == 'ALU') {
+            $curso = $array['curso'];
+            $array['cursoID'] = $curso;
+            $array['curso'] = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM cursos where id='$curso'"))['nome'];
+        }
+        $enc = json_encode($array);
+        $enc = substr_replace($enc, ',', strlen($enc) - 1, 1);
+        $enc = $enc . ' "disciplinas":{' . $jsonDisci . '}}';
+        if ($dadosGerais) {
+            $enc = substr_replace($enc, ',', strlen($enc) - 1, 1);
+            $salas = $this->getSalas($campus, false);
+            $todasTurmas = $this->tirar_fundo(json_encode($this->getTurmasByCurso($curso, $campus, false)));
+            $todasDisciplinas = $this->tirar_fundo(json_encode($this->getDisciplinas(false)));
+            $enc = $enc . '"todasSalas":' . $salas . ', "todasTurmas" :' . $todasTurmas . ', "todasDisciplinas" :' . $todasDisciplinas . '}';
         }
 
-        $turmas = $this->getTurmasByCurso($cursoID, $campusID, false);
-        $disciplinas = $this->getDisciplinas(false);
-        $salas = $this->getSalas($campusID, false);
+        return $enc;
+    }
 
-        if ($dadosGerais == true) {
-            $retorno = "{
-				\"id\": \"$id\", 
-				\"nome\": \"$nome\", 
-				\"nomePreferencia\":\"$nomePreferencia\",
-				\"matricula\":\"$matricula\",
-				\"email\":\"$email\",
-				\"tipo\":\"$tipo\",
-				\"cursoID\":\"$cursoID\",
-				\"curso\":\"$curso\", 
-				\"turma\":\"$turma\", 
-				\"campusID\":\"$campusID\", 
-				\"campus\":\"$campus\", 
-				\"disciplinas\": {
-					$jsonDisci
-				},
-				\"todasTurmas\": 
-					$turmas
-				,
-				\"todasDisciplinas\": 
-                    $disciplinas
-                ,
-                \"todasSalas\": 
-                    $salas
-			 }";
-        } else {
-			$retorno = "{
-				\"id\": \"$id\", 
-				\"nome\": \"$nome\", 
-				\"nomePreferencia\":\"$nomePreferencia\",
-				\"matricula\":\"$matricula\",
-				\"email\":\"$email\",
-				\"tipo\":\"$tipo\",
-				\"cursoID\":\"$cursoID\",
-				\"curso\":\"$curso\", 
-				\"turma\":\"$turma\", 
-				\"campusID\":\"$campusID\", 
-				\"campus\":\"$campus\",
-				\"disciplinas\": {
-					$jsonDisci
-				}
-			 }";
-		}
-        $retorno = preg_replace("/\r|\n/", '', $retorno);
-        return $retorno;
+    public function tirar_fundo($str){
+        $str = substr_replace($str, ' ', strlen($str) -1, 1);
+        return substr_replace($str, ' ', 0, 1);
     }
 
     public function disciplinasUsuario($id) {
@@ -170,11 +120,7 @@ class Usuario extends Atendimentos {
             $nomeDisciplina = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM disciplinas where id='$disciplinaID'"))['nome'];
             $arr[$disciplinaID][] = $nomeDisciplina;
         }
-        $json = json_encode($arr) . '';
-        $json = str_replace('{', ' ', $json);
-        $json = str_replace('}', ' ', $json);
-
-        return $json;
+        return $arr;
     }
 
     /* Mudar dados */
@@ -199,6 +145,7 @@ class Usuario extends Atendimentos {
                 $result = mysqli_multi_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+
                     return 'ERR';
                 }
                 $this->conn->next_result();
@@ -210,11 +157,12 @@ class Usuario extends Atendimentos {
                 $result = mysqli_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+
                     return 'ERR';
                 }
             }
             if ($disci != null) {
-                if(count(explode("-", $disci)) > 5 || count(explode("-", $disci)) <= 0) {
+                if (count(explode('-', $disci)) > 5 || count(explode('-', $disci)) <= 0) {
                     return 'DIS';
                 }
                 $queryString =
@@ -222,6 +170,7 @@ class Usuario extends Atendimentos {
                 $result = mysqli_query($this->conn, $queryString);
                 if ($result == false) {
                     echo(mysqli_error($this->conn));
+
                     return 'ERR';
                 }
             }
@@ -234,6 +183,7 @@ class Usuario extends Atendimentos {
                     $result = mysqli_multi_query($this->conn, $queryString);
                     if ($result == false) {
                         echo(mysqli_error($this->conn));
+
                         return 'ERR';
                     }
                 } else {

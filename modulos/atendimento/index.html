@@ -12,9 +12,9 @@
                     <a id="editarBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">settings</i>Editar atendimento</a>
                     <a onclick="confirmarAtendimentoCon()" id="confirmarBotat" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">done</i>Confirmar atendimento</a>
                     <a onclick="cancelarAtendimentoCon()" id="cancelarAtendimentoBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">clear</i>Cancelar atendimento</a>
-                    <a id="inscreverAtendimentoBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">create</i>Inscrever-se no atendimento</a>
-                    <a id="confirmarPresencaBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">done</i>Confirmar presença</a>
-                    <a id="cancelarInscricao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">clear</i>Cancelar inscrição</a>
+                    <a onclick="inscreverAtendimentoCon()" id="inscreverAtendimentoBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">create</i>Inscrever-se no atendimento</a>
+                    <a onclick="confirmarPresencaCon()" id="confirmarPresencaBotao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">done</i>Confirmar presença</a>
+                    <a onclick="cancelarInscricaoCon()" id="cancelarInscricao" class="waves-effect waves-light btn btn-acao"><i class="material-icons left">clear</i>Cancelar inscrição</a>
                 </div>
                 <table class="striped">
                     <tbody>
@@ -111,18 +111,17 @@
             </div>
             <div id="divLista">
                 <div class="topBar2">
-                    <a id="b1Lista" class="waves-effect waves-light btn btn-lista"><i class="material-icons left">format_list_bulleted</i>Fazer lista de presença</a>
-                    <a style="display:none" id="b2Lista" class="waves-effect waves-light btn btn-lista"><i class="material-icons left">clear</i>Cancelar lista</a>
+                    <a style="display:none" id="botaoLista" class="waves-effect waves-light btn btn-lista"><i class="material-icons left">format_list_bulleted</i>Fazer lista de presença</a>
+                    <!-- clear  Cancelar lista -->
                 </div>
                 <table class="lista striped">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th class="thCheck"></th>
                             <th>Nome</th>
                         </tr>
                     </thead>
                     <tbody id="tabelaLista">
-
                     </tbody>
                 </table>
             </div>

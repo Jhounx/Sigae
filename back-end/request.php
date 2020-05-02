@@ -99,7 +99,7 @@ if (isset($_GET['trocarSenha']) && isset($_GET['codigo']) && isset($_GET['senha'
 /* Verificar se o registro acabou */
 if (isset($_GET['registroAcabou'])) {
     $user->verificarPermissao(['permissaoRegistro']);
-    $id = $user->getIDnoCookie(["permissaoRegistro"]);
+    $id = $user->getIDnoCookie(['permissaoRegistro']);
     echo($user->verificarSeJaValidou($id));
 }
 
@@ -154,7 +154,7 @@ if (isset($_GET['getSalas']) && isset($_GET['campus'])) {
 
 /* Pegar dados de um usuário qualquer */
 if (isset($_GET['pegarDadoUsuario'])) {
-    $id = $user->proteger($_GET['id']);
+    $id = $user->getIDnoCookie(['permissaoSistema']);
     $pedido = $user->proteger($_GET['pedido']);
     $user->verificarPermissao(['permissaoSistema'], $id);
     if (isset($_GET['turma'])) {
@@ -259,13 +259,13 @@ if (isset($_GET['quantidadeDeRegistrosTurma']) && isset($_GET['campus']) && isse
 /* Pegar todos os atendimentos agendados (só para docentes) */
 if (isset($_GET['pegarTodosAtendimentosDocente'])) {
     $user->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
-    $id = $user->getIDnoCookie(["permissaoSistema"]);
+    $id = $user->getIDnoCookie(['permissaoSistema']);
     echo $user->pegarTodosAtendimentosDocente($id);
 }
 
 if (isset($_GET['pegarTodosAtendimentosDiscente'])) {
     $user->verificarPermissao(['permissaoSistema'], '', ['ALU']);
-    $id = $user->getIDnoCookie(["permissaoSistema"]);
+    $id = $user->getIDnoCookie(['permissaoSistema']);
     echo $user->pegarTodosAtendimentosDiscente($id);
 }
 
@@ -275,7 +275,6 @@ if (isset($_GET['pegarAtendimentoByID']) && isset($_GET['id'])) {
     $id = $user->proteger($_GET['id']);
     echo $user->pegarAtendimentoByID($id);
 }
-
 
 ##################################################
 # Parte VI - Emails

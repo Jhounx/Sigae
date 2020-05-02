@@ -9,13 +9,14 @@ function carregarAtendimento() {
     request = new Request()
     request.add("pegarAtendimentoByID", "")
     request.add("id", id)
+    request.add("requerIdentidade", id)
     request.send("GET", ["JSON"], (resultado) => {
         resposta = resultado.resposta;
         erro = resultado.erro;
         if (resposta != null) {
             if (JSON.stringify(resposta) == "{}") {
                 acionarErro("Esse atendimento não existe")
-                linha1.rodar()
+                irInicio()
             } else {
                 dados = resposta[id]
                 aten = new Atendimento(dados)
@@ -79,17 +80,22 @@ function carregarDados() {
 function initMaterialize() {
     $(document).ready(function () {
         $("ul.tabs").tabs();
+        if (getTipo() == "ALU") {
+            $("#inscreverAtendimentoBotao").show()
+            $("#confirmarPresencaBotao").show()
+            $("#cancelarInscricao").show()
+        }
+        if (getTipo() == "DOC" || getTipo() == "MON") {
+            $("#editarBotao").show()
+            $("#confirmarBotat").show()
+            $("#cancelarAtendimentoBotao").show()
+            $(".topBar2").css("height", "60px")
+            $("#botaoLista").show()
+    
+            $(".thCheck, .tdbBox").show()
+        }
+        $("#editarBotao").attr("href", "?modulo=agendarAtendimento&id" + id)
     });
-    if (getTipo() == "ALU") {
-        $("#inscreverAtendimentoBotao").show()
-        $("#confirmarPresencaBotao").show()
-        $("#cancelarInscricao").show()
-    }
-    if (getTipo() == "DOC" || getTipo() == "MON") {
-        $("#editarBotao").show()
-        $("#confirmarBotat").show()
-        $("#cancelarAtendimentoBotao").show()
-    }
 }
 
 /* Lista de presença */
@@ -161,7 +167,7 @@ function confirmarAtendimentoCon() {
 function cancelarAtendimentoCon() {
     Swal.fire({
         title: "Deseja cancelar este atendimento?",
-        html: "Ele ainda poderá ser visto por todos, e será apagado após 24 horas<br><br>Esta ação é irreversível!",
+        html: '<div class="popupDesc">Ele ainda poderá ser visto por todos, e será apagado após 24 horas<br><br>Esta ação é irreversível!</div>',
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -176,13 +182,52 @@ function cancelarAtendimentoCon() {
 }
 
 function inscreverAtendimentoCon() {
-
+    Swal.fire({
+        title: "Deseja se inscrever neste atendimento?",
+        html: '<div class="popupDesc">Você pode cancelar esta ação quando bem entender</div>',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Não",
+        confirmButtonText: "Sim"
+    }).then((result) => {
+        if (result.value) {
+            
+        }
+    })
 }
 
 function confirmarPresencaCon() {
-
+    Swal.fire({
+        title: "Deseja declarar presença neste atendimento?",
+        html: '<div class="popupDesc">Esta ação é irreversível!</div>',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Não",
+        confirmButtonText: "Sim"
+    }).then((result) => {
+        if (result.value) {
+            
+        }
+    })
 }
 
 function cancelarInscricaoCon() {
-
+    Swal.fire({
+        title: "Deseja se inscrever neste atendimento?",
+        html: '<div class="popupDesc">Você poderá se inscrever novamente</div>',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Não",
+        confirmButtonText: "Sim"
+    }).then((result) => {
+        if (result.value) {
+            
+        }
+    })
 }

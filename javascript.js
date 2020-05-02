@@ -178,6 +178,18 @@ function rightAlertas() {
     }
 }
 
+mostrarSenha = !false
+function toggleMostrarSenha() {
+    mostrarSenha = !mostrarSenha;
+    if(mostrarSenha) {
+        $(".icone-senha").removeAttr("style")
+        $("#senha").attr("type", "password")
+    } else {
+        $(".icone-senha").css("color", "rgb(92, 103, 188)")
+        $("#senha").attr("type", "text")
+    }
+}
+
 class Campo {
 
     constructor(input, enterClick, enterComponent) {

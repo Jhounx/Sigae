@@ -63,6 +63,9 @@ class Atendimento {
             if (this.json["estado"] == "CON") {
                 return "Confirmado pelo docente"
             }
+            if (this.json["estado"] == "FIN") {
+                return "Já realizado"
+            }
             if (this.json["estado"] == "CAN") {
                 return "Cancelado pelo docente"
             }
@@ -75,7 +78,7 @@ class Atendimento {
 
     pegarLimite() {
         if(parseInt(this.json["limite"]) == -1) {
-            return "SEM_LIMITE"
+            return ""
         }
         if(parseInt(this.json["limite"]) > 0) {
             return this.json["limite"]

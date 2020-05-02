@@ -8,6 +8,23 @@ function dataHoje(string) {
     }
 }
 
+function stringDateToDate(str) {
+    return Date.parse(moment(str, "DD/MM/YYYY"));
+}
+
+/* Somatórias */
+
+function somarDia(hj, dias, string) {
+    if (hj == null) {
+        hj = moment().format("DD/MM/YYYY");
+    }
+    if (string) {
+        return moment(hj, "DD-MM-YYYY").add(dias, 'days').format('DD/MM/YYYY');
+    } else {
+        return moment(hj, "DD-MM-YYYY").add(dias, 'days').toDate()
+    }
+}
+
 function somarAno(hj, anos, string) {
     if (hj == null) {
         hj = moment().format("DD/MM/YYYY");

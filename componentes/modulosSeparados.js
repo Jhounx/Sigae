@@ -75,14 +75,20 @@ function usuarioShow(id) {
 }
 
 function invoker_agendarAtendimento() {
-    setParam("modulo", "agendarAtendimento", "--agendarAtendimento")
+    setParam("modulo", "agendarAtendimento", true)
     agendarAtendimento.invoker()
 }
 
 function invoker_atendimento(id) {
-    if(id == undefined) {
-        id = getParam("id")
+    if(id == undefined && !paramExist("id")) {
+        acionarErro("Nenhum ID foi declarado")
+        irInicio()
+    } else {
+        if(paramExist("id")) {
+            id = getParam("id")
+        } else {
+            setParam("modulo", "atendimento&id=" + id, true)
+        }
+        atendimento.invoker()
     }
-    setParam("modulo", "atendimento&id=" + id, "--atendimento")
-    atendimento.invoker()
 }

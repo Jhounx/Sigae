@@ -1,12 +1,20 @@
 .botoes {
     display: inline-flex;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.btn-top, .btn-baixo {
+.btn-top,
+.btn-baixo {
     color: white !important;
     width: 250px !important;
     margin-right: 10px !important;
     padding-left: 15px !important;
+    text-transform: none !important;
+}
+
+.text-primary {
+    color: azure !important
 }
 
 .collapsible {
@@ -19,6 +27,32 @@
     -ms-user-select: none;
     user-select: none;
     font-weight: bold;
+    border-bottom: 0px !important;
+}
+
+.collapsible-body {
+    padding: 0px !important;
+    display: block;
+    border-bottom: 0px !important;
+}
+
+modulo>li {
+    list-style-type: none;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.collapsible-header {
+    border-bottom: 0px !important;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.labelLi {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .erro {
@@ -26,55 +60,23 @@
     color: crimson;
     margin-top: 8px;
     margin-left: 2px;
-    display: none;
+    /* display: none; */
 }
 
-.editado {
-    font-weight: bold;
-    color: rgb(38, 166, 154);
-    margin-left: 3px;
-    display: none;
+.bootstrap-select {
+    margin-top: 10px;
 }
 
-.collapsible-body {
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+.dropdown-toggle {
+    border: 0.5px solid #9e9e9e;
 }
 
-.input-field {
-    width: 100%;
-}
-
-.icone-tab {
-    color: rgb(83, 106, 141)
-}
-
-.selected {
-    background-color: rgb(112, 121, 201) !important;
-    color: white !important;
-    outline: none !important;
-    border: none !important;
-}
-
-.labelLi {
-    margin-bottom: 10px;
-}
-
-/* Primária */
-
-#nomeAtendimento {
+#nomeAtendimento,
+#descAtendimento {
     margin-bottom: 5px;
 }
 
-#descriAtendimento {
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
 /* Datepicker */
-
 .picker__holder {
     overflow-y: hidden !important;
 }
@@ -91,7 +93,8 @@
     display: none;
 }
 
-.picker__input, .timepicker {
+.picker__input,
+.timepicker {
     cursor: pointer;
 }
 
@@ -121,10 +124,11 @@
 }
 
 .picker__day--selected {
-    background-color: #26a69a!important;
+    background-color: #26a69a !important;
 }
 
-.picker__nav--prev:hover, .picker__nav--next:hover {
+.picker__nav--prev:hover,
+.picker__nav--next:hover {
     background-color: transparent !important;
 }
 
@@ -136,8 +140,9 @@
     background-color: rgb(250, 250, 250);
 }
 
+/* Inputs */
 .inputDatas {
-    margin-bottom: 0px!important;
+    margin-bottom: 0px !important;
 }
 
 .lbDate {
@@ -145,23 +150,24 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .picker__date-display {
+        width: 100%;
+    }
+
     .picker__box {
         display: flex;
         flex-direction: column;
     }
+
     .picker__container__wrapper {
         flex-grow: 1;
     }
 }
 
-/* Timepicker */
-
-.text-primary {
-    color: azure !important
-}
-
-/* Switch */
-
-.switch {
-    margin-left: 2px;
+@media only screen and (max-width: 500px) {
+    .botoes {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }

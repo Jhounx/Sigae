@@ -9,9 +9,17 @@ if (isset($_SESSION['permissaoSistema'])) {
     $i = 1;
     foreach ($_GET as $key => $value) {
         if(count($_GET) == $i) {
-            $param = $param . $key . "=" . $value;
+            if($value != '') {
+                $param = $param . $key . "=" . $value;
+            } else {
+                $param = $param . $key;
+            }
         } else {
-            $param = $param . $key . "=" . $value . "&";
+            if($value != '') {
+                $param = $param . $key . "=" . $value . "&";
+            } else {
+                $param = $param . $key . "&";
+            }
         }
         $i++;
     }
@@ -80,9 +88,10 @@ if (isset($_SESSION['permissaoSistema'])) {
                 </div>
             </div>
             <div class="row justify-content-center linha2">
-                <div class="divInput">
+                <div class="divInput divSenha">
                     <label id="senha-label" for="senha">Sua senha</label>
                     <input type="password" class="campo" id="senha" placeholder="Sua senha" spellcheck="false" autocapitalize="none">
+                    <i onclick="toggleMostrarSenha()" class="material-icons icone-senha">remove_red_eye</i>
                 </div>
             </div>
             <div class="row justify-content-center linha3">

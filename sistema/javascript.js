@@ -38,7 +38,7 @@ function initSigae() {
     $(window).on('resize', function () {
         $(function () {
             var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-            $("html, body").css({"height": h });
+            $("html, body").css({ "height": h });
         });
     });
 }
@@ -68,12 +68,6 @@ function initMaterialize() {
             event.stopPropagation();
         });
     });
-
-    nomeModulo = "inicio"
-    if (window.location.search != "") {
-        window.history.pushState({ pagina: 0, valor: nomeModulo, url: window.location.search }, nomeModulo, "");
-        window.history.replaceState({ pagina: 0, valor: nomeModulo, url: window.location.search }, nomeModulo, "");
-    }
 }
 
 function posInit() {
@@ -85,28 +79,23 @@ function posInit() {
 
     window.onpopstate = function (event) {
         event.preventDefault();
-        if (window.history.state) {
-            valor = window.history.state.value
-            console.log(valor)
-            // if(valor != undefined && valor.startsWith("--")) {
-            //     arr = valor.substring(2)
-            //     if (moduloAtual.id != arr) {
-            //         linha = getLinhaByNome(arr)
-            //         if(linha != undefined) {
-            //             linha.rodar(true)
-            //         }
-            //     }
-            // }
+        if (paramExist("modulo")) {
+            modulo = getParam("modulo")
+            if (getLinhaByNome(modulo) != undefined) {
+                linha = getLinhaByNome(modulo)
+                linha.rodar()
+            } else {
+                f = "invoker_" + modulo
+                this.eval(f + "()")
+            }
         } else {
-            console.log("inicio")
-            this.removeAllParans()
             linha1.rodar()
         }
     };
 }
 
 function popupsParam() {
-    if(paramExist("senhaTrocada")) {
+    if (paramExist("senhaTrocada")) {
         Swal.fire({
             position: "top-end",
             type: "success",
@@ -116,7 +105,7 @@ function popupsParam() {
         })
         removeParam("senhaTrocada")
     }
-    if(paramExist("negado")) {
+    if (paramExist("negado")) {
         Swal.fire({
             position: "top-end",
             type: "error",
