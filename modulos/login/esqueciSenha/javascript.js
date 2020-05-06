@@ -25,34 +25,31 @@ function enviarEmail() {
     request = new Request()
     request.add("enviarEmailTrocarSenha", "")
     request.add("email", $("#recuperarEmail").val())
-    request.send("GET", ["OK", "EML", "INV"], (resultado) => {
-        resposta = resultado.resposta;
-        erro = resultado.erro;
-        if (resposta != null) {
-            if (resposta == "OK") {
-                $("#sucessoEmail").show()
-                $("#erroEmail").hide()
-                $("#waitingEmail").hide()
-                $("#botaoEnviarRecuperacao").removeAttr("disabled")
-            }
-            if (resposta == "EML") {
-                $("#sucessoEmail").hide()
-                $("#erroEmail").show()
-                $("#waitingEmail").hide()
-                $("#botaoEnviarRecuperacao").removeAttr("disabled")
-            }
-            if (resposta == "INV") {
-                $("#sucessoEmail").hide()
-                $("#erroEmail").show()
-                $("#waitingEmail").hide()
-                $("#botaoEnviarRecuperacao").removeAttr("disabled")
-            }
-        } else {
+    request.send("GET", ["OK", "EML", "INV"], (resposta) => {
+        if (resposta == "OK") {
+            $("#sucessoEmail").show()
+            $("#erroEmail").hide()
+            $("#waitingEmail").hide()
+            $("#botaoEnviarRecuperacao").removeAttr("disabled")
+        }
+        if (resposta == "EML") {
             $("#sucessoEmail").hide()
             $("#erroEmail").show()
             $("#waitingEmail").hide()
             $("#botaoEnviarRecuperacao").removeAttr("disabled")
-            alert(erro)
         }
+        if (resposta == "INV") {
+            $("#sucessoEmail").hide()
+            $("#erroEmail").show()
+            $("#waitingEmail").hide()
+            $("#botaoEnviarRecuperacao").removeAttr("disabled")
+        }
+
+    }, (erro) => {
+        $("#sucessoEmail").hide()
+        $("#erroEmail").show()
+        $("#waitingEmail").hide()
+        $("#botaoEnviarRecuperacao").removeAttr("disabled")
+        alert(erro)
     });
 }

@@ -1,6 +1,6 @@
 <?php
 /* Hierarquia das classes
-    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+    Usuario > Atendimento > Dados > Registro > Validacao > Admin > Banco
 
     Esta classe gerencia as fotos. Esta não contata o banco de dados
 */

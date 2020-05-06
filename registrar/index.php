@@ -68,7 +68,7 @@ if (isset($_SESSION['permissaoSistema'])) {
                             <input id="campoChave" type="tel">
                             <label id="labelChave" for="campoChave">Digite sua chave de acesso</label>
                         </div>
-                        <a class="waves-effect waves-light btn btnChave" onclick="verificarChave()">Próxima etapa</a>
+                        <a class="waves-effect waves-light btn btnChave" onclick="testarKey()">Próxima etapa</a>
                         <div class="waiting" id="waiting">
                             <div class="row justify-content-center">
                                 <div class="spinner-border text-secondary" id="spinner-login" role="status"></div>
@@ -99,24 +99,42 @@ if (isset($_SESSION['permissaoSistema'])) {
                             </div>
                             <br>
                         </div>
-                        <div>
-                            <div class="row justify-content-center linha">
-                                <div class="parte2Painel">
-                                    <div class="parte2Esquerda">
-                                        <h2 class="perguntaInfo" id="perg1"><i class="material-icons iconePerg">people</i>Nome:</h2>
-                                        <h2 class="perguntaInfo" id="perg2"><i class="material-icons iconePerg">account_circle</i>Matrícula: </h2>
-                                        <h2 class="perguntaInfo" id="perg3"><i class="material-icons iconePerg">school</i>Curso:</h2>
-                                        <h2 class="perguntaInfo" id="perg4"><i class="material-icons iconePerg">account_balance</i>Campus:</h2>
-                                    </div>
-                                    <div class="parte2Direita">
-                                        <h2 class="perguntaResp" id="resp1"></h2>
-                                        <h2 class="perguntaResp" id="resp2"></h2>
-                                        <h2 class="perguntaResp" id="resp3"></h2>
-                                        <h2 class="perguntaResp" id="resp4"></h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <table class="tableTop">
+                                <tbody>
+                                    <tr class="tr1">
+                                        <td class="tdPerg">
+                                            <div class="tdDiv">
+                                                <i class="material-icons iconePerg">people</i>Nome:
+                                            </div>
+                                        </td>
+                                        <td class="tdResp" id="td1"></td>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <td class="tdPerg">
+                                            <div class="tdDiv">
+                                                <i class="material-icons iconePerg">account_circle</i>Matrícula:
+                                            </div>
+                                        </td>
+                                        <td class="tdResp" id="td2"></td>
+                                    </tr>
+                                    <tr class="tr3">
+                                        <td class="tdPerg">
+                                            <div class="tdDiv">
+                                                <i class="material-icons iconePerg">school</i>Curso:
+                                            </div>
+                                        </td>
+                                        <td class="tdResp" id="td3"></td>
+                                    </tr>
+                                    <tr class="tr4">
+                                        <td class="tdPerg">
+                                            <div class="tdDiv">
+                                                <i class="material-icons iconePerg">account_balance</i>Campus:
+                                            </div>
+                                        </td>
+                                        <td class="tdResp" id="td4"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                     </div>
                     <!-- Abreviação do nome -->
                     <div class="row justify-content-center linha">
@@ -210,8 +228,12 @@ if (isset($_SESSION['permissaoSistema'])) {
                             </div>
                             <input spellcheck="false" id="senha1" type="password" autocomplete="false" onfocus="ganhouFocus('#senha1')" onfocusout="perdeuFocus('#senha1')">
                             <label for="senha1">Senha</label>
+                            
                         </div>
                         <div class="input-field">
+                            <div class="popupShow popupShow2">
+                                <h6 class="diferentes">As duas senhas não coincidem</h6>
+                            </div>
                             <input spellcheck="false" id="senha2" type="password" autocomplete="false" onfocus="ganhouFocus('#senha2')" onfocusout="perdeuFocus('#senha2')">
                             <label for="senha2">Repetir senha</label>
                         </div>
@@ -220,18 +242,6 @@ if (isset($_SESSION['permissaoSistema'])) {
                     <div class="row justify-content-center linha">
                         <a disabled class="waves-effect waves-light btn btn-confirmar" id="botaoFinalizar" onclick="inscreverUsuario()">Finalizar registro</a>
                     </div>
-                    <script>
-                        $(window).on("resize", function() {
-                            resizer()
-                        });
-
-                        function resizer() {
-                            $("#perg1").height($("#resp1").outerHeight())
-                            $("#perg2").height($("#resp2").outerHeight())
-                            $("#perg3").height($("#resp3").outerHeight())
-                            $("#perg4").height($("#resp4").outerHeight())
-                        }
-                    </script>
                 </form>
             </div>
             <!-- Parte 3 -->

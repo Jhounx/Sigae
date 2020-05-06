@@ -111,11 +111,11 @@
 /* Toolbar */
 
 .topBar2 {
-    /* height: 60px; */
     display: inline-flex;
     background-color: rgb(245, 245, 245);
     border-radius: 5px;
     align-items: center;
+    height: 50px !important;
 }
 
 .btn-lista {

@@ -52,7 +52,13 @@ function eventosCampos() {
         if (senhaValida(nota) && senhaIguais()) {
             $("#erro2").text("")
             $("#senha2").removeAttr("style")
+            $(".popupShow2").fadeOut(250)
         } else {
+            if($("#senha2").val().length > 0) {
+                $(".popupShow2").show()
+            } else {
+                $(".popupShow2").fadeOut(250)
+            }
             $("#senha2").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
         }
         fazerValidacao()
@@ -163,8 +169,13 @@ function senhaIguais() {
 }
 
 function ganhouFocus(a) {
-    if (a == "#senha1" || a == "#senha2") {
+    if (a == "#senha1") {
         $(".popupShow1").show()
+    }
+    if (a == "#senha2") {
+        if($("#senha2").val().length > 0 && !senhaIguais()) {
+            $(".popupShow2").show()
+        }
     }
 }
 
@@ -176,7 +187,7 @@ function perdeuFocus(comp) {
         $(".popupShow1").fadeOut(250)
     }
     if (comp == "#senha2") {
-        $(".popupShow1").fadeOut(250)
+        $(".popupShow2").fadeOut(250)
     }
 }
 

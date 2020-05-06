@@ -56,12 +56,12 @@ function getTodasSalas() {
 
 
 function getDisciplinas(json) {
-    if(json == null) {
+    if (json == null) {
         json = jsonDados["disciplinas"];
     }
     r = [];
     for (i in json) {
-        if(i != undefined) {
+        if (i != undefined) {
             r.push(i);
         }
     }
@@ -69,15 +69,15 @@ function getDisciplinas(json) {
 }
 
 function getDisciplinasNome(json) {
-    if(json == "null") {
+    if (json == "null") {
         return [];
     }
-    if(json == null) {
+    if (json == null) {
         json = jsonDados["disciplinas"];
     }
     r = [];
     for (i in json) {
-        if(i != undefined) {
+        if (i != undefined) {
             r.push(json[i]);
         }
     }
@@ -87,11 +87,11 @@ function getDisciplinasNome(json) {
 function disciplinaNomeToID(arrayNomes) {
     dados = getTodasDisciplinas()
     arrayID = [];
-    for(i = 0; i < arrayNomes.length; i++) {
+    for (i = 0; i < arrayNomes.length; i++) {
         nome = arrayNomes[i];
-        Object.keys(dados).forEach(function (key) {
+        Object.keys(dados).forEach(function(key) {
             value = dados[key]
-            if(value == nome) {
+            if (value == nome) {
                 arrayID.push(key)
             }
         });
@@ -102,11 +102,11 @@ function disciplinaNomeToID(arrayNomes) {
 function disciplinaIDtoNome(arrayID) {
     dados = getTodasDisciplinas()
     a = []
-    for(i = 0; i < arrayID.length; i++) {
+    for (i = 0; i < arrayID.length; i++) {
         id = arrayID[i];
-        Object.keys(dados).forEach(function (key) {
+        Object.keys(dados).forEach(function(key) {
             value = dados[key]
-            if(id == key) {
+            if (id == key) {
                 a.push(dados[key])
             }
         });
@@ -114,17 +114,41 @@ function disciplinaIDtoNome(arrayID) {
     return a;
 }
 
+function tipoNomeToID(nome) {
+    if (nome == "Atendimento convencional") {
+        return "ATE"
+    }
+    if (nome == "Monitoria") {
+        return "MON"
+    }
+    if (nome == "Aula extra") {
+        return "EXT"
+    }
+}
+
+function tipoIDtoNome(id) {
+    if (id == "ATE") {
+        return "Atendimento convencional"
+    }
+    if (id == "MON") {
+        return "Monitoria"
+    }
+    if (id == "Aula extra") {
+        return "EXT"
+    }
+}
+
 function getTipoNome(tipoID) {
-    if(tipoID == "ALU") {
+    if (tipoID == "ALU") {
         return "Aluno";
     }
-    if(tipoID == "DOC") {
+    if (tipoID == "DOC") {
         return "Docente";
     }
-    if(tipoID == "MON") {
+    if (tipoID == "MON") {
         return "Monitor";
     }
-    if(tipoID == "ADM") {
+    if (tipoID == "ADM") {
         return "Administrador";
     }
 }
@@ -148,7 +172,7 @@ function notaDaSenha(password) {
     if (password.length < 6) {
         return 0
     }
-    
+
     var matchedCase = new Array();
     matchedCase.push("[$@$!%*#?&]");
     matchedCase.push("[A-Z]");
@@ -160,17 +184,53 @@ function notaDaSenha(password) {
             nota++;
         }
     }
-    if(nota == 1) {
+    if (nota == 1) {
         return 20;
     }
-    if(nota == 2) {
+    if (nota == 2) {
         return 50;
     }
-    if(nota == 3) {
+    if (nota == 3) {
         return 75;
     }
-    if(nota == 4) {
+    if (nota == 4) {
         return 100;
     }
     return 0;
+}
+
+/* Json utils */
+
+function fixJson(json) {
+    return json.replace(/'/g, "\"");
+}
+
+function isJson(json) {
+    var json = fixJson(json)
+    try {
+        JSON.parse(json);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function jsonVazio(json) {
+    if(json == "{}") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/* Misc */
+
+function randomString(chars, tamanho) {
+    text = ""
+    for(i = 0; i < tamanho; i++) {
+        random = Math.floor(Math.random() * chars.length + 1);
+        var s = chars.charAt(random);
+        text = text + s;
+    }
+    return text;
 }

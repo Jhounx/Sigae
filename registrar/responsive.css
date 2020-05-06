@@ -12,6 +12,10 @@
         border-bottom: 1px solid rgb(177, 177, 177);
         bottom: -11;
     }
+
+    .popupShow2 {
+        top: -90px;
+    }
 }
 
 @media only screen and (max-width: 620px) {

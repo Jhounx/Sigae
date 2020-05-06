@@ -1,18 +1,17 @@
 <?php
 /* Hierarquia das classes
-    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+    Admin > Atendimento > Registro > Usuario > Dados > Email > Validacao > Banco
 
     Esta classe gerencia todas as funções de registro
 */
 
-class Registro extends Validacao {
+class Registro extends Usuario {
 
 	/* Realizar registro */
 	public function registrar($id, $nomePreferencial, $email, $senha, $turma, $disciplina) {
 	    if($this->emailJaCadastrado($email)) {
 	        return "EML";
 	    }
-
 	    $queryString = "
 	        select id,nome,matricula,tipo,estado,codigo_acesso,curso from alunos
 	        where id='$id'
@@ -82,6 +81,18 @@ class Registro extends Validacao {
 	    }
 	}
 
+	function dadosEssenciais($id, $tipo) {
+		if($tipo == "ALU") {
+			$curso = $this->cursoUsuario($id);
+			$campus = $this->campusUsuario($id);
+			return $this->getTurmasByCurso($curso, $campus);
+		}
+		if($tipo == "DOC" || $tipo == "MON") {
+			return $this->getDisciplinas();
+		}
+		return "{}";
+	}
+
 	public function cancelarInscricao($id) {
 	    $query = "
 	        UPDATE alunos SET `nome.preferencia` = '', senha = '', turma = '', email = '', estado = 'NUL' WHERE id='$id' and estado='REG';
@@ -116,5 +127,4 @@ class Registro extends Validacao {
 	}
 
 }
-
 ?>

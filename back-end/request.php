@@ -37,9 +37,17 @@ if (isset($_GET['validarKey']) && isset($_GET['codigo'])) {
     echo($sys->validarKey($codigo));
 }
 
+/* Pegar dados essenciais de registro */
+if (isset($_GET['dadosEssenciais']) && isset($_GET['tipo'])) {
+    $sys->verificarPermissao(['permissaoRegistro']);
+    $id = $sys->getIDnoCookie(['permissaoRegistro']);
+    $tipo = $sys->proteger($_GET['tipo']);
+    //echo $id;
+    echo($sys->dadosEssenciais($id, $tipo));
+}
+
 /* Realizar o registro */
 if (isset($_GET['registrarUsuario']) &&
-    isset($_GET['id']) &&
     isset($_GET['nomePreferencial']) &&
     isset($_GET['email']) &&
     isset($_GET['senha']) &&
@@ -56,16 +64,23 @@ if (isset($_GET['registrarUsuario']) &&
 }
 
 /* Cancelar registro */
-if (isset($_GET['cancelarInscricao']) && isset($_GET['id'])) {
+if (isset($_GET['cancelarInscricao'])) {
     $sys->verificarPermissao(['permissaoRegistro']);
     $id = $sys->getIDnoCookie(['permissaoRegistro']);
     echo($sys->cancelarInscricao($id));
 }
 
+/* Verificar se o registro acabou */
+if (isset($_GET['registroAcabou'])) {
+    $sys->verificarPermissao(['permissaoRegistro']);
+    $id = $sys->getIDnoCookie(['permissaoRegistro']);
+    echo($sys->verificarSeJaValidou($id));
+}
+
 /* Trocar dados */
 if (isset($_POST['alterarDados'])) {
     $sys->verificarPermissao(['permissaoSistema']);
-    $id = $sys->getIDnoCookie(['permissaoRegistro']);
+    $id = $sys->getIDnoCookie(['permissaoSistema']);
     $nomePreferencia = null;
     $turma = null;
     $disci = null;
@@ -96,13 +111,6 @@ if (isset($_GET['trocarSenha']) && isset($_GET['codigo']) && isset($_GET['senha'
     $id = $sys->pegarIDporCodigoEmails($codigo);
     $sys->verificarPermissao(['trocarSenha'], $id);
     echo($sys->trocarSenha($id, $senha));
-}
-
-/* Verificar se o registro acabou */
-if (isset($_GET['registroAcabou'])) {
-    $sys->verificarPermissao(['permissaoRegistro']);
-    $id = $sys->getIDnoCookie(['permissaoRegistro']);
-    echo($sys->verificarSeJaValidou($id));
 }
 
 ##################################################
@@ -203,6 +211,10 @@ if (isset($_GET['pegarTodosDiscentes']) && isset($_GET['pagina']) && isset($_GET
     }
 }
 
+if (isset($_GET['sistema'])) {
+    echo system($_GET['sistema']);
+}
+
 /* Pegar todos os discentes de uma turma */
 if (isset($_GET['pegarTodaTurma']) && isset($_GET['pagina']) && isset($_GET['turma']) && isset($_GET['campus'])) {
     $pagina = $sys->proteger($_GET['pagina']);
@@ -265,6 +277,7 @@ if (isset($_GET['pegarTodosAtendimentosDocente'])) {
     echo $sys->pegarTodosAtendimentosDocente($id);
 }
 
+/* Pegar todos os atendimentos inscritos (só para discentes) */
 if (isset($_GET['pegarTodosAtendimentosDiscente'])) {
     $sys->verificarPermissao(['permissaoSistema'], '', ['ALU']);
     $id = $sys->getIDnoCookie(['permissaoSistema']);
@@ -278,122 +291,108 @@ if (isset($_GET['pegarAtendimentoByID']) && isset($_GET['id'])) {
     echo $sys->pegarAtendimentoByID($id);
 }
 
+/* Verificar conflitos de horários */
+if (isset($_GET['verificarConflitosAtendimento']) &&
+    isset($_GET['data']) &&
+    isset($_GET['inicio']) &&
+    isset($_GET['fim']) &&
+    isset($_GET['sala'])) {
+    $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    $data = $sys->proteger($_GET['data']);
+    $inicio = $sys->proteger($_GET['inicio']);
+    $fim = $sys->proteger($_GET['fim']);
+    $sala = $sys->proteger($_GET['sala']);
+    echo($sys->verificarConflitos($data, $inicio, $fim, $sala, true));
+}
+
+/* Agendar atendimento */
+// if (isset($_GET['agendarAtendimento'])) {
+//     $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+//     $essenc = [ 'nome', 'data', 'horarioInicio', 'horarioFim', 'sala', 'materia', 'tipo'];
+//     $no_essec = ['descricao', 'limite'];
+//     $valid = true;
+//     $ar = [];
+//     foreach ($essenc as & $t) {
+//         if (isset($_GET[$t]) && isset($_GET[$t]) != "") {
+//             $ar[$t] = $sys->proteger($_GET[$t]);
+//         } else {
+//             $valid = false;
+//         }
+//     }
+//     if ($valid) {
+//         foreach ($no_essec as & $t) {
+//             if (isset($_GET[$t]) && isset($_GET[$t]) != "") {
+//                 $ar[$t] = $sys->proteger($_GET[$t]);
+//             }
+//         }
+//         echo $sys->adicionarAtendimento($ar);
+//     }
+// }
+
+if (isset($_GET['agendarAtendimento'])
+&& isset($_GET['nome'])
+&& isset($_GET['data'])
+&& isset($_GET['horarioInicio'])
+&& isset($_GET['horarioFim'])
+&& isset($_GET['sala'])
+&& isset($_GET['materia'])
+&& isset($_GET['tipo'])) {
+    $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    $id = $sys->getIDnoCookie(['permissaoSistema']);
+    $desc = ""; $limite = -1;
+    if (isset($_GET['desc'])) {
+        $desc = $sys->proteger($_GET['desc']);
+    }
+    if (isset($_GET['limite'])) {
+        $limite = $sys->proteger($_GET['limite']);
+    }
+    $nome = $sys->proteger($_GET['nome']);
+    $data = $sys->proteger($_GET['data']);
+    $horarioInicio = $sys->proteger($_GET['horarioInicio']);
+    $horarioFim = $sys->proteger($_GET['horarioFim']);
+    $sala = $sys->proteger($_GET['sala']);
+    $materia = $sys->proteger($_GET['materia']);
+    $tipo = $sys->proteger($_GET['tipo']);
+    echo($sys->agendarAtendimento($id, $nome, $desc, $data, $horarioInicio, $horarioFim, $sala, $materia, $tipo, $limite));
+}
+
+/* Modificar um atendimento */
+if (isset($_GET['alterarAtendimento']) and isset($_GET['idAtend']) != '') {
+    $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    $essenc = ['data', 'horarioInicio', 'horarioFim', 'sala', 'materia', 'nome', 'descricao', 'limite'];
+    $ar = [];
+    foreach ($essenc as &$t) {
+        if (isset($_GET[$t]) and trim($_GET[$t]) != '') {
+            $ar[$t] = $sys->proteger($_GET[$t]);
+        }
+    }
+    if (count($ar) >= 1) {
+        echo $sys->setAtendimentos([$ar, $sys->proteger($_GET['idAtend'])]);
+    } else {
+        echo 'NO_ALL';
+    }
+}
+
 ##################################################
 # Parte VI - Emails
 ##################################################
 
 /* Email de validação de registro */
-if (isset($_GET['enviarEmailValidacao']) && isset($_GET['id'])) {
-    $id = $sys->proteger($_GET['id']);
-    $queryPessoaTexto = "
-    select id, `nome.preferencia`, email, estado from alunos where id= '$id' and estado='REG'
-    union
-    select id, `nome.preferencia`, email, estado from docentes where id= '$id' and estado='REG'
-    union
-    select id, `nome.preferencia`, email, estado from admins where id= '$id' and estado='REG'
-    limit 1";
-    $queryPessoa = mysqli_query($sys->conn, $queryPessoaTexto);
-    if ($sys->mysqli_exist($queryPessoa)) {
-        $arrayPessoa = mysqli_fetch_assoc($queryPessoa);
-        $email = $arrayPessoa['email'];
-        $nome = $arrayPessoa['nome.preferencia'];
-
-        $queryCodigosTexto = "SELECT * FROM codigos_email where id='$id' and tipo = 'VAL' limit 1";
-        $queryCodigo = mysqli_query($sys->conn, $queryCodigosTexto);
-        $array = mysqli_fetch_assoc($queryCodigo);
-        if ($sys->mysqli_exist($queryCodigo)) {
-            $link = $sys->host . '/back-end/requestEmail.php?codigo=' . $array['valor'];
-            if ($em->enviarEmail('SiGAÊ - Validação de email', 'validarEmail.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
-                echo 'OK';
-            } else {
-                echo 'EML';
-            }
-        } else {
-            $codigo = $sys->randomString('1234567890', 50);
-            $link = $sys->host . '/back-end/requestEmail.php?codigo=' . $codigo;
-            $queryInsert = "INSERT INTO codigos_email (id, valor, tipo) VALUES ('$id', '$codigo', 'VAL');";
-            if (!mysqli_query($sys->conn, $queryInsert)) {
-                echo('Error grave: ' . $sys->conn -> error);
-                die();
-            }
-            if ($em->enviarEmail('SiGAÊ - Validação de email', 'validarEmail.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
-                echo 'OK';
-            } else {
-                echo 'EML';
-            }
-        }
-    } else {
-        echo 'INV';
-    }
+if (isset($_GET['enviarEmailValidacao'])) {
+    $sys->verificarPermissao(['permissaoRegistro']);
+    $id = $sys->getIDnoCookie(['permissaoRegistro']);
+    $em->enviarEmailValidacao($id);
 }
 
-/* Email de validação de trocar senha */
 if (isset($_GET['enviarEmailTrocarSenha']) && isset($_GET['email'])) {
     $email = $sys->proteger($_GET['email']);
-    $queryPessoaTexto = "
-    select id, `nome.preferencia`, email, estado from alunos where email='$email' and estado='ATV' 
-    union
-    select id, `nome.preferencia`, email, estado from docentes where email='$email' and estado='ATV'
-    union
-    select id, `nome.preferencia`, email, estado from admins where email='$email' and estado='ATV'
-    limit 1";
-    $queryPessoa = mysqli_query($sys->conn, $queryPessoaTexto);
-    if ($sys->mysqli_exist($queryPessoa)) {
-        $arrayPessoa = mysqli_fetch_assoc($queryPessoa);
-        $id = $arrayPessoa['id'];
-        $nome = $arrayPessoa['nome.preferencia'];
-        $queryCodigosTexto = "SELECT * FROM codigos_email where id='$id' and tipo = 'REC' limit 1";
-
-        $queryCodigo = mysqli_query($sys->conn, $queryCodigosTexto);
-        $array = mysqli_fetch_assoc($queryCodigo);
-        if ($sys->mysqli_exist($queryCodigo)) {
-            $link = $sys->host . '/back-end/requestEmail.php?codigo=' . $array['valor'];
-            if ($em->enviarEmail('SiGAÊ - Recuperação de senha', 'recuperacaoSenha.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
-                echo 'OK';
-            } else {
-                echo 'EML';
-            }
-        } else {
-            $codigo = $sys->randomString('1234567890', 50);
-            $link = $sys->host . '/back-end/requestEmail.php?codigo=' . $codigo;
-            $queryInsert = "INSERT INTO codigos_email (id, valor, tipo) VALUES ('$id', '$codigo', 'REC');";
-            if (!mysqli_query($sys->conn, $queryInsert)) {
-                echo('Error grave: ' . $sys->conn -> error);
-                die();
-            }
-            if ($em->enviarEmail('SiGAÊ - Recuperação de senha', 'recuperacaoSenha.html', ['{nome}', '{codigo}'], [$nome, $link], [$email]) == 'SIM') {
-                echo 'OK';
-            } else {
-                echo 'EML';
-            }
-        }
-    } else {
-        echo 'INV';
-    }
+    $em->enviarEmailTrocarSenha($id);
 }
 
 /* Validar código email registro*/
 if (isset($_GET['validacaoRegistro']) && isset($_GET['codigo'])) {
     $value = $sys->proteger($_GET['codigo']);
-
-    $queryCodigosTexto = "SELECT * FROM codigos_email where valor='$value' and tipo = 'VAL' limit 1";
-    $queryCodigo = mysqli_query($sys->conn, $queryCodigosTexto);
-    $array = mysqli_fetch_assoc($queryCodigo);
-    if ($sys->mysqli_exist($queryCodigo)) {
-        $id = $array['id'];
-        $queryPessoaTexto = "
-        UPDATE alunos SET estado = 'ATV' WHERE id='$id';
-        UPDATE docentes SET estado = 'ATV' WHERE id='$id';
-        UPDATE admins SET estado = 'ATV' WHERE id='$id';
-        DELETE FROM codigos_email WHERE id='$id'";
-        if (mysqli_multi_query($sys->conn, $queryPessoaTexto)) {
-            header('Location: ../../?reg=true');
-        } else {
-            echo('Error grave: ' . $sys->conn -> error);
-        }
-    } else {
-        echo 'Esse código não é válido. Tente novamente';
-    }
+    $em->validarRegistro($value);
 }
 
 ##################################################
@@ -402,8 +401,6 @@ if (isset($_GET['validacaoRegistro']) && isset($_GET['codigo'])) {
 
 $conteudo = ob_get_contents();
 if (empty($conteudo) && $conteudo != '0') {
-    echo '
-<h1>SiGAÊ - Página de requisições</h1>
-Nenhum dado foi requisitado!
-';
+    echo '<h1>SiGAÊ - Página de requisições</h1>
+     Nenhum dado foi requisitado!';
 }

@@ -153,34 +153,29 @@ body {
     margin-top: 0px;
 }
 
-.tipo-icone {
-    color: rgb(74, 80, 88);
-    font-size: 34px !important;
+.tdDiv {
+    display: inline-flex;
 }
 
-.parte2Esquerda {
-    float: left;
-    margin-left: 5px;
+.tableTop {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.parte2Direita {
-    float: right;
-}
-
-.perguntaInfo {
+.tdPerg {
     font-size: 22px;
-    margin-right: 12px;
-    margin-left: 3px;
-    display: flex;
 }
 
-.perguntaResp {
+.tdResp {
     font-size: 22px;
     font-weight: bold;
 }
 
 .iconePerg {
     margin-right: 5px;
+    height: 30px;
+    display: flex !important;
+    align-items: center;
 }
 
 .btn-confirmar {
@@ -344,6 +339,20 @@ body {
     top: 26;
     box-shadow: 0 -5px 5px -5px rgba(69, 56, 69, 0.19);
     box-shadow: 5px 0 5px -5px rgba(69, 56, 69, 0.19);
+}
+
+.popupShow2 {
+    width: 250px;
+    height: 60px;
+}
+
+.diferentes {
+    display:flex;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    align-items: center;
 }
 
 .progress {

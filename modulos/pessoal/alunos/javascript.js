@@ -102,33 +102,30 @@ function carregarNumeroPaginas() {
     if (valorBusca != null && valorBusca != "") {
         request.add("busca", valorBusca)
     }
-    request.send("GET", ["INTEGER", "NEG"], (resultado) => {
-        resposta = resultado.resposta;
-        erro = resultado.erro;
-        if (resposta != null) {
-            numeroRegistros = resposta;
-            numeroPaginas = Math.ceil(numeroRegistros / 10)
-            $("#totalPessoas").text(numeroRegistros)
-            $("#totalPaginas").text(numeroPaginas)
-            if (numeroRegistros > 0) {
-                if (pagina > numeroPaginas) {
-                    pagina = numeroPaginas;
-                }
-                retirarErro()
-                carregarPagina(pagina)
-            } else {
-                mostrarErro()
-                mostrarTabela()
+    request.send("GET", ["INTEGER", "NEG"], (resposta) => {
+        numeroRegistros = resposta;
+        numeroPaginas = Math.ceil(numeroRegistros / 10)
+        $("#totalPessoas").text(numeroRegistros)
+        $("#totalPaginas").text(numeroPaginas)
+        if (numeroRegistros > 0) {
+            if (pagina > numeroPaginas) {
+                pagina = numeroPaginas;
             }
+            retirarErro()
+            carregarPagina(pagina)
         } else {
-            if (erro == "NEG") {
-                removeAllParans()
-                linha1.rodar()
-            } else {
-                alert(erro)
-            }
-            acionarErro("Requisição negada")
+            mostrarErro()
+            mostrarTabela()
         }
+
+    }, (erro) => {
+        if (erro == "NEG") {
+            removeAllParans()
+            linha1.rodar()
+        } else {
+            alert(erro)
+        }
+        acionarErro("Requisição negada")
     })
 }
 
@@ -149,23 +146,19 @@ function carregarPagina(p) {
         if (valorBusca != null && valorBusca != "") {
             request.add("busca", valorBusca)
         }
-        request.send("GET", ["JSON"], (resultado) => {
-            resposta = resultado.resposta;
-            erro = resultado.erro;
-            if (resposta != null) {
-                Object.keys(resposta).forEach(function (nome) {
-                    var id = resposta[nome]["id"];
-                    var turma = resposta[nome]["turma"];
-                    var tipo = resposta[nome]["tipo"];
-                    renderizarLinha(id, nome, turma, tipo)
-                });
-            } else {
-                alert(erro)
-                acionarErro("Requisição negada")
-            }
+        request.send("GET", ["JSON"], (resposta) => {
+            Object.keys(resposta).forEach(function (nome) {
+                var id = resposta[nome]["id"];
+                var turma = resposta[nome]["turma"];
+                var tipo = resposta[nome]["tipo"];
+                renderizarLinha(id, nome, turma, tipo)
+            });
             mostrarTabela()
             mostrarPaginacao()
             carregando = false;
+        }, (erro) => {
+            alert(erro)
+            acionarErro("Requisição negada")
         })
     }
 }

@@ -1,4 +1,5 @@
-var aten, id, dados, arrayPresentes
+var aten, id, dados, nLinhas = 1,
+    arrayPresentes
 
 function init_atendimento() {
     carregarAtendimento()
@@ -10,23 +11,19 @@ function carregarAtendimento() {
     request.add("pegarAtendimentoByID", "")
     request.add("id", id)
     request.add("requerIdentidade", id)
-    request.send("GET", ["JSON"], (resultado) => {
-        resposta = resultado.resposta;
-        erro = resultado.erro;
-        if (resposta != null) {
-            if (JSON.stringify(resposta) == "{}") {
-                acionarErro("Esse atendimento não existe")
-                irInicio()
-            } else {
-                dados = resposta[id]
-                aten = new Atendimento(dados)
-                carregarDados()
-                carregarLista()
-            }
+    request.send("GET", ["JSON"], (resposta) => {
+        if (JSON.stringify(resposta) == "{}") {
+            acionarErro("Esse atendimento não existe")
+            irInicio()
         } else {
-            alert(erro)
-            acionarErro("Requisição negada")
+            dados = resposta[id]
+            aten = new Atendimento(dados)
+            carregarDados()
+            carregarLista()
         }
+    }, (erro) => {
+        alert(erro)
+        acionarErro("Requisição negada")
     })
 }
 
@@ -61,7 +58,7 @@ function carregarDados() {
     }
     $("#r12").text(aten.pegarCampus())
 
-    if (aten.pegarLimite() == "SEM_LIMITE") {
+    if (aten.pegarLimite() == "") {
         $("#r13").addClass("alert-info")
     } else {
         $("#r13").removeClass("alert banner")
@@ -91,10 +88,10 @@ function initMaterialize() {
             $("#cancelarAtendimentoBotao").show()
             $(".topBar2").css("height", "60px")
             $("#botaoLista").show()
-    
+
             $(".thCheck, .tdbBox").show()
         }
-        $("#editarBotao").attr("href", "?modulo=agendarAtendimento&id" + id)
+        $("#editarBotao").attr("onclick", "invoker_agendarAtendimento(\"" + id + "\")")
     });
 }
 
@@ -109,8 +106,6 @@ function carregarLista() {
         renderizarLinha(id, nome, presente)
     });
 }
-
-nLinhas = 1
 
 function renderizarLinha(id, nome, presente) {
     pr = ""
@@ -145,7 +140,7 @@ function selecionarLinhaAluno(linha) {
 /* Requisições */
 
 function editarAtendimentoCon() {
-    
+
 }
 
 function confirmarAtendimentoCon() {
@@ -159,7 +154,7 @@ function confirmarAtendimentoCon() {
         confirmButtonText: "Sim"
     }).then((result) => {
         if (result.value) {
-            
+
         }
     })
 }
@@ -176,7 +171,7 @@ function cancelarAtendimentoCon() {
         confirmButtonText: "Sim"
     }).then((result) => {
         if (result.value) {
-            
+
         }
     })
 }
@@ -193,7 +188,7 @@ function inscreverAtendimentoCon() {
         confirmButtonText: "Sim"
     }).then((result) => {
         if (result.value) {
-            
+
         }
     })
 }
@@ -210,7 +205,7 @@ function confirmarPresencaCon() {
         confirmButtonText: "Sim"
     }).then((result) => {
         if (result.value) {
-            
+
         }
     })
 }
@@ -227,7 +222,7 @@ function cancelarInscricaoCon() {
         confirmButtonText: "Sim"
     }).then((result) => {
         if (result.value) {
-            
+
         }
     })
 }

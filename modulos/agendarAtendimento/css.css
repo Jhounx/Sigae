@@ -87,6 +87,7 @@ modulo>li {
 
 .picker__date-display {
     width: 250px;
+    padding: 12px !important;
 }
 
 .picker__weekday-display {
@@ -138,6 +139,11 @@ modulo>li {
 
 .picker__day--infocus:hover:not(.picker__day--disabled) {
     background-color: rgb(250, 250, 250);
+}
+
+.picker__day-display, .picker__month-display {
+    font-size: 30px !important;
+    margin-right: 0px;
 }
 
 /* Inputs */

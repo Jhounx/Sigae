@@ -1,11 +1,11 @@
 <?php
 /* Hierarquia das classes
-    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+    Admin > Atendimento > Registro > Usuario > Dados > Email > Validacao > Banco
 
     Esta classe gerencia dados de infraestrutura e outros diversos
 */
 
-class Dados extends Registro {
+class Dados extends Email {
     public function getTurmas() {
         $query = '
         SELECT tabelaTurma.codigo, tabelaTurma.curso, tabelaCurso.nome
@@ -252,6 +252,15 @@ class Dados extends Registro {
             return mysqli_fetch_assoc($query)['nome'];
         } else {
             return 'null'; 
+        }
+    }
+
+    public function getCampusNameById($id){
+        $query = mysqli_query($this->conn, "SELECT nome FROM campus where id='$id' limit 1");
+        if ($this->mysqli_exist($query)) {
+            return mysqli_fetch_assoc($query)['nome'];
+        } else {
+            return 'nul'; 
         }
     }
 }

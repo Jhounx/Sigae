@@ -21,7 +21,7 @@ class Request {
         }
     }
 
-    send(requestType, esperado, callback) {
+    send(requestType, esperado, tudoOK, returnErr) {
         var dados = {};
         for (var i = 0; i < this.parans.length; i++) {
             dados[this.parans[i]] = this.values[i];
@@ -34,7 +34,6 @@ class Request {
             dataType: "html"
 
         }).done(function (resposta) {
-            var objeto = new ObjectResposta()
             if(resposta == "NEG") {
                 window.location.href="../?negado";
                 return;
@@ -43,32 +42,52 @@ class Request {
                 window.location.href="../?expirado";
                 return;
             }
-            if (esperado[0] == "JSON") {
-                try {
-                    var json = JSON.parse(resposta);
-                    objeto.resposta = json;
-                } catch (e) {
-                    objeto.erro = resposta;
-                }
-            } else {
-                if (esperado[0] == "INTEGER") {
-                    if (!isNaN(resposta)) {
-                        objeto.resposta = resposta;
-                    } else {
-                        objeto.erro = resposta;
-                    }
-                } else {
-                    for (var i = 0; i < esperado.length; i++) {
-                        if (esperado[i] == resposta) {
-                            objeto.resposta = resposta;
-                        }
-                    }
-                    if (objeto.resposta == null) {
-                        objeto.erro = resposta;
-                    }
+            var retorno = false;
+            for (var i = 0; i < esperado.length; i++) {
+                var es = esperado[i]
+                if(es == 'JSON' && isJson(resposta)) {
+                    retorno = true;
+                    tudoOK(JSON.parse(fixJson(resposta)))
+                } else if (es == 'INTEGER' && isNaN(resposta)) {
+                    retorno = true;
+                    tudoOK(resposta)
+
+                } else if (es == resposta) {
+                    retorno = true;
+                    tudoOK(resposta)
                 }
             }
-            callback(objeto);
+            if(retorno == false) {
+                if (typeof returnErr === 'function') {
+                    returnErr(resposta)
+                }
+            }
+            // if (esperado[0] == "JSON") {
+            //     try {
+            //         var json = JSON.parse(resposta);
+            //         objeto.resposta = json;
+            //     } catch (e) {
+            //         objeto.erro = resposta;
+            //     }
+            // } else {
+            //     if (esperado[0] == "INTEGER") {
+            //         if (!isNaN(resposta)) {
+            //             objeto.resposta = resposta;
+            //         } else {
+            //             objeto.erro = resposta;
+            //         }
+            //     } else {
+            //         for (var i = 0; i < esperado.length; i++) {
+            //             if (esperado[i] == resposta) {
+            //                 objeto.resposta = resposta;
+            //             }
+            //         }
+            //         if (objeto.resposta == null) {
+            //             objeto.erro = resposta;
+            //         }
+            //     }
+            // }
+            //callback(objeto);
     }).fail(function(request) {
         if (request.statusText != "error" && request.statusText != "abort") {
             alert(request.statusText)

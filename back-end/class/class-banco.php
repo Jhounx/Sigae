@@ -1,13 +1,10 @@
 <?php
 /* Hierarquia das classes
-    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+    Usuario > Atendimento > Dados > Registro > Validacao > Admin > Banco
 
     Esta classe gerencia o banco de dados
 */
 
-set_error_handler(function () {
-    die('<h1>Erro grave ao iniciar o sistema</h1>');
-});
 class Banco {
 
     /* Chaves principais do sistema. CUIDADO, NÃO PUBLIQUE ESSES CAMPOS PREENCHIDOS*/
@@ -19,9 +16,10 @@ class Banco {
     /* Chaves super globais */
     public $conn;
     public $host;
+    public $preFixHost = "http://";
 
     public function __construct() {
-        $this->host = $_SERVER['HTTP_HOST'];
+        $this->host = $this->preFixHost . $_SERVER['HTTP_HOST'];
         $this->conn = mysqli_connect($this->servidor, $this->usuario, $this->senhaDB, $this->dbname);
         if (mysqli_connect_errno()) {
             echo "<h1>Erro ao conectar com o banco de dados</h1>";
@@ -65,6 +63,16 @@ class Banco {
             if(isset($_SESSION[$permissao[$i]]) && $_SESSION[$permissao[$i]] != null) {
                 return $_SESSION[$permissao[$i]];
             }
+        }
+    }
+
+    function pegarIDporCodigoEmails($codigo) {
+        $query = mysqli_query($this->conn, "
+        SELECT id FROM codigos_email where valor='$codigo'");
+        if($this->mysqli_exist($query)) {
+            return mysqli_fetch_assoc($query)['id'];
+        } else {
+            return null;
         }
     }
 
@@ -123,4 +131,47 @@ class Banco {
         $this->init_session();
         $_SESSION[$nome] = null;
     }
+
+    /* Utils */
+    
+    function randomString($chars, $length) {
+        $tamaho = strlen($chars);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $chars[rand(0, $tamaho - 1)];
+        }
+        return $randomString;
+    }
+
+    public function createIDUsuario(){
+        $id = $this->randomString('QWERTYUIOPASDFGHJKLZXCVBNM1234567890', 10);
+        $queryString = "
+        select id from alunos
+        where id='$id'
+        union
+        select id from docentes
+        where id='$id'
+        union
+        select id from admins
+        where id='$id'";
+        $query = mysqli_query($this->conn, $queryString);
+        while($this->mysqli_exist($query)){
+            $id = $this->randomString('QWERTYUIOPASDFGHJKLZXCVBNM1234567890', 10);
+            $query = mysqli_query($this->conn, $query);
+        }
+        return $id;
+    }
+
+    public function createIDAtendimento(){
+        $id = $this->randomString('QWERTYUIOPASDFGHJKLZXCVBNM1234567890', 10);
+        $queryString = "
+        select id from atendimentos where id='$id'";
+        $query = mysqli_query($this->conn, $queryString);
+        while($this->mysqli_exist($query)){
+            $id = $this->randomString('QWERTYUIOPASDFGHJKLZXCVBNM1234567890', 10);
+            $query = mysqli_query($this->conn, $query);
+        }
+        return $id;
+    }
+    
 }

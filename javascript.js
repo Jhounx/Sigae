@@ -46,44 +46,36 @@ function logar() {
         request = new Request()
         request.add("login", loginstr)
         request.add("senha", senhastr)
-        esperado = ["CON", "MAT", "SEN", "REG", "INA"] /* JÁ ESTA LOGADO, CONSEGUIU LOGAR, MATRICULA ERRADA, SENHA ERRADA, NAO CONFIRMOU REGISTRO, CONTA INATIVA */
-        request.send("POST", esperado, (resultado) => {
+        esperado = ["CON", "MAT", "SEN", "REG", "INA"]
+        request.send("POST", esperado, (resposta) => {
             $("#erro").show()
-            if (resultado == undefined) {
-                $(".erroTexto").text("Erro grave: Requisição falha")
-            } else {
-                resposta = resultado.resposta;
-                erro = resultado.erro;
-                if (resposta != null) {
-                    if (resposta == "INA") {
-                        $(".erroTexto").text("Essa conta está inativa")
-                        $("#waiting").hide()
-                        $("#erro").show()
-                    }
-                    if (resposta == "REG") {
-                        $("#erro").hide()
-                        window.location.href = "./registrar";
-                    }
-                    if (resposta == "MAT") {
-                        $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
-                        $("#waiting").hide()
-                        $("#erro").show()
-                    }
-                    if (resposta == "SEN") {
-                        $(".erroTexto").text("Sua senha está incorreta. Confira-a")
-                        $("#waiting").hide()
-                        $("#erro").show()
-                    }
-                    if (resposta == "CON") {
-                        $("#erro").hide()
-                        window.location.href = "./sistema";
-                    }
-                } else {
-                    $("#waiting").hide()
-                    $(".erroTexto").text("Erro grave: Requisição confusa")
-                    alert(erro)
-                }
+            if (resposta == "INA") {
+                $(".erroTexto").text("Essa conta está inativa")
+                $("#waiting").hide()
+                $("#erro").show()
             }
+            if (resposta == "REG") {
+                $("#erro").hide()
+                window.location.href = "./registrar";
+            }
+            if (resposta == "MAT") {
+                $(".erroTexto").text("A matrícula inserida não pertence a uma conta")
+                $("#waiting").hide()
+                $("#erro").show()
+            }
+            if (resposta == "SEN") {
+                $(".erroTexto").text("Sua senha está incorreta. Confira-a")
+                $("#waiting").hide()
+                $("#erro").show()
+            }
+            if (resposta == "CON") {
+                $("#erro").hide()
+                window.location.href = "./sistema";
+            }
+        }, (erro) => {
+            $(".erroTexto").text("Erro grave: Requisição falha")
+            $("#waiting").hide()
+            $("#erro").show()
         });
     } else {
         if (loginstr == "") {
@@ -107,7 +99,7 @@ function mainEmail() {
 }
 
 function rightAlertas() {
-    if(paramExist("expirado")) {
+    if (paramExist("expirado")) {
         parametro = getParam("expirado")
         Swal.fire({
             position: 'top-end',
@@ -130,7 +122,7 @@ function rightAlertas() {
         window.history.pushState("", "", "./");
         return;
     }
-    if(paramExist("reg")) {
+    if (paramExist("reg")) {
         parametro = getParam("reg")
         Swal.fire({
             position: 'top-end',
@@ -153,7 +145,7 @@ function rightAlertas() {
         window.history.pushState("", "", "./");
         return;
     }
-    if(paramExist("senhaTrocada")) {
+    if (paramExist("senhaTrocada")) {
         parametro = getParam("senhaTrocada")
         Swal.fire({
             position: 'top-end',
@@ -181,7 +173,7 @@ function rightAlertas() {
 mostrarSenha = !false
 function toggleMostrarSenha() {
     mostrarSenha = !mostrarSenha;
-    if(mostrarSenha) {
+    if (mostrarSenha) {
         $(".icone-senha").removeAttr("style")
         $("#senha").attr("type", "password")
     } else {

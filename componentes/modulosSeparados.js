@@ -29,7 +29,7 @@ function alterarSenhaShow() {
         allowOutsideClick: false,
         preConfirm: function () {
             return new Promise(function () {
-                if ($mandou == false) {
+                if (mandou == false) {
                     Swal.getCancelButton().style.display = "none";
                     Swal.showLoading()
                     $(".swal2-title").text("Enviando email...")
@@ -38,25 +38,21 @@ function alterarSenhaShow() {
                     request = new Request()
                     request.add("enviarEmailTrocarSenha", "")
                     request.add("email", getEmail())
-                    request.send("GET", ["OK", "EML", "INV"], (resultado) => {
-                        resposta = resultado.resposta;
-                        erro = resultado.erro;
+                    request.send("GET", ["OK", "EML", "INV"], (resposta) => {
                         Swal.hideLoading();
                         Swal.getCancelButton().style.display = "block";
-                        if (resposta != null) {
-                            if (resposta == "OK") {
-                                $(".swal2-title").text("O email foi enviado!")
-                                $(".swal2-cancel").hide()
-                                $(".swal2-confirm").text("Fechar")
-                                $mandou = true
-                            }
-                            if (resposta == "EML" || resposta == "INV") {
-                                Swal.showValidationMessage("Não foi possível enviar o email")
-                            }
-                        } else {
-                            Swal.showValidationMessage("Erro grave")
-                            alert(erro)
+                        if (resposta == "OK") {
+                            $(".swal2-title").text("O email foi enviado!")
+                            $(".swal2-cancel").hide()
+                            $(".swal2-confirm").text("Fechar")
+                            $mandou = true
                         }
+                        if (resposta == "EML" || resposta == "INV") {
+                            Swal.showValidationMessage("Não foi possível enviar o email")
+                        }
+                    }, (erro) => {
+                        Swal.showValidationMessage("Erro grave")
+                        alert(erro)
                     });
                 } else {
                     Swal.close()
@@ -65,6 +61,10 @@ function alterarSenhaShow() {
             });
         }
     })
+}
+
+function sobreSigae() {
+    sobre.show()
 }
 
 /* Modulos separados */
@@ -80,11 +80,11 @@ function invoker_agendarAtendimento() {
 }
 
 function invoker_atendimento(id) {
-    if(id == undefined && !paramExist("id")) {
+    if (id == undefined && !paramExist("id")) {
         acionarErro("Nenhum ID foi declarado")
         irInicio()
     } else {
-        if(paramExist("id")) {
+        if (paramExist("id")) {
             id = getParam("id")
         } else {
             setParam("modulo", "atendimento&id=" + id, true)

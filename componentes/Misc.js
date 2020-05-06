@@ -1,11 +1,6 @@
 /* Funcionalidades de versão */
-var versao = "Dev 1.13.2"
+var versao = "Dev 1.14"
 
 function definirVersao() {
     $(".versao").text(versao)
 }
-
-function sobreSigae() {
-    sobre.show()
-}
-

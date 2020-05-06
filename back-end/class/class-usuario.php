@@ -1,11 +1,12 @@
 <?php
 /* Hierarquia das classes
-    Admin > Usuario > Atendimento > Dados > Registro > Validacao > Banco
+    Admin > Atendimento > Registro > Usuario > Dados > Email > Validacao > Banco
 
     Esta classe gerencia todas as funções relacionadas aos dados pessoais
 */
 
-class Usuario extends Atendimentos {
+class Usuario extends Dados {
+    
     public function logar($login, $senha) {
         $senha_md5 = md5($senha);
         $queryString = "
@@ -113,18 +114,6 @@ class Usuario extends Atendimentos {
         return substr_replace($str, ' ', 0, 1);
     }
 
-    public function disciplinasUsuario($id) {
-        $stringTodas = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT disciplinas FROM docentes where id = '$id' and estado = 'ATV'"))['disciplinas'];
-        $array = explode('-', $stringTodas);
-        $arr = [];
-        for ($i = 0; $i < count($array); $i++) {
-            $disciplinaID = $array[$i];
-            $nomeDisciplina = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM disciplinas where id='$disciplinaID'"))['nome'];
-            $arr[$disciplinaID][] = $nomeDisciplina;
-        }
-        return $arr;
-    }
-
     /* Mudar dados */
     public function mudarDados($id, $nomePreferencia, $turma, $disci, $email, $img) {
         $queryPessoaString = "
@@ -226,5 +215,38 @@ class Usuario extends Atendimentos {
         } else {
             echo 'INV';
         }
+    }
+
+    /*### Dados do usuário ###*/
+
+    public function disciplinasUsuario($id) {
+        $stringTodas = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT disciplinas FROM docentes where id = '$id' and estado = 'ATV'"))['disciplinas'];
+        $array = explode('-', $stringTodas);
+        $arr = [];
+        for ($i = 0; $i < count($array); $i++) {
+            $disciplinaID = $array[$i];
+            $nomeDisciplina = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM disciplinas where id='$disciplinaID'"))['nome'];
+            $arr[$disciplinaID][] = $nomeDisciplina;
+        }
+        return $arr;
+    }
+
+    public function cursoUsuario($id) {
+        return mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT curso FROM alunos where id = '$id'"))['curso'];
+    }
+
+    public function campusUsuario($id) {
+        $queryString = "
+        select id,campus from alunos
+        where id='$id'
+        union
+        select id,campus from docentes
+        where id='$id'
+        union
+        select id,campus from admins
+        where id='$id'
+        limit 1";
+        $query = mysqli_query($this->conn, $queryString);
+        return mysqli_fetch_assoc($query)['campus'];
     }
 }

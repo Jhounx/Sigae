@@ -1,4 +1,9 @@
-var linhas = 0, conjuntos = 0, nodes = 0, arrayNodes = [], arrayLinhas = [], moduloInit
+var linhas = 0,
+    conjuntos = 0,
+    nodes = 0,
+    arrayNodes = [],
+    arrayLinhas = [],
+    moduloInit
 
 function sideMenus() {
     //Início
@@ -59,7 +64,7 @@ function modulos() {
 
     atendimento = new Modulo("atendimento", "../modulos/atendimento", " ", "perm_contact_calendar", true, true, null);
     atendimento.wait()
-    /* Módulos especiais */
+        /* Módulos especiais */
     erro404 = new Modulo("erro404", "../modulos/erro404", "Módulo não encontrado", "error", true, false, null);
 
     setModuloParam()
@@ -75,7 +80,7 @@ function setModuloParam() {
             var moduloDoArray = arrayModulos[i]
             if (moduloDoArray.id == moduloParam) {
                 var achou = true;
-                if(moduloDoArray.linha != null) {
+                if (moduloDoArray.linha != null) {
                     moduloDoArray.linha.rodar()
                 } else {
                     eval("invoker_" + moduloDoArray.id + "()")
@@ -263,7 +268,8 @@ class Linha {
         removeAllSelection()
         selectLinha(this)
         if (this.getActionType() == "MODULO") {
-            var modulo = this.action.substring(2), achou = false;
+            var modulo = this.action.substring(2),
+                achou = false;
             for (var i = 0; i < arrayModulos.length; i++) {
                 var moduloDoArray = arrayModulos[i]
                 if (moduloDoArray.id == modulo) {
@@ -274,7 +280,7 @@ class Linha {
                             setParam("modulo", moduloDoArray.id, true, true)
                         }
                     } else {
-                        removeParam("modulo")
+                        removeAllParans()
                     }
                 }
             }

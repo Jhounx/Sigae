@@ -16,7 +16,7 @@ function ocultarErro() {
 
 function verificarErro() {
     var n = $(".tabela > tbody > tr:visible").length
-    if(n == 0) {
+    if (n == 0) {
         mostrarErro()
     } else {
         ocultarErro()
@@ -27,31 +27,28 @@ function carregarDados() {
     universalAbort()
     request = new Request()
     request.add("pegarTodosAtendimentosDiscente", "")
-    request.send("GET", ["JSON"], (resultado) => {
-        resposta = resultado.resposta;
-        erro = resultado.erro;
-        if (resposta != null) {
-            if (JSON.stringify(resposta) == "{}") {
-                verificarErro()
-            } else {
-                Object.keys(resposta).forEach(function (nome) {
-                    aten = new Atendimento(resposta[nome])
-                    id = nome
-                    data = aten.pegarData()
-                    inicio = aten.pegarHorarioInicio()
-                    fim = aten.pegarHorarioFim()
-                    sala = aten.pegarSala()
-                    estado = aten.pegarEstado()
-                    renderizarLinha(id, data, inicio, fim, sala, estado)
-                });
-                atendimentosInscritos.show()
-                verificarErro()
-            }
+    request.send("GET", ["JSON"], (resposta) => {
+        if (JSON.stringify(resposta) == "{}") {
+            verificarErro()
         } else {
-            alert(erro)
-            acionarErro("Requisição negada")
+            Object.keys(resposta).forEach(function (nome) {
+                aten = new Atendimento(resposta[nome])
+                id = nome
+                data = aten.pegarData()
+                inicio = aten.pegarHorarioInicio()
+                fim = aten.pegarHorarioFim()
+                sala = aten.pegarSala()
+                estado = aten.pegarEstado()
+                renderizarLinha(id, data, inicio, fim, sala, estado)
+            });
+            atendimentosInscritos.show()
+            verificarErro()
         }
+
         eventos()
+    }, (erro) => {
+        alert(erro)
+        acionarErro("Requisição negada")
     })
 }
 
@@ -105,7 +102,7 @@ function eventos() {
         if (checkCancel == false) {
             $(".cancel").hide()
         }
-        if($(".inputFiltrar").val().length > 0) {
+        if ($(".inputFiltrar").val().length > 0) {
             filtrarTabela($(".inputFiltrar").val().toLowerCase())
         }
         verificarErro()
@@ -118,7 +115,7 @@ function eventos() {
         if (checkRealizados == false) {
             $(".concluido").hide()
         }
-        if($(".inputFiltrar").val().length > 0) {
+        if ($(".inputFiltrar").val().length > 0) {
             filtrarTabela($(".inputFiltrar").val().toLowerCase())
         }
         verificarErro()
@@ -138,10 +135,10 @@ function eventos() {
 function filtrarTabela(value) {
     $("#tabela > tbody > tr").filter(function () {
         e = $(this).find("td.bannerTd>div").attr("id")
-        if(checkCancel == false && e == "CAN") {
+        if (checkCancel == false && e == "CAN") {
             return;
         }
-        if(checkRealizados == false && e == "FIN") {
+        if (checkRealizados == false && e == "FIN") {
             return;
         }
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)

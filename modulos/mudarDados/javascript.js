@@ -56,44 +56,39 @@ function salvarDados() {
 
     request = new Request()
     request.add("alterarDados", "")
-    request.add("id", getID())
     for (i = 0; i < array.length; i++) {
         request.add(array[i][0], array[i][1])
     }
     request.setURL("../back-end/request.php")
-    request.send("POST", ["OK", , "NONE", "IMG", "EML", "ERROR"], (resultado) => {
-        resposta = resultado.resposta;
-        erro = resultado.erro;
-        if (resposta != null) {
-            if (resposta == "OK") {
-                window.location.reload(false);
-            }
-            if (resposta == "NONE") {
-                acionarErro("None")
-                $("#salvarDados").removeAttr("disabled")
-                $("#undoDados").removeAttr("disabled")
-            }
-            if (resposta == "IMG") {
-                acionarErro("Erro grave ao processar a imagem")
-                $("#salvarDados").removeAttr("disabled")
-                $("#undoDados").removeAttr("disabled")
-            }
-            if (resposta == "EML") {
-                acionarErro("Esse e-mail já está sendo usado")
-                $("#salvarDados").removeAttr("disabled")
-                $("#undoDados").removeAttr("disabled")
-            }
-            if (resposta == "ERROR") {
-                acionarErro("Erro grave")
-                $("#salvarDados").removeAttr("disabled")
-                $("#undoDados").removeAttr("disabled")
-            }
-        } else {
-            alert(erro)
+    request.send("POST", ["OK", , "NONE", "IMG", "EML", "ERROR"], (resposta) => {
+        if (resposta == "OK") {
+            window.location.reload(false);
+        }
+        if (resposta == "NONE") {
+            acionarErro("None")
+            $("#salvarDados").removeAttr("disabled")
+            $("#undoDados").removeAttr("disabled")
+        }
+        if (resposta == "IMG") {
+            acionarErro("Erro grave ao processar a imagem")
+            $("#salvarDados").removeAttr("disabled")
+            $("#undoDados").removeAttr("disabled")
+        }
+        if (resposta == "EML") {
+            acionarErro("Esse e-mail já está sendo usado")
+            $("#salvarDados").removeAttr("disabled")
+            $("#undoDados").removeAttr("disabled")
+        }
+        if (resposta == "ERROR") {
             acionarErro("Erro grave")
             $("#salvarDados").removeAttr("disabled")
             $("#undoDados").removeAttr("disabled")
         }
+    }, (erro) => {
+        alert(erro)
+        acionarErro("Erro grave")
+        $("#salvarDados").removeAttr("disabled")
+        $("#undoDados").removeAttr("disabled")
     });
 }
 
@@ -252,7 +247,6 @@ function deselect(x) {
 }
 
 /* Imagem */
-
 function deletarFoto() {
     select("5")
     $("#previewImage").attr("src", "../icones/semFoto.png")
