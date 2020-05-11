@@ -117,7 +117,6 @@ class Banco {
                 die();
             }
         }
-
     }
     
     /* Adiciona à sessão uma certa permissão */
@@ -172,6 +171,11 @@ class Banco {
             $query = mysqli_query($this->conn, $query);
         }
         return $id;
+    }
+
+    public function tirar_fundo($str){
+        $str = substr_replace($str, ' ', strlen($str) -1, 1);
+        return substr_replace($str, ' ', 0, 1);
     }
     
 }

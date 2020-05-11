@@ -48,7 +48,7 @@ class Request {
                 if(es == 'JSON' && isJson(resposta)) {
                     retorno = true;
                     tudoOK(JSON.parse(fixJson(resposta)))
-                } else if (es == 'INTEGER' && isNaN(resposta)) {
+                } else if (es == 'INTEGER' && !isNaN(resposta)) {
                     retorno = true;
                     tudoOK(resposta)
 
@@ -62,32 +62,6 @@ class Request {
                     returnErr(resposta)
                 }
             }
-            // if (esperado[0] == "JSON") {
-            //     try {
-            //         var json = JSON.parse(resposta);
-            //         objeto.resposta = json;
-            //     } catch (e) {
-            //         objeto.erro = resposta;
-            //     }
-            // } else {
-            //     if (esperado[0] == "INTEGER") {
-            //         if (!isNaN(resposta)) {
-            //             objeto.resposta = resposta;
-            //         } else {
-            //             objeto.erro = resposta;
-            //         }
-            //     } else {
-            //         for (var i = 0; i < esperado.length; i++) {
-            //             if (esperado[i] == resposta) {
-            //                 objeto.resposta = resposta;
-            //             }
-            //         }
-            //         if (objeto.resposta == null) {
-            //             objeto.erro = resposta;
-            //         }
-            //     }
-            // }
-            //callback(objeto);
     }).fail(function(request) {
         if (request.statusText != "error" && request.statusText != "abort") {
             alert(request.statusText)

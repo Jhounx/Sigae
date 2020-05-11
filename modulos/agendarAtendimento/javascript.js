@@ -1,8 +1,4 @@
-var editando = false,
-    aten, m1 = false,
-    m2 = false,
-    m3 = false,
-    m4 = false;
+var editando = false, idAtendimento, aten
 
 function init_agendarAtendimento() {
     loadAtendimento()
@@ -11,8 +7,8 @@ function init_agendarAtendimento() {
 }
 
 function loadAtendimento() {
-    if (paramExist("atendimento")) {
-        idAtendimento = getParam("atendimento")
+    if (paramExist("id")) {
+        idAtendimento = getParam("id")
         $("#salvarDadosText").text("Salvar alterações")
         editando = true
         request = new Request()
@@ -31,7 +27,7 @@ function loadAtendimento() {
                 $(".datepicker").val(aten.pegarData())
                 $(".inicioPicker").val(aten.pegarHorarioInicio())
                 $(".fimPicker").val(aten.pegarHorarioFim())
-                if (aten.pegarLimite() != "SEM_LIMITE") {
+                if (aten.pegarLimite() != "-1") {
                     $("#limiteInput").val(aten.pegarLimite())
                 }
                 $(".selectSalas").selectpicker("val", aten.pegarSala());
@@ -39,6 +35,7 @@ function loadAtendimento() {
                 $(".selectTipo").selectpicker("val", aten.pegarTipo());
                 initMaterialize()
                 Materialize.updateTextFields()
+                agendarAtendimento.show()
             }
         }, (erro) => {
             alert(erro)
@@ -47,6 +44,7 @@ function loadAtendimento() {
     } else {
         $("#nomeAtendimento").val("Atendimento#" + randomString("1234567890", 5))
         initMaterialize()
+        agendarAtendimento.show()
     }
 }
 
@@ -74,7 +72,6 @@ function loadJsonBase() {
         noneResultsText: "Nada foi encontrado",
         noneSelectedText: "Selecione ao menos uma opção"
     });
-    agendarAtendimento.show()
 }
 
 function eventos() {
@@ -176,6 +173,12 @@ function eventos() {
             validacaoGeral()
         }
     });
+    /* select tipo */
+    $(".selectTipo").on("changed.bs.select", function () {
+        if (this.value != undefined) {
+            validacaoGeral()
+        }
+    });
     $("#limiteInput").keyup(function () {
         validacaoGeral()
     });
@@ -269,7 +272,6 @@ function validacaoGeral() {
         valido = false;
     }
 
-
     if (editando == false) {
         if (valido == false) {
             $("#salvarDados").attr("disabled", true)
@@ -297,52 +299,69 @@ function verificarMudanca() {
         $(".fimPicker").val() == aten.pegarHorarioFim() &&
         $(".selectSalas option:selected").val() == aten.pegarSala() &&
         $(".selectDisciplinas option:selected").val() == aten.pegarMateria() &&
-        $("#limiteInput").val() == aten.pegarLimite()
+        $(".selectTipo option:selected").val() == aten.pegarTipo() &&
+        $("#limiteInput").val() == aten.pegarLimite(true)
 }
 
 function acaoBotao() {
     $("#salvarDados").attr("disabled", true)
-
-    if (editando) {
-
-    } else {
-        verificarDisponibilidade(function (json) {
-            if (jsonVazio(json)) {
-                aten = new Atendimento(JSON.parse(JSON.stringify(obj = {
-                    nome: $("#nomeAtendimento").val(),
-                    descricao: $("#descAtendimento").val(),
-                    data: $(".datepicker").val(),
-                    horarioInicio: $(".inicioPicker").val(),
-                    horarioFim: $(".fimPicker").val(),
-                    sala: $(".selectSalas option:selected").val(),
-                    materia: disciplinaNomeToID([$(".selectDisciplinas option:selected").val()]),
-                    tipo: tipoNomeToID($(".selectTipo option:selected").val()),
-                    limite: $("#limiteInput").val(),
-                })))
+    idAtendimentoEdicao = editando ? idAtendimento : null
+    verificarDisponibilidade(function (json) {
+        if (jsonVazio(json)) {
+            aten = new Atendimento(JSON.parse(JSON.stringify(obj = {
+                nome: $("#nomeAtendimento").val(),
+                descricao: $("#descAtendimento").val(),
+                data: $(".datepicker").val(),
+                horarioInicio: $(".inicioPicker").val(),
+                horarioFim: $(".fimPicker").val(),
+                sala: $(".selectSalas option:selected").val(),
+                materia: disciplinaNomeToID([$(".selectDisciplinas option:selected").val()]),
+                tipo: tipoNomeToID($(".selectTipo option:selected").val()),
+                limite: $("#limiteInput").val(),
+            })))
+            if (editando) {
+                aten.alterarAtendimento(idAtendimento, function (resposta) {
+                    if (Object.keys(resposta).length == 0) {
+                        acionarErro("Modificação negada pelo servidor")
+                    } else {
+                        id = resposta["id"]
+                        invoker_atendimento(id)
+                        setParam("atendimentoModificado");
+                    }
+                    $("#salvarDados").removeAttr("disabled", true)
+                })
+            } else {
                 aten.agendarAtendimento(function (resposta) {
                     if (Object.keys(resposta).length == 0) {
                         acionarErro("Agendamento negado pelo servidor")
                     } else {
                         id = resposta["id"]
                         invoker_atendimento(id)
+                        setParam("atendimentoAgendado");
                     }
+                    $("#salvarDados").removeAttr("disabled", true)
                 })
-            } else {
-                htm = "\
-                <div style=\"text-align:center\">Existe um atendimento já marcado conflitando com seu horário</div>\
-                <br>\
-                <div style=\"text-align:center\"><b>Seu atendimento</b></div>\
-                <div style=\"text-align:center\">Data: " + json["data_formatada"] + ", das " + json["horarioInicio"] + " às " + json["horarioFim"] + "<br> Sala " + json["sala"] + "</div>\
-                <br>\
-                <div style=\"text-align:center\"><b>Atendimento em conflito</b></div>\
-                <div style=\"text-align:center\">Data: " + $(".datepicker").val() + ", das " + $(".inicioPicker").val() + " às " + $(".fimPicker").val() + "<br> Sala " + $(".selectSalas option:selected").val() + "</div>";
-                Swal.fire({
-                    type: 'error',
-                    title: 'Conflito de horários!',
-                    html: htm,
-                })
-                $("#salvarDados").removeAttr("disabled", true)
             }
-        })
-    }
+        } else {
+            popupConflito(json["data_formatada"], json["horarioInicio"], json["horarioFim"], json["sala"])
+            $("#salvarDados").removeAttr("disabled", true)
+        }
+    }, idAtendimentoEdicao)
+}
+
+function popupConflito(data, inicio, fim, sala) {
+    htm = `
+    <div style="text-align:center">Existe um atendimento já marcado conflitando com seu horário</div>
+    <br>
+    <div style="text-align:center"><b>Seu atendimento</b></div>
+    <div style="text-align:center">Data: ` + $(".datepicker").val() + `, das ` + $(".inicioPicker").val() + ` às ` + $(".fimPicker").val() + `<br> Sala ` + $(".selectSalas option:selected").val() + `</div>
+    <br>
+    <div style="text-align:center"><b>Atendimento em conflito</b></div>
+    <div style="text-align:center">Data: ` + data + `, das ` + inicio + ` às ` + fim + `<br> Sala ` + sala + `</div>
+    `;
+    Swal.fire({
+        type: 'error',
+        title: 'Conflito de horários!',
+        html: htm,
+    })
 }

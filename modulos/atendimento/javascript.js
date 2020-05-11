@@ -20,6 +20,7 @@ function carregarAtendimento() {
             aten = new Atendimento(dados)
             carregarDados()
             carregarLista()
+            popupsAviso()
         }
     }, (erro) => {
         alert(erro)
@@ -58,7 +59,7 @@ function carregarDados() {
     }
     $("#r12").text(aten.pegarCampus())
 
-    if (aten.pegarLimite() == "") {
+    if (aten.pegarLimite() == "-1") {
         $("#r13").addClass("alert-info")
     } else {
         $("#r13").removeClass("alert banner")
@@ -69,7 +70,12 @@ function carregarDados() {
     $("#r16").text(aten.pegarPorConfirmados() + "%")
 
     $("#r17").text(aten.pegarDataAgendamento())
-    $("#r18").text(aten.pegarDataUltimaModificacao())
+    if(aten.pegarDataUltimaModificacao() == "NONE") {
+        $("#r18").addClass("alert-info")
+    } else {
+        $("#r18").removeClass("alert banner")
+        $("#r18").text(aten.pegarDataUltimaModificacao())
+    }
     atendimento.show()
     initMaterialize()
 }
@@ -225,4 +231,31 @@ function cancelarInscricaoCon() {
 
         }
     })
+}
+
+/*#######################
+# Popups de aviso
+#########################*/
+
+function popupsAviso() {
+    if (paramExist("atendimentoAgendado")) {
+        Swal.fire({
+            position: "top-end",
+            type: "success",
+            title: "Atendimento agendado com sucesso!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+        removeParam("atendimentoAgendado")
+    }
+    if (paramExist("atendimentoModificado")) {
+        Swal.fire({
+            position: "top-end",
+            type: "success",
+            title: "Atendimento modificado com sucesso!",
+            showConfirmButton: false,
+            timer: 2000
+        })
+        removeParam("atendimentoModificado")
+    }
 }

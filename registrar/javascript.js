@@ -18,6 +18,14 @@ function eventos() {
             testarKey()
         }
     });
+    $(function () {
+        var width = $(window).width();
+        var height = $(window).height();
+        if (width <= 730 || height <= 528) {
+            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            $("html, body").css({ "height": h });
+        }
+    });
 }
 
 /* Tela de loading */

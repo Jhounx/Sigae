@@ -34,7 +34,7 @@ class Atendimento {
     }
 
     pegarMateria() {
-        if(Object.keys(this.json["materia"]).length) {
+        if (this.json["materia"].constructor.name === "Array") {
             return this.json["materia"][0]
         } else {
             return this.json["materia"]
@@ -84,17 +84,24 @@ class Atendimento {
         return this.json["campus"]
     }
 
-    pegarLimite() {
-        if(this.json["limite"] == "") {
-            return -1;
+    pegarLimite(literal) {
+        if(!literal) {
+            if (this.json["limite"] == "") {
+                return -1;
+            } else {
+                return this.json["limite"]
+            }
         } else {
+            if(this.json["limite"] == "-1") {
+                return ""
+            }
             return this.json["limite"]
         }
     }
 
     pegarTotalAlunos() {
         var i = 0
-        Object.keys(this.json["aluno"]).forEach(function(id) {
+        Object.keys(this.json["aluno"]).forEach(function (id) {
             i++
         });
         return i
@@ -103,7 +110,7 @@ class Atendimento {
     pegarTotalAlunosConfirmados() {
         var i = 0,
             json = this.json
-        Object.keys(json["aluno"]).forEach(function(id) {
+        Object.keys(json["aluno"]).forEach(function (id) {
             if (json["aluno"][id]["confirmado"] == "SIM") {
                 i++
             }
@@ -141,7 +148,7 @@ class Atendimento {
         request = new Request()
         request.add("agendarAtendimento", "")
         request.add("nome", this.pegarNome())
-        request.add("descricao", this.pegarDescricao())
+        request.add("desc", this.pegarDescricao())
         request.add("data", this.pegarData())
         request.add("horarioInicio", this.pegarHorarioInicio())
         request.add("horarioFim", this.pegarHorarioFim())
@@ -150,27 +157,53 @@ class Atendimento {
         request.add("tipo", this.pegarTipo(true))
         request.add("limite", this.pegarLimite())
         request.send("GET", ["JSON"], (resposta) => {
-            retorno(resposta)  
+            retorno(resposta)
         }, (erro) => {
-            console.log(erro)
             alert(erro)
             acionarErro("Requisição negada")
+            $("#salvarDados").removeAttr("disabled", true)
+        })
+    }
+
+    alterarAtendimento(id, retorno) {
+        request = new Request()
+        request.add("alterarAtendimento", "")
+        request.add("idAtendimento", id)
+        request.add("nome", this.pegarNome())
+        request.add("desc", this.pegarDescricao())
+        request.add("data", this.pegarData())
+        request.add("horarioInicio", this.pegarHorarioInicio())
+        request.add("horarioFim", this.pegarHorarioFim())
+        request.add("sala", this.pegarSala())
+        request.add("materia", this.pegarMateria())
+        request.add("tipo", this.pegarTipo(true))
+        request.add("limite", this.pegarLimite())
+        request.send("GET", ["JSON"], (resposta) => {
+            retorno(resposta)
+        }, (erro) => {
+            alert(erro)
+            acionarErro("Requisição negada")
+            $("#salvarDados").removeAttr("disabled", true)
+            console.log(erro)
         })
     }
 }
 
-function verificarDisponibilidade(retorno) {
+function verificarDisponibilidade(retorno, id) {
     request = new Request()
     request.add("verificarConflitosAtendimento", "")
     request.add("data", $(".datepicker").val())
     request.add("inicio", $(".inicioPicker").val())
     request.add("fim", $(".fimPicker").val())
     request.add("sala", $(".selectSalas option:selected").val())
+    if(id != undefined) {
+        request.add("excecao", id)
+    }
     request.send("GET", ["JSON"], (resposta) => {
         retorno(resposta)
     }, (erro) => {
         alert(erro)
         acionarErro("Requisição negada")
+        $("#salvarDados").removeAttr("disabled", true)
     })
-
 }

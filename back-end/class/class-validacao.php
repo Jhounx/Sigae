@@ -30,7 +30,8 @@ class Validacao extends Banco {
                 $array['campusID'] = $cpm;
                 $array['campus'] = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM campus where id='$cpm'"))['nome'];
                 $array['curso'] = mysqli_fetch_assoc(mysqli_query($this->conn, "SELECT * FROM cursos where id='$cur'"))['nome'];
-                unset($array["id"]);
+                unset($array['id']);
+
                 return json_encode($array);
             }
 
@@ -96,147 +97,103 @@ class Validacao extends Banco {
         $query = $this->conn->query($queryString);
         $numeroLinha = mysqli_num_rows($query);
         if ($numeroLinha == 0) {
-            if($boolean) {
+            if ($boolean) {
                 return false;
-            } else {
-                return 'NAO';
             }
+
+            return 'NAO';
         }
-        if($boolean) {
+        if ($boolean) {
             return true;
-        } else {
-            return 'SIM';
         }
+
+        return 'SIM';
     }
 
     /* Validação de atendimentos */
 
-    public function horaToMin($hora) {
-        $ar = explode(':', $hora);
-        $soma = intval($ar[0]) * 60 + intval($ar[1]);
-
-        return $soma;
+    public function isValidDate($date) {
+        return DateTime::createFromFormat('d/m/Y', $date) ? true : false;
     }
 
-    public function isHour($hora) {
-        try {
-            $ar = explode(':', $hora);
-            if (count($ar) == 2) {
-                $hour = $ar[0];
-                $min = $ar[1];
-                if (strlen($hour) != 2 || strlen($hour) != 2) {
-                    return false;
+    public function validarHorarioAtendimento($inicio, $fim) {
+        return strtotime($fim) >= strtotime($inicio) ? true : false;
+    }
+
+    public function verificarDonoAtendimento($idDocente, $idAtendimento) {
+        $queryString = "SELECT * FROM atendimentos where id='$idAtendimento' and docente='$idDocente' limit 1";
+        $query = $this->conn->query($queryString);
+        return $this->mysqli_exist($query);
+    }
+
+    public function verificarConflitos($data, $agoraInicio, $agoraFim, $sala, $excecao = null) {
+        $data = DateTime::createFromFormat('d/m/Y', $data)->format('Y-m-d');
+        $queryString = "SELECT id, DATE_FORMAT (`data`,'%d/%m/%Y') AS data_formatada, 
+        horarioInicio, horarioFim, sala FROM atendimentos where `data`='$data' and sala='$sala' and (estado = 'CON' or estado = 'NAO')";
+        $query = $this->conn->query($queryString);
+        if ($this->mysqli_exist($query)) {
+            while ($linha = mysqli_fetch_array($query)) {
+                foreach ($linha as $key => $v) {
+                    if (is_int($key)) {
+                        unset($linha[$key]);
+                    }
                 }
-                $hour = intval($hour);
-                $min = intval($min);
-                if ($hour >= 24 || $hour < 0 || $min >= 60 || $min < 0) {
-                    return false;
+                $id = $linha['id'];
+                $inicioDB = $linha['horarioInicio'];
+                $fimDB = $linha['horarioFim'];
+                if ($excecao != $id) {
+                    if (((strtotime($agoraInicio) >= strtotime($inicioDB))
+                    and (strtotime($agoraInicio) <= strtotime($fimDB)))
+                    or (strtotime($agoraFim) >= strtotime($inicioDB))
+                     and (strtotime($agoraFim) <= strtotime($fimDB))) {
+                        return json_encode($linha);
+                    }
                 }
-
-                return true;
             }
-
-            return false;
-        } catch (Exception $e) {
-            return false;
         }
+
+        return '{}';
     }
 
-    public function isDate($date) {
-        try {
-            $ar = explode('/', $date);
-            if (count($ar) < 3) {
-                return false;
-            }
-            $day = intval($ar[0]);
-            $ms = intval($ar[1]);
-            $ano = intval($ar[2]);
-            if ($ano != date('Y')) {
-                return false;
-            } elseif ($ms < date('m')) {
-                return false;
-            } elseif ($ms == date('m') and $day < date('d')) {
-                return false;
-            }
-
-            return checkdate($ms, $day, $ano);
-        } catch (Exception $e) {
-            return false;
+    public function isLimit($lim) {
+        if ($lim == -1) {
+            return true;
         }
-    }
-
-    public function validarTipo($tipo){
-        $ar = array('ATE', 'MON', 'EXT');
-        return in_array($tipo, $ar);
-    }
-
-    public function validarHorarioAtendimento($tmpInicial, $tmpFinal) {
-        $tmpFinal = explode(':', $tmpFinal);
-        $ss_fn = ($tmpFinal[0] * 60) + $tmpFinal[1];
-
-        $tmpInicial = explode(':', $tmpInicial);
-        $ss_in = ($tmpInicial[0] * 60) + $tmpInicial[1];
-
-        $ss_rs = $ss_fn - $ss_in;
-        if ($ss_rs <= 0) {
+        $lim = intval($lim);
+        if ($lim < 1) {
             return false;
         }
 
         return true;
     }
 
-    public function atendimentoExist($id, $docente) {
-        $query = mysqli_query($this->conn, "SELECT * FROM atendimentos where id='$id' AND docente='$docente'");
-        if ($this->mysqli_exist($query)) {
-            return [true, mysqli_fetch_assoc($query)];
-        }
+    public function validarTipoAtendimento($tipo) {
+        $ar = ['ATE', 'MON', 'EXT'];
 
-        return false;
+        return in_array($tipo, $ar);
     }
 
-    public function verificarConflitos($data, $agoraInicio, $agoraFim, $sala) {
-        $data = DateTime::createFromFormat('d/m/Y', $data)->format('Y-m-d');
-        $queryString = "SELECT DATE_FORMAT (`data`,'%d/%m/%Y') AS data_formatada, horarioInicio, horarioFim, sala FROM atendimentos where `data`='$data' and sala='$sala' and (estado = 'CON' or estado = 'NAO')";
-        $query = $this->conn->query($queryString);
-        if ($this->mysqli_exist($query)) {
-            $ar = mysqli_fetch_assoc($query);
-            $inicioDB = $ar['horarioInicio'];
-            $fimDB = $ar['horarioFim'];
-            if (((strtotime($agoraInicio) >= strtotime($inicioDB)) 
-            and (strtotime($agoraInicio) <= strtotime($fimDB))) 
-            or (strtotime($agoraFim) >= strtotime($inicioDB)) 
-            and (strtotime($agoraFim) <= strtotime($fimDB))) {
-                return json_encode($ar);
-            } 
-            return '{}';
-        }
-        return '{}';
-    }
-
-    public function isLimit($lim) {
-        if($lim == -1) {
+    public function validarString($str, $tamanhoMin, $tamanhoMax) {
+        if ($str == '') {
             return true;
         }
-        try {
-            $lim = intval($lim);
-            if ($lim < 1) {
-                return false;
-            }
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function tamanhoString($str, $tamanhoMin, $tamanhoMax) {
-        if($str == '') {
-            return true;
-        }
-        if (strlen($str) <= $tamanhoMin or strlen($str) >= $tamanhoMax) {
+        if (strlen($str) < $tamanhoMin or strlen($str) > $tamanhoMax) {
             return false;
         }
 
+        return true;
+    }
+
+    public function pegarNumeroALunosNoAtendimento($id) {
+        $query = "SELECT atendimento FROM atendimentos_alunos where atendimento = '$id'";
+        $resultadoQuery = $this->conn->query($query);
+        return mysqli_num_rows($resultadoQuery);
+    }
+
+    public function verifyLimit($num_limit, $id){
+        if($num_limit < $this->pegarNumeroALunosNoAtendimento($id)){
+            return false;
+        }
         return true;
     }
 }

@@ -216,7 +216,7 @@ function isJson(json) {
 }
 
 function jsonVazio(json) {
-    if(json == "{}") {
+    if(JSON.stringify(json) == "{}") {
         return true;
     } else {
         return false;

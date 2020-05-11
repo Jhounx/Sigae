@@ -109,11 +109,6 @@ class Usuario extends Dados {
         return $enc;
     }
 
-    public function tirar_fundo($str){
-        $str = substr_replace($str, ' ', strlen($str) -1, 1);
-        return substr_replace($str, ' ', 0, 1);
-    }
-
     /* Mudar dados */
     public function mudarDados($id, $nomePreferencia, $turma, $disci, $email, $img) {
         $queryPessoaString = "

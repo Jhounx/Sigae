@@ -42,8 +42,58 @@ function sideMenus() {
 
     //Finalizar sessão
     linha13 = new Linha("Finalizar sessão", "exit_to_app", null, "finalizarSessao()");
-
     modulos()
+
+    sigae = {
+        nodes: {
+            node1: {
+                titulo: "Calendários",
+                icone: "perm_contact_calendar"
+            },
+            node2: {
+                titulo: "Alunos e professores",
+                icone: "school"
+            },
+            node3: {
+                titulo: "Meu usuário",
+                icone: "people"
+            },
+            node4: {
+                titulo: "Configurações",
+                icone: "settings"
+            }
+        },
+        conjuntos: {
+            conjunto1: {
+                inicio: {
+                    titulo: "Início",
+                    icone: "home",
+                    conjunto: null,
+                    modulo: "inicio"
+                }
+            },
+            conjunto2: {
+
+            },
+            conjunto3: {
+
+            },
+            conjunto4: {
+
+            }
+        },
+        linhasSeparadas: {
+            inicio: {
+                titulo: "Início",
+                icone: "home",
+                conjunto: null,
+                modulo: "inicio"
+            }
+        },
+        modulos: {
+
+        }
+    }
 }
 
 function modulos() {
