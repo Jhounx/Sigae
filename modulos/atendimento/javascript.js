@@ -10,7 +10,7 @@ function carregarAtendimento() {
     request = new Request()
     request.add("pegarAtendimentoByID", "")
     request.add("id", id)
-    request.add("requerIdentidade", id)
+    // request.add("requerIdentidade", id)
     request.send("GET", ["JSON"], (resposta) => {
         if (JSON.stringify(resposta) == "{}") {
             acionarErro("Esse atendimento não existe")
@@ -29,7 +29,7 @@ function carregarAtendimento() {
 }
 
 function carregarDados() {
-    atendimento.setBreadcrumbs("Detalhes do atendimento: " + aten.pegarNome())
+    getModulo("atendimento").setBreadcrumbs("Detalhes do atendimento: " + aten.pegarNome())
     $("#aLinhAtendimento").attr("href", "./?modulo=agendarAtendimento&id=" + id)
 
     $("#r1").text(aten.pegarNome())
@@ -76,7 +76,7 @@ function carregarDados() {
         $("#r18").removeClass("alert banner")
         $("#r18").text(aten.pegarDataUltimaModificacao())
     }
-    atendimento.show()
+    getModulo("atendimento").show()
     initMaterialize()
 }
 

@@ -374,6 +374,12 @@ if (isset($_GET['alterarAtendimento'])
 # Parte VI - Emails
 ##################################################
 
+/* */
+if (isset($_GET['codigoEmail'])) {
+    $codigo = $sys->proteger($_GET['codigoEmail']);
+    echo($sys->processarCodigoEmail($codigo));
+}
+
 /* Email de validação de registro */
 if (isset($_GET['enviarEmailValidacao'])) {
     $sys->verificarPermissao(['permissaoRegistro']);
@@ -382,8 +388,9 @@ if (isset($_GET['enviarEmailValidacao'])) {
 }
 
 if (isset($_GET['enviarEmailTrocarSenha']) && isset($_GET['email'])) {
+    sleep(2);
     $email = $sys->proteger($_GET['email']);
-    $em->enviarEmailTrocarSenha($id);
+    $em->enviarEmailTrocarSenha($email);
 }
 
 /* Validar código email registro*/

@@ -92,11 +92,11 @@ class Atendimentos extends Registro {
         if($this->mysqli_exist($resultadoQuery)) {
             return $this->pegarAtendimentoQuery($resultadoQuery);
         } else {
-            return "{}";
+            $this->deletarRegistroAlunosAtendimento($id);
+            return $query;
         }
     }
 
-    
     /* Adicionar atendimento */
     public function agendarAtendimento($id, $nome, $desc, $data, $horarioInicio, $horarioFim, $sala, $materia, $tipo, $limite) {
         if ($this->validarString($nome, 5, 30) and
@@ -154,5 +154,10 @@ class Atendimentos extends Registro {
             return mysqli_error($this->conn);
         }
         return '{2}';
+    }
+
+    public function deletarRegistroAlunosAtendimento($id) {
+        $queryString = "DELETE * FROM atendimentos_alunos WHERE atendimento = '$id'";
+        return mysqli_query($this->conn, $queryString);
     }
 }

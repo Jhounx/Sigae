@@ -1,53 +1,119 @@
-@media only screen and (max-width: 730px), screen and (max-height: 570px) {
-    .centro {
-        width: 100%;
-        height: 100%;
-        border-radius: 0px;
+/* colapso da sidebar */
+@media only screen and (max-width : 992px) {
+    main {
+        margin-left: 0px;
     }
 
-    .form {
-        padding-top: 70px;
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        top: 70%;
-        right: 0;
-        bottom: 0;
-        left: 0;
+    .footer {
+        padding-left: 0px;
     }
 
-    .swal2-container.swal2-top-end {
-        justify-content: center !important;
+    #carregamentoModulo {
+        left: 0px !important;
     }
-}
 
-@media only screen and (max-width: 600px) {
-    .links {
-        display: block;
-        text-align: center;
-        width: 100%;
+    .titulo {
         font-size: 18px;
     }
 
-    .direita {
-        float: left;
+    .loading-modulo {
+        padding-left: 0px !important;
+    }
+}
+
+
+/* reduz um pouco o titulo e diminui navbarEsquerda */
+@media only screen and (max-width : 854px) {
+    .titulo {
+        font-size: 16px;
     }
 
-    .divInput {
-        width: 72%;
+    .navbarEsquerda {
+        width: 250px;
     }
 
-    .botaoLogin, .alert-login {
-        width: 72%;
+    .navbarDireita {
+        width: calc(100% - 250px);
+    }
+}
+
+/* @media only screen and (max-height : 800px) {
+    .navbar {
+        height: 80px;
     }
 
-    .baixo {
-        width: 72%;
-        margin-top: 10px;
+    .side-nav {
+        top: 80px !important;
+    }
+} */
+
+/* reduz ainda mais o titulo */
+@media only screen and (max-width : 854px) {
+    .titulo {
+        font-size: 14px;
+    }
+}
+
+/* some com o titulo */
+@media only screen and (max-width : 688px) {
+    .navbarDireita {
+        display: none;
     }
 
-    .direita {
-        margin-top: 10px;
+    .navbarEsquerda {
+        width: 100%;
     }
 
+    .linhaTituloImg {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+}
+
+/* side bar 100% e diminuição do footer */
+
+@media only screen and (max-width : 600px) {
+    .content {
+        padding-left:15px;
+        padding-right: 15px;
+    }
+    
+    .side-nav {
+        width: 100% !important;
+    }
+
+    #linkFooter1 {
+        display: none;
+    }
+
+    #linkFooter2 {
+        display: inline;
+    }
+
+    #brTitulo {
+        display: block;
+    }
+
+    .copyright-titulo {
+        margin-top: 20px
+    }
+}
+
+@media only screen and (max-width : 364px) {
+    .copyright {
+        font-size: 17px
+    }
+
+    .consoleTexto {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        padding-left: 8px !important;
+    }
+
+    .noAlertas {
+        font-size: 14px;
+    }
 }

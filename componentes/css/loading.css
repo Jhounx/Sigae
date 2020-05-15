@@ -1,0 +1,36 @@
+.divCarregamento {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgb(241, 242, 243) !important;
+}
+
+.noJS {
+    display: none !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 50px !important;
+    margin: auto !important;
+    top: 20% !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    text-align: center !important;
+    color: #3f4c6b !important;
+    font-size: 30px !important;
+    font-weight: 400 !important;
+}
+
+
+.imgCarregamento {
+    position: absolute !important;
+    margin: auto !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+}
+
+#carregamentoModulo {
+    left: 300px;
+    display: none;
+}

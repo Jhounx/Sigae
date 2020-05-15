@@ -155,6 +155,10 @@ modulo>li {
     margin-top: 10px;
 }
 
+#limiteInput {
+    margin-bottom: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     .picker__date-display {
         width: 100%;

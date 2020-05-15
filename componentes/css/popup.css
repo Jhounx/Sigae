@@ -31,12 +31,12 @@
 }
 
 .swal2-modal .swal2-styled:focus {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .swal2-content {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 .swal2-actions {
@@ -45,5 +45,5 @@
 
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
     overflow-y: scroll !important;
-    position: fixed;
+    position: fixed !important;
 }

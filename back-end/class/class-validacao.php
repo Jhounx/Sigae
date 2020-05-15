@@ -190,7 +190,10 @@ class Validacao extends Banco {
         return mysqli_num_rows($resultadoQuery);
     }
 
-    public function verifyLimit($num_limit, $id){
+    public function verifyLimit($num_limit, $id) {
+        if($num_limit == -1) {
+            return true;
+        }
         if($num_limit < $this->pegarNumeroALunosNoAtendimento($id)){
             return false;
         }

@@ -41,7 +41,7 @@ function carregarDados() {
                 estado = aten.pegarEstado()
                 renderizarLinha(id, data, inicio, fim, sala, estado)
             });
-            atendimentosAgendados.show()
+            getModulo("atendimentosAgendados").show()
             verificarErro()
         }
         eventos()

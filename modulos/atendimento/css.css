@@ -238,3 +238,49 @@ table.striped>tbody>tr:nth-child(odd) {
     text-align: center;
     font-weight: bold;
 }
+
+/* Popup */
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+    position: static !important;
+}
+
+.swal2-top-end {
+    background-color: transparent !important;
+    height: 300px;
+}
+
+.swal2-top-end > .swal2-popup {
+    padding: 8px!important;
+    padding-right: 10px!important;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2)
+}
+
+.swal2-top-end > .swal2-popup > .swal2-header > .swal2-icon {
+    margin: 0px;
+    margin-left: 14px;
+}
+
+.swal2-top-end > .swal2-popup > .swal2-header > .swal2-icon > .swal2-success-circular-line-left,
+.swal2-top-end > .swal2-popup > .swal2-header > .swal2-icon > .swal2-success-fix,
+.swal2-top-end > .swal2-popup > .swal2-header > .swal2-icon > .swal2-success-circular-line-right {
+    display: none !important;
+}
+
+.swal2-top-end > .swal2-popup > .swal2-header {
+    align-items: baseline !important;
+    position: relative;
+}
+
+.swal2-top-end > .swal2-popup > .swal2-header > .swal2-title {
+    display: flex !important;
+    position: absolute;
+    text-align: right;
+    margin-bottom: 0px !important;
+    align-items: center !important;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    font-size: 20px;
+}

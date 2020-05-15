@@ -35,7 +35,7 @@ function loadAtendimento() {
                 $(".selectTipo").selectpicker("val", aten.pegarTipo());
                 initMaterialize()
                 Materialize.updateTextFields()
-                agendarAtendimento.show()
+                getModulo("agendarAtendimento").show()
             }
         }, (erro) => {
             alert(erro)
@@ -44,7 +44,7 @@ function loadAtendimento() {
     } else {
         $("#nomeAtendimento").val("Atendimento#" + randomString("1234567890", 5))
         initMaterialize()
-        agendarAtendimento.show()
+        getModulo("agendarAtendimento").show()
     }
 }
 
@@ -180,6 +180,13 @@ function eventos() {
         }
     });
     $("#limiteInput").keyup(function () {
+        if(parseInt($("#limiteInput").val()) < aten.pegarTotalAlunos()) {
+            $("#erro6").text("O limite de inscritos não pode ser menor do que o número de inscritos atualmente (total de inscritos: " + aten.pegarTotalAlunos() + " alunos)")
+            $("#limiteInput").css("cssText", "border-bottom: 1px solid #F44336;-webkit-box-shadow: 0 1px 0 0 #F44336;box-shadow: 0 1px 0 0 #F44336;");
+        } else {
+            $("#erro6").text("")
+            $("#limiteInput").removeAttr("style")
+        }
         validacaoGeral()
     });
     $('#limiteInput').mask("000")
@@ -254,7 +261,6 @@ function validacaoGeral() {
     if (descAtendimento.length != 0 && descAtendimento.length < 5 || descAtendimento.length > 60) {
         valido = false;
     }
-
     if ($(".datepicker").val().length == 0) {
         valido = false;
     }
@@ -271,7 +277,9 @@ function validacaoGeral() {
     if ($(".selectDisciplinas option:selected").val() == undefined) {
         valido = false;
     }
-
+    if(parseInt($("#limiteInput").val()) < aten.pegarTotalAlunos()) {
+        valido = false;
+    }
     if (editando == false) {
         if (valido == false) {
             $("#salvarDados").attr("disabled", true)

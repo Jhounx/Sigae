@@ -10,7 +10,7 @@ function init_calendario() {
 }
 
 function popups() {
-    filtroCalendario = new Popup("filtroCalendario", "../modulos/filtroCalendario", "Adicionar um filtro", "700px", null);
+    /*filtroCalendario = new Popup("filtroCalendario", "../modulos/_popups/filtroCalendario", "Adicionar um filtro", "700px", null);
     filtroCalendario.setScroll(true)
     filtroCalendario.setCss(true)
     filtroCalendario.setJS(true)
@@ -20,7 +20,7 @@ function popups() {
     diaPopup.setScroll(true)
     diaPopup.setCss(true)
     diaPopup.setJS(true)
-    diaPopup.invoker()
+    diaPopup.invoker()*/
 }
 
 function invokerDia(d, m, a) {
@@ -59,13 +59,4 @@ function anoAvancar() {
 function anoAtual() {
     ano = new Date().getFullYear();
     renderCalendario(ano)
-}
-
-function reloadCalendar() {
-    // alert(filtroLivre)
-    // alert(filtroCampus)
-    // alert(filtroTurma)
-    // alert(filtroDisciplina)
-    // alert(filtroProfessor)
-    // alert(filtroHorario)
 }

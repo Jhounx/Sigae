@@ -165,7 +165,8 @@ function carregarDados() {
 }
 
 function renderizar() {
-    mudarDados.show()
+    console.log("renderizar")
+    getModulo("mudarDados").show()
 }
 
 function eventos() {

@@ -357,7 +357,7 @@ function verificarConclusao() {
         request.send("GET", ["SIM", "NAO"], (resposta) => {
             if (resposta != null) {
                 if (resposta == "SIM") {
-                    window.location.href = "../../?reg=true";
+                    window.location.href = "../login/?reg=true";
                 }
             } else {
                 this.alert(resposta)

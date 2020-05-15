@@ -1,3 +1,9 @@
+versao = "Dev 1.14.2"
+
+/*##################################################
+# FUNÇÕES DE URL'S
+##################################################*/
+
 function getAllParans() {
     url = window.location.href
     br = url.split("?")
@@ -103,4 +109,111 @@ function setParam(param, value, saveHistory, exclusive) {
     } else {
         window.history.replaceState(null, null, "?" + url);
     }
+}
+
+/*##################################################
+# FUNÇÕES DE CALCULO DE DATAS E HORÁRIOS
+##################################################*/
+
+function dataHoje(string) {
+    if (string) {
+        return moment().format("DD/MM/YYYY");
+    } else {
+        return Date.parse(moment());
+    }
+}
+
+function stringDateToDate(str) {
+    return Date.parse(moment(str, "DD/MM/YYYY"));
+}
+
+function somarDia(hj, dias, string) {
+    if (hj == null) {
+        hj = moment().format("DD/MM/YYYY");
+    }
+    if (string) {
+        return moment(hj, "DD-MM-YYYY").add(dias, 'days').format('DD/MM/YYYY');
+    } else {
+        return moment(hj, "DD-MM-YYYY").add(dias, 'days').toDate()
+    }
+}
+
+function somarAno(hj, anos, string) {
+    if (hj == null) {
+        hj = moment().format("DD/MM/YYYY");
+    }
+    if (string) {
+        return moment(hj, "DD-MM-YYYY").add(anos, 'years').format('DD/MM/YYYY');
+    } else {
+        return moment(hj, "DD-MM-YYYY").add(anos, 'years').toDate()
+    }
+}
+
+function diferencaHorario(h1, h2) {
+    m1 = moment(h1, "hh:mm")
+    m2 = moment(h2, "hh:mm")
+    var totalHoras = (m2.diff(m1, 'hours'));
+    var totalMinutos = m2.diff(m1, 'minutes');
+    var minutos = totalMinutos % 60;
+    if(minutos == 0) {
+        return totalHoras + " horas"
+    } else {
+        return totalHoras + " horas e  " + minutos + " minutos"
+    }
+}
+
+function compararHorario(h1, h2) {
+    return moment(h1, "hh:mm").isBefore(moment(h2, "hh:mm"));
+}
+
+/*##################################################
+# FUNÇÕES DE JSON
+##################################################*/
+
+function fixJson(json) {
+    return json.replace(/'/g, "\"");
+}
+
+function isJson(json) {
+    var json = fixJson(json)
+    try {
+        JSON.parse(json);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function jsonVazio(json) {
+    return JSON.stringify(json) == "{}"
+}
+
+/*##################################################
+# FUNÇÕES DE STRING'S
+##################################################*/
+
+function randomString(chars, tamanho) {
+    text = ""
+    for(i = 0; i < tamanho; i++) {
+        random = Math.floor(Math.random() * chars.length + 1);
+        var s = chars.charAt(random);
+        text = text + s;
+    }
+    return text;
+}
+
+/*##################################################
+# FUNÇÕES DIVERSAS
+##################################################*/
+
+function runFunction(nome, reclamar) {
+    try {
+        window[nome]()
+    } catch (ex) { 
+        if(reclamar) acionarErro("A função '" + nome + "' não existe");
+    }
+}
+
+function definirVersao() {
+    $(".versao").text(versao)
 }

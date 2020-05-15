@@ -1,0 +1,278 @@
+body {
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(#606c88, #3f4c6b);
+    position: relative !important;
+    min-height: 100%;
+}
+
+.centro {
+    display: none;
+    position: absolute;
+    width: 720px;
+    height: 520px;
+    background-color: rgb(250, 250, 250);
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-radius: 5px;
+}
+
+.linha1 {
+    margin-top: 12px
+}
+
+.linha2 {
+    margin-top: 12px
+}
+
+.linha3 {
+    margin-top: 12px
+}
+
+.linha4 {
+    margin-top: 8px
+}
+
+.titulo {
+    white-space: nowrap;
+    font-size: 18px;
+    text-align: center;
+    color: rgb(78, 95, 120);
+}
+
+.botaoLogin {
+    width: 60%;
+}
+
+.baixo {
+    width: 60%;
+}
+
+.botaoLogin {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.links {
+    color: slategray;
+    display: inline;
+    font-size: 16px;
+    white-space: nowrap;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    transition: color 0.7s;
+}
+
+.links:hover {
+    color: rgb(40, 167, 69);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.direita {
+    float: right;
+}
+
+#waiting,
+#erro {
+    display: none;
+}
+
+.spinner-border {
+    margin-top: 18px;
+}
+
+.alert-login {
+    width: 60%;
+    margin-top: 5px;
+}
+
+.parteBaixo {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(219, 221, 224, 0.692);
+    position: absolute;
+    bottom: 0;
+}
+
+.copyright {
+    font-size: 15px;
+    color: #3f4c6b;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.desenvolvimento {
+    cursor: pointer;
+}
+
+.desenvolvimento:hover {
+    text-decoration: underline !important;
+}
+
+/* Alertas */
+
+.swal2-top-end {
+    height: 100px !important;
+}
+
+.divContainer {
+    display: inline-flex;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.expirado {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+.iconeOk {
+    font-size: 35px;
+    color: green;
+    margin-right: 5px;
+}
+
+.iconeErro {
+    font-size: 35px;
+    color: crimson;
+    margin-right: 5px;
+}
+
+.header2 {
+    display:none !important;
+}
+
+.content2 {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+/*campos */
+
+.divInput {
+    width: 60%;
+}
+
+.campo {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    padding-left: 50px;
+    font-family: 'Helvetica Neue', Helvetica, Arial;
+    font-size: 18px;
+    background-color: white;
+    border: 1px solid rgb(168, 180, 202);
+    border-radius: 3.5px;
+    transition: border 200ms;
+    background-position: 7px 8px;
+    background-repeat: no-repeat;
+    transition: background-image 0.4s;
+    filter: none;
+}
+
+.campo:focus {
+    border-color: rgb(92, 103, 188);
+    outline: none;
+}
+
+.pequeno {
+    height: 40px !important;
+    padding-left: 10px !important;
+}
+
+label {
+    position: absolute;
+    color: rgb(92, 103, 188);
+    text-decoration: none;
+    top: 5px;
+    left: 7px;
+    z-index: -1;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0;
+    transition: top 200ms, opacity 200ms;
+}
+
+label.floating {
+    top: -12px;
+    z-index: 1;
+    padding: 0 3px;
+    opacity: 1.0;
+    background-color: white;
+}
+
+form div {
+    position: relative;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+h8 {
+    font-size: 16px;
+}
+
+#login {
+    content: url("../icones/usuario.png");
+    background-image: url(../icones/usuario-disable.png);
+}
+
+#senha {
+    content: url("../icones/senha.png");
+    background-image: url(../icones/senha-disable.png);
+    padding-right: 50px;
+}
+
+.divSenha {
+    position: relative;
+}
+
+.icone-senha {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 15;
+    display: flex !important;
+    align-items: center;
+    color: rgb(144, 146, 148);
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+#recuperarEmail {
+    content: url("../icones/email.png");
+    background-image: url(../icones/email-disable.png);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+}

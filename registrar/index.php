@@ -13,29 +13,28 @@ if (isset($_SESSION['permissaoSistema'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="author" content="Pedro Cerqueira Mota, João Costa Neto, Rafael Requião" />
+    <meta name="author" content="Pedro Cerqueira Mota, João Costa Neto, Rafael Requião">
+    <link rel="icon" href="../icones/si.png">
     <link rel="stylesheet" href="../componentes/APIs/bootstrap.min.css">
     <link rel="stylesheet" href="../componentes/APIs/materialize.min.css">
+    <link rel="stylesheet" href="../componentes/APIs/materialDesignIcons.css">
+    <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../componentes/css/loading.css">
+    <link rel="stylesheet" href="../componentes/css/select.css">
     <link rel="stylesheet" href="./css.css">
     <link rel="stylesheet" href="./responsive.css">
-    <link rel="stylesheet" href="../componentes/loading.css">
-    <link rel="icon" href="../icones/si.png">
-    <link rel="stylesheet" href="../componentes/APIs/icon.css">
-    <link rel="stylesheet" href="../componentes/APIs/bootstrap-select.min.css">
-    <link rel="stylesheet" href="../componentes/select.css">
     <script src="../componentes/APIs/jquery.min.js"></script>
     <script src="../componentes/APIs/sweetalert2@8.js"></script>
     <script src="../componentes/APIs/popper.min.js"></script>
     <script src="../componentes/APIs/bootstrap.min.js"></script>
     <script src="../componentes/APIs/jquery.mask.min.js"></script>
-    <script src="../componentes/parans.js"></script>
-    <script src="../componentes/dados.js"></script>
-    <script src="./javascript.js"></script>
-    <script src="./validacao.js"></script>
-    <script src="../componentes/request.js"></script>
-    <script src="../componentes/Misc.js"></script>
     <script src="../componentes/APIs/materialize.min.js"></script>
     <script src="../componentes/APIs/bootstrap-select.min.js"></script>
+    <script src="../componentes/Utils.js"></script>
+    <script src="../componentes/DadosGlobais.js"></script>
+    <script src="../componentes/Request.js"></script>
+    <script src="./javascript.js"></script>
+    <script src="./validacao.js"></script>
 </head>
 
 <body style="overflow: hidden !important;">

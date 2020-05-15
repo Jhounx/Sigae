@@ -9,7 +9,7 @@ var
 function init_minhaTurma() {
     $(".selectFiltro").selectpicker();
     $("#campusTitle").text(getCampus())
-    minhaTurma.setBreadcrumbs("Minha turma (" + getTurma() + ")")
+    getModulo("minhaTurma").setBreadcrumbs("Minha turma (" + getTurma() + ")")
     if (paramExist("pagina")) {
         var n = Math.floor(Number(getParam("pagina")));
         if (n !== Infinity && String(n) == getParam("pagina") && n > 0) {
@@ -121,7 +121,7 @@ function carregarNumeroPaginas() {
     }, (erro) => {
         if (erro == "NEG") {
             removeParam()
-            linha1.rodar()
+            getLinha("inicio").rodar()
         } else {
             alert(erro)
         }

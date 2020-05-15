@@ -121,7 +121,7 @@ function carregarNumeroPaginas() {
     }, (erro) => {
         if (erro == "NEG") {
             removeAllParans()
-            linha1.rodar()
+            getLinha("inicio").rodar()
         } else {
             alert(erro)
         }

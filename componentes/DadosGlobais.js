@@ -1,3 +1,9 @@
+function verificarPermissao(ar) {
+    return ar == undefined ? true : ar.includes(getTipo())
+}
+
+/* Pegar dados do usuário */
+
 function getID() {
     return jsonDados["id"];
 }
@@ -172,7 +178,6 @@ function notaDaSenha(password) {
     if (password.length < 6) {
         return 0
     }
-
     var matchedCase = new Array();
     matchedCase.push("[$@$!%*#?&]");
     matchedCase.push("[A-Z]");
@@ -197,40 +202,4 @@ function notaDaSenha(password) {
         return 100;
     }
     return 0;
-}
-
-/* Json utils */
-
-function fixJson(json) {
-    return json.replace(/'/g, "\"");
-}
-
-function isJson(json) {
-    var json = fixJson(json)
-    try {
-        JSON.parse(json);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-function jsonVazio(json) {
-    if(JSON.stringify(json) == "{}") {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/* Misc */
-
-function randomString(chars, tamanho) {
-    text = ""
-    for(i = 0; i < tamanho; i++) {
-        random = Math.floor(Math.random() * chars.length + 1);
-        var s = chars.charAt(random);
-        text = text + s;
-    }
-    return text;
 }
