@@ -1,4 +1,4 @@
-versao = "Dev 1.14.2"
+versao = "Dev 1.14.3"
 
 /*##################################################
 # FUNÇÕES DE URL'S
@@ -203,6 +203,15 @@ function randomString(chars, tamanho) {
 }
 
 /*##################################################
+# Funções de erro
+##################################################*/
+
+function dispararErro(texto) {
+    var toast = $("<i class=\"material-icons toast-erro\">cancel</i><span class=\"toastTexto\">" + texto + "</span>");
+    Materialize.toast(toast, 5000);
+}
+
+/*##################################################
 # FUNÇÕES DIVERSAS
 ##################################################*/
 
@@ -216,4 +225,34 @@ function runFunction(nome, reclamar) {
 
 function definirVersao() {
     $(".versao").text(versao)
+}
+
+function notaDaSenha(password) {
+    if (password.length < 6) {
+        return 0
+    }
+    var matchedCase = new Array();
+    matchedCase.push("[$@$!%*#?&]");
+    matchedCase.push("[A-Z]");
+    matchedCase.push("[0-9]");
+    matchedCase.push("[a-z]");
+    var nota = 0;
+    for (var i = 0; i < matchedCase.length; i++) {
+        if (new RegExp(matchedCase[i]).test(password)) {
+            nota++;
+        }
+    }
+    if (nota == 1) {
+        return 20;
+    }
+    if (nota == 2) {
+        return 50;
+    }
+    if (nota == 3) {
+        return 75;
+    }
+    if (nota == 4) {
+        return 100;
+    }
+    return 0;
 }

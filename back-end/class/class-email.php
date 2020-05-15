@@ -139,6 +139,15 @@ class Email extends Validacao {
     /* 
     Funções 
     */
+    public function deletarCodigoEmail($codigo) {
+        return mysqli_query($this->conn, "DELETE FROM codigos_email WHERE valor='$codigo'");
+    }
+
+    public function validarCodigoEmail($codigo) {
+        $query = mysqli_query($this->conn, "SELECT * FROM codigos_email where valor='$codigo' limit 1");
+        return $this->mysqli_exist($query);
+    }
+
     public function processarCodigoEmail($codigo) {
         $query = mysqli_query($this->conn, "SELECT * FROM codigos_email where valor='$codigo' limit 1");
         if ($this->mysqli_exist($query)) {
@@ -158,8 +167,7 @@ class Email extends Validacao {
                 }
             }
             if ($tipo == 'REC') {//Recuperar/alterar senha;
-                $this->addPermissao($id, 'trocarSenha');
-                header('Location: ../recuperarSenha');
+                header("Location: ../recuperarSenha?codigo=$codigo");
             }
         } else {
             return "Este token é inválido ou já foi utilizado";
@@ -173,10 +181,10 @@ class Email extends Validacao {
         if ($this->mysqli_exist($queryCodigo)) {
             $id = $array['id'];
             $queryPessoaTexto = "
-        UPDATE alunos SET estado = 'ATV' WHERE id='$id';
-        UPDATE docentes SET estado = 'ATV' WHERE id='$id';
-        UPDATE admins SET estado = 'ATV' WHERE id='$id';
-        DELETE FROM codigos_email WHERE id='$id'";
+            UPDATE alunos SET estado = 'ATV' WHERE id='$id';
+            UPDATE docentes SET estado = 'ATV' WHERE id='$id';
+            UPDATE admins SET estado = 'ATV' WHERE id='$id';
+            DELETE FROM codigos_email WHERE id='$id'";
             if (mysqli_multi_query($this->conn, $queryPessoaTexto)) {
                 header('Location: ../../?reg=true');
             } else {

@@ -173,33 +173,3 @@ function getArrayNomes(completo) {
     }
     return combinacoes
 }
-
-function notaDaSenha(password) {
-    if (password.length < 6) {
-        return 0
-    }
-    var matchedCase = new Array();
-    matchedCase.push("[$@$!%*#?&]");
-    matchedCase.push("[A-Z]");
-    matchedCase.push("[0-9]");
-    matchedCase.push("[a-z]");
-    var nota = 0;
-    for (var i = 0; i < matchedCase.length; i++) {
-        if (new RegExp(matchedCase[i]).test(password)) {
-            nota++;
-        }
-    }
-    if (nota == 1) {
-        return 20;
-    }
-    if (nota == 2) {
-        return 50;
-    }
-    if (nota == 3) {
-        return 75;
-    }
-    if (nota == 4) {
-        return 100;
-    }
-    return 0;
-}

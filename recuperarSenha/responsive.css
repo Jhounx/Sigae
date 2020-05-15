@@ -1,0 +1,30 @@
+@media only screen and (max-width : 496px) {
+    .centro {
+        width: 98%;
+    }
+}
+
+@media only screen and (max-width: 938px) {
+    .popupShow {
+        left: 55;
+        top: -10;
+    }
+
+    .popupShow2 {
+        top: 305 !important;
+    }
+
+    .popupShow2:after {
+        transform: rotate(225deg);
+        top: -11 !important;
+    }
+
+    .popupShow:after {
+        top: auto;
+        left: 10px;
+        bottom: -11px;
+        border-bottom: 1px solid rgb(177, 177, 177);
+        border-top: 0px solid rgb(177, 177, 177);
+        
+    }
+}

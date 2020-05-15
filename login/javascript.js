@@ -31,24 +31,6 @@ function popups() {
     sobre.invoker()
 }
 
-/*function posInit() {
-    // comoCriar = new Popup("comoCriar", "../modulos/login/comoCriar", "Como realizar meu registro?", "700px", "85%");
-    // comoCriar.setScroll(true)
-    // comoCriar.invoker()
-    // esqueciSenha = new Popup("esqueciSenha", "../modulos/login/esqueciSenha", "Esqueci minha senha", "500px", "460px");
-    // esqueciSenha.setScroll(false)
-    // esqueciSenha.setJS(true)
-    // esqueciSenha.invoker()
-
-    // sobre = new Popup("sobre", "../modulos/sobre", "Sobre o SiGAÊ");
-    // sobre.setCss(true)
-    // sobre.setJS(true)
-    // sobre.setScroll(true)
-    // sobre.invoker()
-
-    //esqueciSenha = new Popup("esqueciSenha", "../modulos/login/esqueciSenha", "Esqueci minha senha", "500px", "460px");
-}*/
-
 function logar() {
     loginstr = $("#login").val()
     senhastr = $("#senha").val()

